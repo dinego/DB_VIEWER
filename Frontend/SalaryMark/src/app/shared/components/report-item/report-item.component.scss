@@ -1,0 +1,69 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.container-report-item {
+  margin-bottom: $remSize2;
+  height: $remSize18;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: $size0 $size2 $size6 $gray-b7b;
+  border-radius: $size10;
+
+  .image-withoutBg {
+    background-color: $gray-dd;
+  }
+
+  .content {
+    padding: $size12 $size0 $size0 $size21;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+
+    .title {
+      color: $orange-f0;
+    }
+
+    .date {
+      font-size: $size12;
+      color: $black-40;
+      width: $size82;
+      height: $size22;
+      background: #eaeaea 0% 0% no-repeat padding-box;
+      border-radius: $size40;
+      opacity: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .btn-options {
+    width: $size266;
+    height: $size39;
+    background: $orange-gradient;
+    box-shadow: $size0 $size2 $size6 $gray-box-shadow-00;
+    border-radius: $size2;
+    opacity: 1;
+    color: $white;
+    border: none;
+  }
+}
+.title-box {
+  font-size: $size18;
+  letter-spacing: $size0;
+  color: $black-1f;
+  opacity: 1;
+  font-weight: 600;
+}
+
+.image {
+  width: $size307;
+  height: $size132;
+  border-radius: $size10 $size10 $size0 $size0;
+
+  .image-config {
+    width: 100%;
+    height: 100%;
+    border-radius: $size10 $size10 $size0 $size0;
+  }
+}

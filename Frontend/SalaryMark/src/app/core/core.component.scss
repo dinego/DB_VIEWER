@@ -1,0 +1,21 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.core-container {
+  overflow: hidden;
+  background-color: $background-container;
+  .info-container {
+    overflow: auto;
+    height: $fullHeightSize - 8.4vh;
+    width: $fullSize;
+
+    z-index: 1;
+  }
+}
+::ng-deep .loading-text{
+  top:56% !important;
+}
+.loading {
+  font-size: 0.8rem;
+  color: $white;
+}

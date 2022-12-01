@@ -1,0 +1,40 @@
+<div class="row mr-1 mb-3 colored-table mt-3 mb-3 color-index-{{ colorIndex }}">
+  <div class="col col-12 col-lg-12 col-sm-12 col-md-12 title-table p-1">
+    <span>{{ data.name }}</span>
+  </div>
+  <div class="col col-12 col-lg-12 col-sm-12 col-md-12 title-items m-0 p-2">
+    <div class="row flex-fill">
+      <div class="col-sm-4 col-lg-4 col-md-4 p-0">Func.</div>
+      <div class="col-sm-4 col-lg-4 col-md-4 p-0">R$</div>
+      <div class="col-sm-4 col-lg-4 col-md-4 p-0">%</div>
+    </div>
+  </div>
+
+  <div class="col col-12 col-lg-12 col-sm-12 col-md-12 m-0 p-0">
+    <table class="table table-striped mb-0">
+      <tbody>
+        <tr *ngFor="let item of data.data">
+          <td width="33%">
+            <span
+              class="link-item"
+              (click)="openModal(item.click, data.name)"
+              >{{ item.func }}</span
+            >
+          </td>
+          <td width="33%">
+            <span
+              class="link-item"
+              (click)="openModal(item.click, data.name)"
+              >{{ item.y | number: "1.0-3" }}</span
+            >
+          </td>
+          <td width="33%">
+            <span class="link-item" (click)="openModal(item.click, data.name)"
+              >{{ item.percentage }}%</span
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+@import 'src/app/shared/styles/colors.scss';
+@import 'src/app/shared/styles/dimensions.scss';
+
+.global-label-container {
+  padding-right: $size50;
+  padding-left: $size50;
+
+}
+
+.flex-align-center {
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+
+.btn-save {
+  background: transparent 0% 0% no-repeat padding-box;
+  border-width: 2px;
+  border-color: $orange-button;
+  opacity: 1;
+  height: $size40;
+  padding: 0 1.9375rem;
+  text-align: left;
+
+  letter-spacing: $size0;
+  opacity: 1;
+  text-transform: uppercase;
+  font-size: small;
+  background-color: $orange-button;
+  color: $white;
+
+  &:hover {
+    background-color: $white;
+    color: $orange-button;
+
+    .logo {
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  &:disabled {
+    background-color: $gray-f2;
+    color: $gray-65;
+    border-color: $gray-f2;
+  }
+}

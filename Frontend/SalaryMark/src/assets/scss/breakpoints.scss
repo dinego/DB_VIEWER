@@ -1,0 +1,95 @@
+@mixin for-iphone5 {
+  @media (max-width: 320px) {
+    @content;
+  }
+}
+
+@mixin for-320-to-360 {
+  @media (min-width: 321px) and (max-width: 360px) {
+    @content;
+  }
+}
+
+@mixin for-360-to-375 {
+  @media (min-width: 361px) and (max-width: 375px) {
+    @content;
+  }
+}
+
+@mixin for-376-to-414 {
+  @media (min-width: 376px) and (max-width: 413px) {
+    @content;
+  }
+}
+
+@mixin for-iphone8 {
+  @media (max-width: 414px) {
+    @content;
+  }
+}
+
+@mixin for-iphoneX {
+  @media (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+    @content;
+  }
+}
+
+@mixin for-phone-only {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin for-tablet-portrait-up {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+
+@mixin for-tablet-portrait-only {
+  @media (min-width: 600px) and (max-width: 899px) {
+    @content;
+  }
+}
+
+@mixin for-tablet-landscape-up {
+  @media (min-width: 900px) {
+    @content;
+  }
+}
+
+@mixin for-tablet-landscape-only {
+  @media (min-width: 900px) and (max-width: 1199px) {
+    @content;
+  }
+}
+
+@mixin for-desktop-small {
+  @media (max-width: 1365px) {
+    @content;
+  }
+}
+
+@mixin for-desktop-smaller {
+  @media (max-width: 900px) {
+    @content;
+  }
+}
+
+@mixin for-desktop-up {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin for-desktop-only {
+  @media (min-width: 1200px) and (max-width: 1799px) {
+    @content;
+  }
+}
+
+@mixin for-big-desktop-up {
+  @media (min-width: 1800px) {
+    @content;
+  }
+}

@@ -1,0 +1,73 @@
+<form [formGroup]="formUpdate" (ngSubmit)="updateData()">
+  <div class="d-flex flex-column">
+    <div class="d-flex justify-content-start align-items-center">
+      <app-button-secundary
+        [label]="locales.downloadTemplate"
+        (click)="downloadTemplate()"
+        class="mr-3"
+      ></app-button-secundary>
+      <app-button-primary
+        [label]="locales.import"
+        (click)="import.click()"
+      ></app-button-primary>
+      <input
+        #import
+        hidden
+        type="file"
+        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        (change)="onImportUpdate($event.target.files)"
+      />
+
+      <div
+        class="file-import ml-3 px-2 d-flex align-items-center flex-row"
+        *ngIf="importFile"
+      >
+        <span class="mr-3">{{ importFile.name }}</span>
+        <img
+          src="../../../../../../../assets/imgs/svg/delete-icon-sm.svg"
+          (click)="removeFileImport()"
+        />
+      </div>
+    </div>
+    <div class="d-flex w-100 mt-3">
+      <div
+        class="input d-flex flex-column w-100"
+        [ngClass]="{
+          'has-error': formUpdate.controls.tableName.invalid
+        }"
+      >
+        <span class="title-list">{{ locales.tableName }}</span>
+        <input formControlName="tableName" class="form-control" />
+      </div>
+    </div>
+
+    <div class="d-flex w-100 mt-3">
+      <div
+        class="input d-flex flex-column w-100"
+        [ngClass]="{
+          'has-error': formUpdate.controls.justify.invalid
+        }"
+      >
+        <span class="title-list">{{ locales.justify }}</span>
+        <textarea
+          formControlName="justify"
+          class="form-control"
+          id="applyUpdateJustify"
+          rows="4"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end mt-3">
+    <app-button-secundary
+      (click)="closeModal($event)"
+      [label]="locales.cancel"
+      class="mr-3"
+    ></app-button-secundary>
+    <app-button-primary
+      [label]="locales.update"
+      (click)="updateData()"
+    ></app-button-primary>
+  </div>
+</form>

@@ -1,0 +1,90 @@
+<div class="positioning-nav-header-container container-fluid" *ngIf="!share">
+  <div
+    fxLayout="row wrap"
+    fxFlex="flex-grow"
+    class="btn-content"
+    fxLayoutAlign="center"
+  >
+    <div
+      class="btn-area"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      *ngIf="canAccess(subModules.framework)"
+    >
+      <button
+        class="btn btn-default"
+        routerLinkActive="activated-route"
+        [routerLink]="routerNames.POSITIONING.FRAMEWORK"
+      >
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span>{{ locales.framework }}</span>
+        </div>
+      </button>
+    </div>
+    <div
+      class="btn-area"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      *ngIf="canAccess(subModules.financialImpact)"
+    >
+      <button
+        class="btn btn-default"
+        routerLinkActive="activated-route"
+        [routerLink]="routerNames.POSITIONING.FINANCIAL_IMPACT"
+      >
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span class="text-nowrap">{{ locales.financialImpact }}</span>
+        </div>
+      </button>
+    </div>
+    <div
+      class="btn-area"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      *ngIf="canAccess(subModules.comparativeAnalysis)"
+    >
+      <button
+        class="btn btn-default"
+        routerLinkActive="activated-route"
+        [routerLink]="routerNames.POSITIONING.COMPARATIVE_ANALYSIS"
+      >
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span class="text-nowrap">{{ locales.comparativeAnalysis }}</span>
+        </div>
+      </button>
+    </div>
+    <div
+      class="btn-area"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      *ngIf="canAccess(subModules.distributionAnalysis)"
+    >
+      <button
+        class="btn btn-default"
+        routerLinkActive="activated-route"
+        [routerLink]="routerNames.POSITIONING.DISTRIBUTION_ANALYSIS"
+      >
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span class="text-nowrap">{{ locales.distributionAnalysis }}</span>
+        </div>
+      </button>
+    </div>
+    <div
+      class="btn-area"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      *ngIf="canAccess(subModules.movement)"
+    >
+      <button
+        class="btn btn-default"
+        routerLinkActive="activated-route"
+        [routerLink]="routerNames.POSITIONING.PROPOSED_MOVEMENTS"
+      >
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span class="text-nowrap">{{ locales.proposedMovements }}</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

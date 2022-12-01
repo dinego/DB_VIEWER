@@ -1,0 +1,497 @@
+<div class="framework-container container-fluid">
+  <app-title-header [title]="locales.framework">
+    <app-button-more-actions
+      *ngIf="!share"
+      [isHelp]="false"
+      [isMore]="true"
+      [isShare]="permissions && permissions.canShare"
+      idModal="shareModal"
+      (onShareClick)="getShareKey()"
+    >
+      <app-button-list
+        *ngIf="
+          contracts &&
+          permissions &&
+          permissions.canFilterTypeofContract &&
+          contracts.length > 1
+        "
+        class="btn-list mr-3"
+        [text]="contractTypeCLT.title"
+        [toolTipText]="locales.contractType"
+        [list]="contracts"
+        [showList]="true"
+        (textSelected)="changeSelectContract($event)"
+      >
+      </app-button-list>
+
+      <app-button-list
+        *ngIf="monthlyList && monthlyList.length > 1"
+        class="btn-list mr-3"
+        [text]="monthlyList[0].title"
+        [showList]="true"
+        [list]="monthlyList"
+        (textSelected)="changeSelectMonthly($event)"
+        [toolTipText]="locales.showAs"
+      >
+      </app-button-list>
+
+      <button
+        class="mr-2 btn btn-options"
+        fxLayoutAlign="center center"
+        data-toggle="modal"
+        data-target="#showModal"
+        tooltip="{{ locales.show }}"
+        placement="top"
+      >
+        {{ locales.show }}
+      </button>
+
+      <app-export-button
+        *ngIf="permissions && permissions.canDownloadExcel"
+        class="btn-list"
+        (export)="getFileSpreadsheet()"
+      ></app-export-button>
+    </app-button-more-actions>
+    <app-share-header [headers]="shareHeader" *ngIf="share"></app-share-header>
+  </app-title-header>
+  <app-filter-header
+    [listDisplay]="movementsList"
+    (displaySelected)="changeMovements($event)"
+    [share]="share || (movementsList && movementsList.length === 1)"
+    [shareFilter]="
+      shareData && shareData.scenarioLabel
+        ? shareData.scenarioLabel
+        : movementsList && movementsList.length === 1
+        ? movementsList[0].name
+        : ''
+    "
+    [shareFilterTitle]="locales.scenario"
+  >
+    <div
+      class="title-content flex-grow-1 align-items-end"
+      ngClass.lt-md="mt-3"
+      fxLayout="row"
+      fxLayout.lt-md="row"
+      fxLayoutAlign="start"
+    >
+      <app-dropdown-search
+        class="mr-3 ml-3"
+        [list]="listProfiles"
+        (searchEmitter)="searchFilter($event)"
+      ></app-dropdown-search>
+      <app-slider-controller
+        class="d-flex flex-grow-1"
+        [minValue]="100"
+        [maxValue]="200"
+        [floor]="80"
+        [ceil]="320"
+        [complement]="'%'"
+        [restoreOptions]="true"
+        [title]="locales.compareMidpoint"
+      >
+      </app-slider-controller>
+
+      <div fxHide.lt-md class="ml-3 ml-3 line" *ngIf="!share"></div>
+      <div
+        ngClass.lt-md="mb-3"
+        fxLayout="column"
+        fxLayoutAlign="space-between"
+        *ngIf="!share"
+      >
+        <div class="tiny-title">{{ locales.units }}</div>
+
+        <app-button-list-light
+          *ngIf="units"
+          text="{{ changeUnitLabel(units) }}"
+          [unitList]="units"
+          [addAllInUnit]="true"
+          [isDropUnit]="true"
+          [textAllDefautl]="
+            units && units.length > 1 ? locales.all : units ? units[0].unit : ''
+          "
+          class="btn-list"
+          (textUnitSelected)="changeSelectUnit($event)"
+        ></app-button-list-light>
+      </div>
+      <div fxHide.lt-md class="ml-3 ml-3 line" *ngIf="!share"></div>
+
+      <div class="ml-auto">
+        <div
+          ngClass.lt-md="mb-3"
+          fxLayout="column"
+          fxLayoutAlign="space-between"
+        >
+          <div class="tiny-title">{{ locales.visualization }}</div>
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between">
+            <app-button-list-visualization
+              [selected]="selectedVisualization"
+              [list]="visualizations"
+              (textSelected)="changeSelectVisualization($event)"
+            >
+            </app-button-list-visualization>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-filter-header>
+
+  <app-clear-filter
+    *ngIf="isClearFilter"
+    (clearFilters)="onClearFilter()"
+    (filters)="onFilterChecked()"
+  >
+  </app-clear-filter>
+  <div
+    class="mt-3 table-container w-100"
+    fxLayout="column"
+    *ngIf="
+      dataResult &&
+      tableClass &&
+      selectedVisualization &&
+      selectedVisualization.id === displayTypeEnum.VALUES
+    "
+  >
+    <ngx-datatable
+      class="bootstrap"
+      [rows]="dataResult"
+      [columnMode]="ColumnMode.force"
+      [ngClass]="tableClass"
+      [selectionType]="SelectionType.checkbox"
+      [headerHeight]="headerHeight"
+      [rowHeight]="rowHeight"
+      [selected]="selected"
+      [selectAllRowsOnPage]="false"
+      [scrollbarV]="true"
+      [scrollbarH]="true"
+      [loadingIndicator]="isLoading"
+      [offset]="myPage"
+      [limit]="pageLimit"
+      [messages]="{ emptyMessage: commonLocales.emptyResult }"
+      (sort)="onSort($event)"
+      [externalSorting]="true"
+      (select)="onSelect($event)"
+      (scroll)="onScroll($event.offsetY)"
+    >
+      <!-- Column Templates -->
+      <ngx-datatable-column
+        [width]="50"
+        [sortable]="false"
+        [canAutoResize]="false"
+        [draggable]="false"
+        [resizeable]="false"
+      >
+        <ng-template
+          ngx-datatable-header-template
+          let-value="value"
+          let-allRowsSelected="allRowsSelected"
+          let-selectFn="selectFn"
+        >
+          <label class="container-cb">
+            <input
+              type="checkbox"
+              id="customCheck"
+              [checked]="allRowsSelected"
+              (change)="selectFn(!allRowsSelected)"
+            />
+            <span class="checkmark"></span>
+          </label>
+        </ng-template>
+        <ng-template
+          ngx-datatable-cell-template
+          let-value="value"
+          let-isSelected="isSelected"
+          let-onCheckboxChangeFn="onCheckboxChangeFn"
+        >
+          <label class="container-cb">
+            <input
+              type="checkbox"
+              [checked]="isSelected"
+              (change)="onCheckboxChangeFn($event)"
+            />
+            <span class="checkmark-item"></span>
+          </label>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column
+        *ngFor="let item of columHeaders; let i = index"
+        name="{{ item.nickName }}"
+        prop="{{ item.columnId }}"
+        [sortable]="item.sortable"
+        [headerClass]="setClassHeader(item)"
+        [cellClass]="setClassBody(item)"
+        [width]="setColumnWidth(item)"
+      >
+        <ng-template
+          let-rowIndex="rowIndex"
+          let-row="row"
+          ngx-datatable-cell-template
+        >
+          <div
+            *ngIf="frameworkColumnsEnum.CompareMidPoint === item.columnId"
+            fxLayout="row"
+            fxLayoutAlign="center center"
+            [style]="
+              getRowResult(row, item)
+                ? styleButton(transformTextToNumber(row, item))
+                : ''
+            "
+          >
+            <div *ngIf="getRowResult(row, item)">
+              {{ getFormatValue(row, item) | number: "1.0-3" }}%
+            </div>
+          </div>
+
+          <div
+            *ngIf="frameworkColumnsEnum.CompareMidPoint !== item.columnId"
+            fxLayout="row"
+            [fxLayoutAlign]="
+              getRowResult(row, item) &&
+              (getRowResult(row, item).type === 'Double' ||
+                getRowResult(row, item).type === 'Int64' ||
+                transformText(row, item) === '-')
+                ? 'center center'
+                : 'start center'
+            "
+          >
+            <div
+              *ngIf="
+                getRowResult(row, item) &&
+                getRowResult(row, item).type === 'Double'
+              "
+              [ngClass]="
+                item.columnId !== 8 && item.columnId !== 9
+                  ? 'font-weight-bold'
+                  : ''
+              "
+            >
+              <div
+                *ngIf="
+                  transformText(row, item) !== '-' &&
+                  hoursType === hourlyBasisEnum.HourSalary
+                "
+              >
+                {{ getFormatValue(row, item) | number: "1.2-2" }}
+              </div>
+              <div
+                *ngIf="
+                  transformText(row, item) !== '-' &&
+                  hoursType !== hourlyBasisEnum.HourSalary
+                "
+              >
+                {{ getFormatValue(row, item) | number: "1.0-3" }}
+              </div>
+              <div *ngIf="transformText(row, item) === '-'">
+                {{ transformText(row, item) }}
+              </div>
+            </div>
+
+            <div
+              (click)="onLineClick(getRowResult(row, item).salaryBaseId)"
+              *ngIf="item.columnId === frameworkColumnsEnum.CurrentPosition"
+              style="cursor: pointer"
+            >
+              <span
+                [innerHTML]="transformText(row, item) | highlightsCase: query"
+              ></span>
+            </div>
+
+            <div
+              *ngIf="
+                item.columnId !== frameworkColumnsEnum.CurrentPosition &&
+                getRowResult(row, item) &&
+                getRowResult(row, item).type !== 'Double'
+              "
+            >
+              <span
+                [innerHTML]="transformText(row, item) | highlightsCase: query"
+              ></span>
+            </div>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+  <div
+    class="mt-3 table-container mr-0 ml-0"
+    fxLayout="column"
+    *ngIf="
+      selectedVisualization &&
+      selectedVisualization.id === displayTypeEnum.INTENSITY
+    "
+  >
+    <app-intensity-table
+      (scrollGetFramework)="getFramework(true)"
+      [data]="movementTable.body"
+      [minBar]="minBar"
+      [maxBar]="maxBar"
+    ></app-intensity-table>
+  </div>
+</div>
+<app-table-header-modal
+  *ngIf="movementTable && inputModalShow && permissions"
+  [inputModalShow]="inputModalShow"
+  [headerInfo]="movementTable.header"
+  (changeHeader)="changeHeaderShowCols($event)"
+  (restoreFilters)="onRestoreCols($event)"
+  (showChanges)="onShowChanges($event)"
+  (save)="saveAndShowCols($event)"
+>
+</app-table-header-modal>
+
+<app-basic-dialog-structure
+  (save)="onSendEmail()"
+  [input]="inputShareModal"
+  *ngIf="permissions && !share"
+  [hidden]="!shareURL"
+  [isShareModal]="true"
+>
+  <app-modal-share-table
+    (onChangeEmail)="onPutEmail($event)"
+    [url]="shareURL"
+  ></app-modal-share-table>
+</app-basic-dialog-structure>
+
+<app-basic-dialog-structure
+  class="help-text"
+  [input]="inputModalFramework"
+  *ngIf="permissions"
+>
+  <div
+    class="dialogFramework container-fluid"
+    fxLayout="row"
+    fxLayoutAlign="space-between stretch"
+    *ngIf="dialogFrameworkData"
+  >
+    <div class="h-100" fxLayout="column" fxLayoutAlign="center start">
+      <div
+        fxLayout="column container-fluid"
+        class="mb-3"
+        *ngFor="let item of getFirstBlockPositionInfo()"
+      >
+        <label for="">{{ item.name }}</label>
+        <div>
+          <strong *ngIf="item.value">{{ item.value }}</strong>
+          <strong *ngIf="!item.value">-</strong>
+        </div>
+      </div>
+    </div>
+    <div class="h-100" fxLayout="column" fxLayoutAlign="center start">
+      <div
+        fxLayout="column container-fluid"
+        class="mb-3"
+        *ngFor="let item of getSecondBlockPositionInfo()"
+      >
+        <label for="">{{ item.name }}</label>
+        <div for="">
+          <strong *ngIf="item.value && item.type === 'Double'">
+            {{ formatPositionValue(item) | number: "1.0-3" }}
+          </strong>
+          <strong *ngIf="item.value && item.type !== 'Double'">{{
+            item.value
+          }}</strong>
+          <strong *ngIf="!item.value">-</strong>
+        </div>
+      </div>
+    </div>
+    <div class="h-100" fxLayout="column" fxLayoutAlign="center start">
+      <div
+        fxLayout="column container-fluid"
+        class="mb-3"
+        *ngFor="let item of getThirdBlockPositionInfo()"
+      >
+        <label for="">{{ item.name }}</label>
+        <div for="">
+          <strong>
+            <strong *ngIf="item.value">
+              {{ item.value }}
+            </strong>
+            <strong *ngIf="!item.value">-</strong>
+          </strong>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="accordion mt-2" id="accordionFramework">
+    <div class="card">
+      <div
+        class="card-header"
+        id="headingOne"
+        data-toggle="collapse"
+        data-target="#collapseOne"
+        aria-expanded="true"
+        aria-controls="collapseOne"
+      >
+        <div fxLayout="column container-fluid">
+          <div fxLayout="row" class="headers">
+            <span fxFlex="50%" class="font-'proxima-nova'">{{
+              locales.positioningInfo.proposedPosition | titlecase
+            }}</span>
+            <div fxFlex="50%" fxLayoutAlign="end center">
+              <span
+                fxFlex="25%"
+                class="font-'proxima-nova' text-center"
+                *ngIf="
+                  dialogFrameworkData &&
+                  dialogFrameworkData.gsmConfig &&
+                  dialogFrameworkData.gsmConfig.visible
+                "
+                >{{ dialogFrameworkData.gsmConfig.name }}</span
+              >
+              <span fxFlex="30%" class="font-'proxima-nova' text-center">{{
+                locales.positioningInfo.comparation | titlecase
+              }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        id="collapseOne"
+        class="collapse show"
+        aria-labelledby="headingOne"
+        data-parent="#accordionFramework"
+      >
+        <hr class="my-1 line-separator" />
+        <div class="card-body" *ngIf="dialogFrameworkData">
+          <div
+            fxLayout="row"
+            class="mb-3"
+            *ngFor="let item of dialogFrameworkData.positionsSMFramework"
+          >
+            <div fxFlex="50%">
+              <div>
+                <span fxFlex="10%" class="row-item d-flex align-items-center">
+                  {{ item.type }}
+                </span>
+                <span
+                  class="font-'proxima-nova' row-item d-flex align-items-center ml-3"
+                  fxFlex="90%"
+                >
+                  {{ item.position }}
+                </span>
+              </div>
+            </div>
+            <div fxFlex="50%" fxLayoutAlign="end center">
+              <span
+                fxFlex="25%"
+                class="font-'proxima-nova' text-center"
+                *ngIf="
+                  dialogFrameworkData &&
+                  dialogFrameworkData.gsmConfig &&
+                  dialogFrameworkData.gsmConfig.visible
+                "
+                >{{ item.gsm }}</span
+              >
+              <span
+                fxFlex="30%"
+                class="font-'proxima-nova' text-center border-0 rounded align-items-center row-item d-grid"
+                [style]="styleButton(item.compare)"
+                >{{ item.compare }}%</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-basic-dialog-structure>

@@ -1,0 +1,109 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: $size54;
+  height: $size30;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $white 0% 0% no-repeat padding-box;
+  border: $size1 solid #898989;
+  border-radius: $size25;
+  opacity: 1;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: $size24;
+  width: $size24;
+  left: $size2;
+  bottom: $size2;
+  background: $gradient-gray;
+  box-shadow: $size0 $size2 $size6 $gray-box-shadow-00;
+
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px $green46;
+}
+input:checked + .slider {
+  border: 1px solid $orange-f6;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX($size24);
+  -ms-transform: translateX($size24);
+  transform: translateX($size24);
+  background: $orange-gradient;
+  box-shadow: $size0 $size2 $size6 $gray-box-shadow-00;
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: $size34;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+label {
+  margin: 0;
+}
+
+input:checked + .slider-blue {
+  border: $size1 solid $blue-277;
+}
+input:checked + .slider-blue:before {
+  -webkit-transform: translateX($size24);
+  -ms-transform: translateX($size24);
+  transform: translateX($size24);
+  background: $blue-277 0% 0% no-repeat padding-box;
+
+  box-shadow: $size0 $size2 $size6 $shadow;
+}
+
+input:checked + .slider-red {
+  border: $size1 solid $red-be5;
+}
+input:checked + .slider-red:before {
+  -webkit-transform: translateX($size24);
+  -ms-transform: translateX($size24);
+  transform: translateX($size24);
+  background: $red-be5 0% 0% no-repeat padding-box;
+  box-shadow: $size0 $size2 $size6 $shadow;
+}
+
+input:checked + .slider-green {
+  border: 0.800000011920929px solid $green-369;
+}
+input:checked + .slider-green:before {
+  -webkit-transform: translateX($size24);
+  -ms-transform: translateX($size24);
+  transform: translateX($size24);
+  background: $green-369 0% 0% no-repeat padding-box;
+
+  box-shadow: $size0 $size2 $size6 $shadow;
+}

@@ -1,0 +1,32 @@
+export enum Modules {
+  home = 1,
+  dashboard = 2,
+  tableSalary = 3,
+  positions = 4,
+  positioning = 5,
+  myReports = 6,
+  parameters = 7,
+  studiesPublications = 8,
+}
+
+export enum SubModules {
+  none = 0,
+  scheduleContact = 1,
+  chat = 2,
+  positionList = 3,
+  positionMap = 4,
+  framework = 5,
+  financialImpact = 6,
+  comparativeAnalysis = 7,
+  distributionAnalysis = 8,
+  movement = 9,
+  levels = 10,
+  salaryStrategy = 11,
+  hourlyBasis = 12,
+  corporateSettings = 13,
+  users = 14,
+  globalLabels = 15,
+  displayConfiguration = 16,
+  lobbu = 17,
+  positionTrack = 18,
+}

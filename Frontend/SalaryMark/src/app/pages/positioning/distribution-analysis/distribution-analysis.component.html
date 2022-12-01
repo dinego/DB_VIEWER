@@ -1,0 +1,148 @@
+<div class="financial-impact-container container-fluid mt-0">
+  <app-title-header [title]="locales.distributionAnalysis.toLocaleUpperCase()">
+    <app-button-more-actions
+      *ngIf="!share"
+      [isMore]="true"
+      [isShare]="permissions && permissions.canShare"
+      [isHelp]="false"
+      idModal="shareModal"
+      (onShareClick)="getShareKey()"
+    >
+      <button
+        class="ml-1 btn btn-show"
+        fxLayoutAlign="center center"
+        data-toggle="modal"
+        data-target="#checkedShowModal"
+      >
+        {{ locales.show }}
+      </button>
+      <app-export-button
+        (click)="
+          selectedVisualization.id === displayTypesEnum.TABLE
+            ? exportCSV()
+            : exportImage()
+        "
+      ></app-export-button>
+    </app-button-more-actions>
+    <app-share-header [headers]="shareHeader" *ngIf="share"></app-share-header>
+  </app-title-header>
+
+  <app-filter-header
+    [share]="share"
+    [listTables]="displayByList"
+    (tableSelected)="changeDisplayBy($event)"
+    [shareFilterTitle]="locales.showTo"
+    [shareFilter]="
+      getDistributionAnalysisChart?.share &&
+      getDistributionAnalysisChart.share.displayBy
+    "
+    [isSpacedBetween]="false"
+  >
+    <div fxLayout.lt-md="row" fxLayout="row" fxLayoutAlign="start start">
+      <div *ngIf="!share" fxHide.lt-md class="ml-3 ml-3 line"></div>
+      <div ngClass.lt-md="mb-3" fxLayout="column" fxLayoutAlign="space-between">
+        <div *ngIf="!share" class="tiny-title">{{ commonLocales.units }}</div>
+        <app-button-list-light
+          *ngIf="units"
+          text="{{ changeUnitLabel(units) }}"
+          [textAllDefautl]="
+            units && units.length > 1 ? locales.all : units ? units[0].unit : ''
+          "
+          [isDropUnit]="true"
+          [unitList]="units"
+          [addAllInUnit]="true"
+          (textUnitSelected)="changeUnits($event)"
+          class="mt-1 btn-list"
+        ></app-button-list-light>
+      </div>
+      <div *ngIf="!share" fxHide.lt-md class="ml-3 ml-3 line"></div>
+      <div ngClass.lt-md="mb-3" fxLayout="column" fxLayoutAlign="space-between">
+        <div *ngIf="!share" class="tiny-title">
+          {{ commonLocales.scenario }}
+        </div>
+        <app-button-list-light
+          *ngIf="movementsList"
+          [text]="movementsList[0].title"
+          [list]="movementsList"
+          [showList]="true"
+          (textSelected)="changeMovements($event)"
+          class="mt-1 btn-list"
+        ></app-button-list-light>
+      </div>
+    </div>
+
+    <div class="ml-auto">
+      <div
+        ngClass.lt-md="mb-3"
+        class="left-separator ml-3"
+        fxLayout="column"
+        fxLayoutAlign="space-between"
+      >
+        <div class="tiny-title">{{ locales.visualization }}</div>
+        <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between">
+          <app-button-list-visualization
+            [list]="listVisualization"
+            [selected]="selectedVisualization"
+            (textSelected)="changeVisualization($event)"
+          >
+          </app-button-list-visualization>
+        </div>
+      </div>
+    </div>
+  </app-filter-header>
+
+  <div class="mt-3 mb-5 card py-3">
+    <app-distribution-analysis-chart
+      *ngIf="
+        distributionAnalysisCopyChart &&
+        chartHeight &&
+        selectedVisualization.id !== displayTypesEnum.TABLE
+      "
+      [typeVisualization]="
+        selectedVisualization.id === displayTypesEnum.BAR ? 'bar' : 'column'
+      "
+      [height]="chartHeight"
+      [valuesDistributionAnalysisChart]="distributionAnalysisCopyChart.chart"
+    ></app-distribution-analysis-chart>
+    <app-distribution-analysis-table
+      *ngIf="
+        displayBy &&
+        displayByList &&
+        distributionAnalysisCopyChart &&
+        selectedVisualization.id === displayTypesEnum.TABLE
+      "
+      [filterText]="getSelectedTable()"
+      [data]="distributionAnalysisCopyChart"
+      (rowItemsOut)="rowItemsMixed($event)"
+    ></app-distribution-analysis-table>
+  </div>
+</div>
+
+<app-checkebox-show-dialog
+  *ngIf="
+    permissions &&
+    !share &&
+    inputCheckedBoxShowModal &&
+    checkedShow &&
+    checkedShow.length > 0
+  "
+  [checkedShow]="checkedShow"
+  [inputModalShow]="inputCheckedBoxShowModal"
+  (sendChecked)="changeCheckedGraph($event)"
+>
+</app-checkebox-show-dialog>
+
+<app-basic-dialog-structure
+  *ngIf="permissions && !share"
+  [hidden]="!shareURL"
+  [input]="inputShareModal"
+  (save)="onSendEmail()"
+  [isShareModal]="true"
+>
+  <app-modal-share-table
+    [url]="shareURL"
+    (onChangeEmail)="onPutEmail($event)"
+    *ngIf="permissions && !share"
+  >
+  </app-modal-share-table>
+</app-basic-dialog-structure>

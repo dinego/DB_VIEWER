@@ -1,0 +1,17 @@
+<div class="table-header-container" fxLayout="row" fxLayoutAlign="space-between center"
+  [ngClass.gt-lg]="{ 'full-size': true }">
+  <div fxLayoutAlign="center" class="check-all-container">
+    <div type="checkbox" class="check-all">
+      <input #inputSalaryAll type="checkbox" (change)="filterAll($event.target.checked)" />
+      <div class="{{ isActive ? 'check-block' : '' }}">
+        <span class="{{ isActive ? 'check-active' : '' }}"></span>
+      </div>
+    </div>
+  </div>
+  <div class="items" [ngClass.gt-lg]="{ 'full-size': true }" fxLayout="row" fxLayoutAlign="center"
+    *ngFor="let item of getHeadersFilter()">
+    <label>
+      {{ item.value }}
+    </label>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.set-height {
+  height: 64vh !important;
+}
+
+.margin-by-size-percent {
+  margin-right: $size63;
+}
+
+::ng-deep.table-container {
+  overflow-y: hidden !important;
+}
+
+.custom-style {
+  & > thead {
+    & > tr {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      & > th {
+        font-weight: 500;
+        background: transparent
+          linear-gradient(180deg, #646464 0%, #868686 100%) 0% 0% no-repeat
+          padding-box;
+        color: white;
+        &:last-child {
+          background: #dddddd 0% 0% no-repeat padding-box;
+          color: #404040;
+        }
+        & > .fas {
+          cursor: pointer;
+          opacity: 0.5;
+          font-size: 10px;
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+  & > tbody {
+    & > tr {
+      & > td {
+        padding: $remSize04 $remSize1;
+        color: $black-1f;
+        opacity: 1;
+      }
+    }
+  }
+}

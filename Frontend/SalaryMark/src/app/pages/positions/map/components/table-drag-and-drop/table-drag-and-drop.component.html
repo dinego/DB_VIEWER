@@ -1,0 +1,91 @@
+<div class="scrollable-area">
+  <table class="table table-striped">
+    <thead>
+      <th *ngFor="let item of header">
+        {{ item.colName }}
+      </th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let items of rows; let rowIndex = index">
+        <ng-container *ngFor="let draggable of items; let i = index">
+          <td>
+            <ng-container *ngIf="editable && i > 0; else notDrag">
+              <div
+                dndDropzone
+                (dndDragover)="onDragover($event)"
+                (dndDrop)="onDrop($event, draggable, rowIndex)"
+                class="drag-area d-flex flex-column align-items-start"
+              >
+                <div class="placeholder-drag" dndPlaceholderRef></div>
+
+                <div
+                  *ngFor="let data of draggable.data; let indexRemove = index"
+                  [dndDraggable]="data"
+                  [dndEffectAllowed]="draggable.effectAllowed"
+                  [dndDisableIf]="draggable.disable"
+                  (dndStart)="onDragStart($event)"
+                  (dndMoved)="onDragged(draggable, rowIndex, data, 'move')"
+                  (dndCanceled)="onDragged(draggable, rowIndex, data, 'none')"
+                  (dndEnd)="onDragEnd($event)"
+                  class="d-flex"
+                >
+                  <div *ngIf="draggable.handle" dndHandle></div>
+                  <span [hidden]="!draggable.disable"></span>
+
+                  <div
+                    class="
+                      text-drag
+                      active
+                      pl-2
+                      mb-1
+                      d-flex
+                      justify-content-between
+                    "
+                  >
+                    <div [innerHTML]="data.value | highlightsCase: query"></div>
+                    <div class="icons ml-1">
+                      <img
+                        src="../../../../../../assets/imgs/svg/move-icon.svg"
+                        class="mr-1"
+                      />
+                      <img
+                        src="../../../../../../assets/imgs/svg/delete-icon-sm.svg"
+                        class="delete-icon"
+                        (click)="removeItemColRow(i, rowIndex, indexRemove)"
+                        [tooltip]="'Remover cargo'"
+                        [placement]="'bottom'"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #notDrag>
+              <div *ngFor="let data of draggable.data" class="d-flex">
+                <div
+                  [ngClass]="{ 'hover text-drag': i > 0 }"
+                  class="px-3 mb-1"
+                  (click)="i === 0 ? clickItem(data) : $event.preventDefault()"
+                >
+                  <div [innerHTML]="data.value | highlightsCase: query"></div>
+                </div>
+              </div>
+            </ng-template>
+          </td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="d-flex flex-row justify-content-center mt-3" *ngIf="editable">
+  <app-button-secundary
+    [label]="'Cancelar'"
+    (click)="clickCancel()"
+  ></app-button-secundary>
+  <app-button-primary
+    class="ml-3"
+    [label]="'Salvar'"
+    (click)="clickSave()"
+  ></app-button-primary>
+</div>

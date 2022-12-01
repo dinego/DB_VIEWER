@@ -1,0 +1,26 @@
+<div ngClass.lt-md="mb-2" fxLayout="d-flex flex-wrap">
+  <div *ngFor="let item of headers" class="mr-2 d-flex align-items-center">
+    <div>
+      <label class="header-label text-nowrap mr-1" for="lbl">
+        {{ item.label }}:
+      </label>
+    </div>
+
+    <div class="mr-2">
+      <label
+        class="header-value text-nowrap"
+        id="lbl"
+        *ngIf="item.type === 'date'"
+      >
+        {{ item.value | date: "dd/MM/yyyy" }}
+      </label>
+      <label
+        class="header-value text-nowrap"
+        id="lbl"
+        *ngIf="item.type !== 'date'"
+      >
+        {{ item.value }}
+      </label>
+    </div>
+  </div>
+</div>

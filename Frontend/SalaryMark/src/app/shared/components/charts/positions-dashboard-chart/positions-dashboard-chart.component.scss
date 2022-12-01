@@ -1,0 +1,8 @@
+::ng-deep .highcharts-tooltip span {
+  height: 50x;
+  width: 90px;
+  white-space: normal !important;
+}
+:host::ng-deep .highcharts-legend .highcharts-color-1 {
+  display: none;
+}

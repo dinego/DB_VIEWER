@@ -1,0 +1,75 @@
+<div class="header-img" fxLayoutAlign="end flex-end">
+  <div>{{ locales.positioning }}</div>
+</div>
+<h5 class="title">{{ locales.definition }}</h5>
+<div fxLayout="row" fxLayoutAlign="center" fxLayout.lt-sm="column-reverse">
+  <div fxLayout="column" fxFlex.gt-lg="80%" fxFlex="70%" fxFlex.sm="60%" class="dv-content">
+    <h5 class="title-mobile">Definição</h5>
+    <div class="body">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ locales.paragraph1 }}</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ locales.paragraph2 }}</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ locales.paragraph3 }}</p>
+    </div>
+  </div>
+  <div class="separator"></div>
+  <div fxLayout="column" fxFlex.gt-lg="20%" fxFlex="30%" fxFlex.sm="40%" class="btn-content">
+    <div class="margin-list" fxLayout="column" fxLayoutAlign="center center" *ngIf="canAccess(subModules.framework)">
+      <button class="btn btn-default" [routerLink]="[
+          routerNames.POSITIONING.SETTINGS,
+          routerNames.POSITIONING.FRAMEWORK
+        ]">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span>{{ locales.framework }}</span>
+          <img src="../../assets/imgs/svg/graph_white.svg" alt="" />
+        </div>
+      </button>
+    </div>
+    <div class="margin-list" fxLayout="column" fxLayoutAlign="center center"
+      *ngIf="canAccess(subModules.financialImpact)">
+      <button class="btn btn-default" [routerLink]="[
+          routerNames.POSITIONING.SETTINGS,
+          routerNames.POSITIONING.FINANCIAL_IMPACT
+        ]">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span>{{ locales.financialImpact }}</span>
+          <img src="../../assets/imgs/svg/impacto_financeiro_white.svg" alt="" />
+        </div>
+      </button>
+    </div>
+    <div class="margin-list" fxLayout="column" fxLayoutAlign="center center"
+      *ngIf="canAccess(subModules.comparativeAnalysis)">
+      <button class="btn btn-default" [routerLink]="[
+          routerNames.POSITIONING.SETTINGS,
+          routerNames.POSITIONING.COMPARATIVE_ANALYSIS
+        ]">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span>{{ locales.comparativeAnalysis }}</span>
+          <img src="../../assets/imgs/svg/analise_comparativa.svg" alt="" />
+        </div>
+      </button>
+    </div>
+    <div class="margin-list" fxLayout="column" fxLayoutAlign="center center"
+      *ngIf="canAccess(subModules.distributionAnalysis)">
+      <button class="btn btn-default" [routerLink]="[
+          routerNames.POSITIONING.SETTINGS,
+          routerNames.POSITIONING.DISTRIBUTION_ANALYSIS
+        ]">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span>{{ locales.distributionAnalysis }}</span>
+          <img src="../../assets/imgs/svg/diagram.svg" alt="" />
+        </div>
+      </button>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center center" *ngIf="canAccess(subModules.movement)">
+      <button class="btn btn-default" [routerLink]="[
+          routerNames.POSITIONING.SETTINGS,
+          routerNames.POSITIONING.PROPOSED_MOVEMENTS
+        ]">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span>{{ locales.proposedMovements }}</span>
+          <img src="../../assets/imgs/svg/meeting-point_white.svg" alt="" />
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

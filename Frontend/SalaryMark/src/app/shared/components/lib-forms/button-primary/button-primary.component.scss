@@ -1,0 +1,33 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+@import "src/app/shared/styles/timings.scss";
+
+.button-primary {
+  cursor: pointer;
+  background-color: $orange-f2;
+  box-shadow: $size0 $size2 $size6 $shadow;
+  border-radius: $size2;
+  height: $size39;
+  font-size: $size14;
+  color: $white;
+  border: 0;
+  -webkit-transition: background-color $transition ease-out;
+  -moz-transition: background-color $transition ease-out;
+  -o-transition: background-color $transition ease-out;
+  transition: background-color $transition ease-out;
+  &:hover {
+    background-color: $orange-f7;
+  }
+  &:focus {
+    outline: 0;
+  }
+
+  &.disabled {
+    background: $gray-b4 0% 0% no-repeat padding-box;
+    cursor: not-allowed;
+  }
+}
+.button-primary:not(:disabled):not(.disabled):active:focus,
+.show > .button-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0 transparent;
+}

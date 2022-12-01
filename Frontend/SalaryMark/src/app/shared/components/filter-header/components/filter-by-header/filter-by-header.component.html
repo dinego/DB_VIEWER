@@ -1,0 +1,68 @@
+<div
+  *ngIf="
+    (!share && listDisplay && listDisplay.length > 0) ||
+    (listTables && listTables.length > 0)
+  "
+  class="title-content dropdown mr-3"
+  fxLayout="column"
+  fxLayoutAlign="space-between"
+>
+  <div *ngIf="(listDisplay || listTables) && showLabel" class="tiny-title mb-2">
+    {{ shareFilterTitle }}
+  </div>
+  <div
+    *ngIf="
+      (listDisplay && listDisplay.length > 0) ||
+      (listTables && listTables.length > 0)
+    "
+    class="super-title"
+    id="dropdownMenuTable"
+    data-toggle="dropdown"
+  >
+    <span class="fas fa-align-right fa-rotate-180" aria-hidden="true"></span>
+    <div class="table-title">
+      {{
+        (selectedLocal && selectedLocal.title) ||
+          selectedItem ||
+          (listDisplay.length && listDisplay[0].name) ||
+          (listTables.length && listTables[0].title)
+      }}
+    </div>
+  </div>
+  <div
+    *ngIf="listTables && listTables.length > 0"
+    class="dropdown-menu item-menu-list-table"
+    aria-labelledby="dropdownMenuTable"
+  >
+    <span
+      [ngClass]="{
+        'btn-table-selected':
+          (!selectedItem &&
+            listTables.length > 0 &&
+            listTables[0].title === item.title) ||
+          (selectedItem && item.title === selectedItem)
+      }"
+      *ngFor="let item of listTables"
+      (click)="changeTable(item)"
+      class="dropdown-item p-2"
+    >
+      {{ item.title }}
+    </span>
+  </div>
+
+  <div
+    *ngIf="listDisplay && listDisplay.length > 0"
+    class="dropdown-menu item-menu-list-table"
+    aria-labelledby="dropdownMenuTable"
+  >
+    <button
+      class="dropdown-item {{
+        item.name === selectedItem ? 'btn-table-selected' : 'btn-table'
+      }}"
+      *ngFor="let item of listDisplay"
+      (click)="changeDisplay(item)"
+    >
+      {{ item.name }}
+    </button>
+  </div>
+</div>

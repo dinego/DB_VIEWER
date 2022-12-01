@@ -1,0 +1,244 @@
+<div class="modal-control p-3">
+  <div class="header-control d-flex justify-content-between">
+    <div class="header-title d-flex align-items-center">
+      <img src="../../../../../assets/imgs/svg/add-square.svg" class="mr-2" />
+      <span class="title-modal">Adicionar Cargo</span>
+    </div>
+    <div class="close btn-close">
+      <img
+        src="../../../../../assets/imgs/svg/close-modal.svg"
+        (click)="bsModalRef.hide()"
+      />
+    </div>
+  </div>
+  <ng-container *ngIf="errorList.length > 0">
+    <app-error-message
+      *ngFor="let error of errorList"
+      [error]="error && error.message ? error.message : null"
+    ></app-error-message>
+  </ng-container>
+  <hr />
+  <div class="errors-control"></div>
+  <form (ngSubmit)="save()" *ngIf="form" [formGroup]="form">
+    <tabset>
+      <tab heading="Detalhes do Cargo" id="tab1">
+        <div class="body-control">
+          <div class="d-flex card-position p-3">
+            <div
+              class="d-flex flex-column position-sm col-4 p-0"
+              [ngClass]="{
+                'has-error': form.controls.positionSm.invalid
+              }"
+            >
+              <label for="positionSm">Cargo SalaryMark *</label>
+              <input
+                type="text"
+                class="form-control input"
+                formControlName="positionSm"
+              />
+            </div>
+            <div
+              class="d-flex flex-column position-sm col-3"
+              [ngClass]="{
+                'has-error': form.controls.positionIdByLibrary.invalid
+              }"
+            >
+              <label for="positionIdByLibrary">Biblioteca SalaryMark</label>
+              <app-button-list-light
+                [list]="librarySm"
+                [text]="'Selecione'"
+                (textSelected)="setLibrarySm($event)"
+              ></app-button-list-light>
+              <input
+                hidden
+                type="number"
+                formControlName="positionIdByLibrary"
+              />
+            </div>
+            <div
+              class="d-flex flex-column position-sm col-2 p-0"
+              [ngClass]="{
+                'has-error': form.controls.levelId.invalid
+              }"
+            >
+              <label for="levelId">Nível</label>
+              <app-button-list-light
+                [list]="levels"
+                [text]="'Selecione'"
+                (textSelected)="setLevels($event)"
+              ></app-button-list-light>
+              <input hidden type="number" formControlName="levelId" />
+            </div>
+            <div
+              class="d-flex flex-column position-sm col-2 pr-0"
+              [ngClass]="{
+                'has-error': form.controls.groupId.invalid
+              }"
+            >
+              <label for="groupId">Perfil</label>
+              <app-button-list-light
+                [list]="profiles"
+                [text]="'Selecione'"
+                (textSelected)="setProfile($event)"
+              ></app-button-list-light>
+              <input hidden type="number" formControlName="groupId" />
+            </div>
+          </div>
+          <div class="controller-parameters mt-3">
+            <div
+              class="d-flex card-position flex-column p-3 mb-3"
+              formArrayName="parameters"
+              *ngFor="let item of positionSm.parameters; let i = index"
+            >
+              <div
+                class="position-sm w-25"
+                [formGroupName]="i"
+                [ngClass]="{
+                  'has-error':
+                    form.controls.parameters['controls'][i]['controls'][
+                      'paramSelectedId'
+                    ]['invalid']
+                }"
+              >
+                <input type="text" hidden formControlName="paramSelectedId" />
+
+                <label for="parameter">{{ item.parameter }}</label>
+                <app-button-list-light
+                  [groupName]="i"
+                  [text]="
+                    form.controls.parameters['controls'][i]['controls'][
+                      'paramSelectedId'
+                    ]['invalid']
+                      ? 'Selecione'
+                      : getLabelParameterSelected(
+                          i,
+                          form.controls.parameters['controls'][i]['controls'][
+                            'paramSelectedId'
+                          ]['value']
+                        )
+                  "
+                  class="items-parameters w-25"
+                  [list]="listParam"
+                  (paramSelected)="setParameterGroup($event)"
+                ></app-button-list-light>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Tabela Salarial">
+        <div class="table-positions">
+          <table class="table table-striped">
+            <thead>
+              <tr class="fixed-tr">
+                <th>Tabela</th>
+                <th>Unidade</th>
+                <th>GSM</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container
+                formArrayName="tables"
+                *ngFor="let table of positionSm.tables; let iTables = index"
+              >
+                <tr
+                  [formGroupName]="iTables"
+                  *ngIf="
+                    form.controls &&
+                    form.controls.tables['controls'] &&
+                    form.controls.tables['controls'][iTables]
+                  "
+                >
+                  <td
+                    class="align-middle"
+                    [ngClass]="{
+                      'has-error':
+                        form.controls &&
+                        form.controls.tables['controls'] &&
+                        form.controls.tables['controls'][iTables] &&
+                        form.controls.tables['controls'][iTables]['controls'][
+                          'posTableId'
+                        ].invalid
+                    }"
+                  >
+                    <input type="text" hidden formControlName="posTableId" />
+                    <app-button-list-loop-light
+                      class="d-inline-flex"
+                      [list]="salaryTables"
+                      [index]="iTables"
+                      (itemSelected)="setLoopValue($event, 'posTableId')"
+                      [placeholder]="'Tabela Salarial'"
+                    ></app-button-list-loop-light>
+                  </td>
+                  <td
+                    class="align-middle"
+                    [ngClass]="{
+                      'has-error':
+                        form.controls.tables['controls'][iTables]['controls'][
+                          'posUnitId'
+                        ].invalid
+                    }"
+                  >
+                    <input type="text" hidden formControlName="posUnitId" />
+                    <app-button-list-loop-light
+                      class="d-inline-flex"
+                      [list]="units"
+                      [index]="iTables"
+                      (itemSelected)="setLoopValue($event, 'posUnitId')"
+                      [placeholder]="'Unidade'"
+                      [text]="table.unitId"
+                    ></app-button-list-loop-light>
+                  </td>
+                  <td
+                    class="align-middle"
+                    [ngClass]="{
+                      'has-error':
+                        form.controls.tables['controls'][iTables]['controls'][
+                          'gsm'
+                        ].invalid
+                    }"
+                  >
+                    <input type="text" hidden formControlName="gsm" />
+                    <app-button-list-loop-light
+                      class="d-inline-flex"
+                      [list]="gsms"
+                      [index]="iTables"
+                      (itemSelected)="setLoopValue($event, 'gsm')"
+                      [placeholder]="'GSM'"
+                      [text]="table.gsm"
+                    ></app-button-list-loop-light>
+                  </td>
+                  <td width="60">
+                    <img
+                      src="../../../../assets/imgs/svg/delete.svg"
+                      class="remove-table"
+                      (click)="removeLineRable(iTables)"
+                    />
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+        <img
+          class="pointer-img"
+          src="../../../../assets/imgs/svg/add-circle.svg"
+          (click)="addEmpyLinePosition()"
+        />
+      </tab>
+    </tabset>
+    <div class="buttons-modal d-flex justify-content-center">
+      <app-button-secundary
+        aria-label="Close"
+        (click)="bsModalRef.hide()"
+        [label]="'Cancelar'"
+        class="mr-3"
+      ></app-button-secundary>
+      <app-button-primary
+        [label]="'Salvar'"
+        (click)="save(); $event.preventDefault()"
+      ></app-button-primary>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,72 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.positioning-nav-header-container {
+  margin-top: $size8;
+}
+
+.logo {
+  margin-left: $remSize1;
+}
+
+.activated-route {
+  .logo {
+    filter: brightness(0) invert(1);
+  }
+
+  &.btn-default {
+    padding-right: $size17;
+    padding-left: $size17;
+    height: $size35;
+    font-weight: 500;
+    background-color: $orange-button;
+    color: $white !important;
+    border: 0;
+  }
+}
+
+.btn-default {
+  background: transparent 0% 0% no-repeat padding-box;
+  border-radius: $size57;
+  border-color: $orange-button;
+  opacity: 1;
+  color: $orange-button !important;
+  height: $size33;
+  padding: 0 $remSize1;
+  text-align: left;
+  letter-spacing: $size0;
+  opacity: 1;
+  font-size: $size14;
+  height: $size33;
+  font-weight: 500;
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &:hover {
+    padding-right: $size17;
+    padding-left: $size17;
+    font-size: $size14;
+    background-color: $orange-button;
+    color: $white !important;
+    border: 0;
+    height: $size35;
+    font-weight: 500;
+
+    .logo {
+      filter: brightness(0) invert(1);
+    }
+  }
+}
+
+.btn-area {
+  margin-right: $remSize075;
+  margin-bottom: $remSize075;
+}
+
+@media only screen and (max-width: $screen-mobile-large) {
+  .btn-content {
+    margin-top: $remSize2;
+  }
+}

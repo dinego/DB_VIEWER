@@ -1,0 +1,100 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.modal-show-as-container {
+  height: $size300;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: $size10;
+  }
+  .input-container {
+    width: $fullSize;
+
+    input {
+      border: none;
+      border-bottom: $size1 solid $gray-ac;
+
+      font-size: $remSize075;
+      outline: 0;
+      padding: $size5;
+      width: $fullSize;
+    }
+
+    input:focus {
+      border-bottom: $size1 solid $black;
+    }
+
+    input::placeholder {
+      color: $black;
+
+      font-size: $remSize075;
+    }
+  }
+
+  .text-description {
+    border: $size1 solid $gray-ac;
+    border-radius: $size10;
+
+    font-size: $remSize08;
+    outline: 0;
+
+    .text-description::placeholder {
+      color: $gray-84;
+    }
+  }
+
+  .sub-title {
+    color: $black;
+
+    font-size: $remSize085;
+  }
+  .btn-cancel {
+    color: $black-231f;
+
+    font-size: $remSize08;
+  }
+
+  .btn-save {
+    background-color: $orange-button;
+    color: $white;
+
+    font-size: $remSize08;
+  }
+}
+
+.copy-link-access {
+  background-color: $gray-ee;
+  font-weight: bold;
+}
+
+.avatar {
+  width: $remSize4_37;
+  height: $remSize4_37;
+}
+
+.avatar-default {
+  padding-top: $remSize05;
+  font-size: $remSize3;
+  background-color: $green-24;
+  color: $white;
+  margin-left: 0;
+}
+
+.bottom-separator {
+  border-bottom: 1px solid $gray-ee;
+}
+
+.btn-show-modal {
+  color: $orange-f0;
+  background: $white 0% 0% no-repeat padding-box;
+  border: $size1 solid $orange-f0;
+  text-transform: capitalize;
+  font-size: $size14;
+  width: $size46;
+  height: $size39;
+  opacity: 1;
+
+  img {
+    margin-left: $size15;
+  }
+}

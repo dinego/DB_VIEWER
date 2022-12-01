@@ -1,0 +1,83 @@
+<div
+  #scrollTable
+  [ngClass]="tableClass"
+  class="table-responsive set-height"
+  infiniteScroll
+  (scrolled)="onScrollDown()"
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  [scrollWindow]="false"
+  (scroll)="onScroll($event)"
+>
+  <table
+    class="table table-striped custom-style"
+    #tableIntensity
+    *ngIf="dataRefactory"
+  >
+    <thead #headTable>
+      <tr>
+        <th>Unidade <i class="fas fa-sort"></i></th>
+        <th>Cargo Interno <i class="fas fa-sort"></i></th>
+        <th>Func. ID <i class="fas fa-sort"></i></th>
+        <th>Salário</th>
+        <th width="50%" class="text-center">
+          <span class="margin-by-size-percent" #basePercent
+            >{{ baseMid }}%</span
+          >
+        </th>
+      </tr>
+    </thead>
+    <tbody #bodyTable>
+      <tr *ngFor="let items of dataRefactory">
+        <ng-container *ngFor="let item of items">
+          <td
+            class="align-middle"
+            [ngClass]="{
+              'text-center':
+                item.colPos === frameworkTableColsEnum.PositionId ||
+                item.colPos === frameworkTableColsEnum.Salary
+            }"
+          >
+            <ng-container
+              *ngIf="
+                item.colPos === frameworkTableColsEnum.Unit ||
+                item.colPos === frameworkTableColsEnum.Position ||
+                item.colPos === frameworkTableColsEnum.Salary ||
+                item.colPos === frameworkTableColsEnum.PositionId
+              "
+            >
+              <span
+                *ngIf="
+                  item.colPos === frameworkTableColsEnum.Salary;
+                  else descriptions
+                "
+              >
+                {{ item.value | number: "1.0-3" }}
+              </span>
+              <ng-template #descriptions>
+                <span [innerHTML]="item.value | highlightsCase: query"></span>
+              </ng-template>
+            </ng-container>
+
+            <ng-container
+              *ngIf="item.colPos === frameworkTableColsEnum.Percent"
+            >
+              <div class="d-flex flex-row">
+                <app-intensity-bar
+                  [min]="minBar"
+                  [max]="maxBar"
+                  [percent]="item.value"
+                  class="d-flex flex-grow-1 align-items-center"
+                ></app-intensity-bar>
+                <app-intensity-percent
+                  [percent]="item.value"
+                  class="p-0 d-flex align-items-center"
+                ></app-intensity-percent>
+              </div>
+            </ng-container>
+          </td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
+</div>

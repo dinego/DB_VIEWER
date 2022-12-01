@@ -1,0 +1,127 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.button-list-light-container {
+  border: $size1 solid $border-orange;
+  border-radius: $size2;
+  position: relative;
+  height: $size35;
+  width: $size130;
+  display: flex;
+  background-color: $white;
+  align-items: center;
+  cursor: pointer;
+
+  &.disabled {
+    background: $gray-eae;
+    border: $size1 solid $gray-a5;
+    border-radius: $size2;
+    opacity: 1;
+  }
+  & > .dropdown-menu {
+    padding: 0;
+    overflow-y: auto;
+    max-height: $size232;
+  }
+  .arrow-icon {
+    height: $size31;
+    min-width: $size31;
+    max-width: $size31;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    border-radius: $size2;
+    & > i {
+      height: $size20;
+    }
+  }
+  .btn-options-light {
+    color: $gray-8f;
+    font-size: $size14;
+    opacity: 1;
+    width: 100%;
+    white-space: nowrap;
+    cursor: pointer;
+    label {
+      cursor: pointer;
+      white-space: break-spaces;
+    }
+  }
+  .btn-options-light:focus {
+    outline: 0;
+    white-space: nowrap;
+    box-shadow: none;
+  }
+}
+
+.item-list-menu-light {
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    border-radius: $size2;
+    font-size: $size14;
+    padding: $size5 $size10;
+    border-bottom: $size1 solid $border-gray;
+    min-height: $size35;
+    &:last-child {
+      border-bottom: 0;
+    }
+    &:hover {
+      background-color: $gray-ed;
+    }
+    & > .item {
+      font-size: $size14;
+    }
+    & > .selected {
+      color: $orange-f7;
+      font-weight: 600;
+    }
+  }
+}
+
+.reset-padding {
+  padding: 0 !important;
+  &:hover {
+    background-color: white !important;
+  }
+
+  & > .search-filter {
+    min-height: $size35;
+    background-image: url("../../../../assets/imgs/svg/search-icon.svg");
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-size: $size20;
+    background-position-y: center;
+    padding-right: $size20;
+    padding-left: $size10;
+    margin-right: $size5;
+    border: 0;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.text-size {
+  font-size: $size14;
+}
+.text-ellipsis {
+  width: 100%;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: $size6;
+  margin-left: $size3;
+}
+.rotate {
+  transform: rotate(180deg);
+}
+.placeholder {
+  color: $gray-8f;
+}
+
+.is-drop-unit {
+  width: $size170 !important;
+}

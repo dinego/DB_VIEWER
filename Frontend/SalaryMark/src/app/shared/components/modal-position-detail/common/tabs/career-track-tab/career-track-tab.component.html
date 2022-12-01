@@ -1,0 +1,79 @@
+<div class="container-tracker mt-3" *ngIf="careerTrack">
+  <div class="tracker-graph row mx-0">
+    <div
+      class="track-position-root d-flex flex-column w-100"
+      *ngFor="let parameter of copyCareerTrackParameters; let paraIndex = index"
+    >
+      <div class="row mx-3" *ngIf="parameter.parametersInner.length > 0">
+        <div
+          class="track-item {{
+            getClassDivisorParameters(parameter.parametersInner.length)
+          }} p-0"
+          *ngFor="
+            let inner of parameter.parametersInner;
+            let innerIndex = index
+          "
+        >
+          <ng-container
+            *ngFor="let related of inner.positionsRelated; let i = index"
+          >
+            <app-dropdown-item-tracker
+              class="d-flex"
+              [position]="related"
+              [editable]="editable"
+              [isLast]="parameter.parametersInner.length - 1 === innerIndex"
+              [innerIndex]="innerIndex"
+              [indexRemove]="i"
+              (removeEmitter)="removeInner($event)"
+              (selectItemEmitter)="selectItem($event)"
+            ></app-dropdown-item-tracker>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="parameters-resp">
+    <div
+      class="d-flex flex-column parameters-list"
+      *ngFor="let parameter of careerTrack.parameters"
+    >
+      <div class="d-flex flex-row line-items w-100">
+        <div class="parameter-item ml-3">
+          <span>{{ parameter.parameterName }}</span>
+        </div>
+
+        <div class="row w-100">
+          <div
+            *ngFor="let inner of parameter.parametersInner"
+            class="{{
+              getClassDivisorParameters(parameter.parametersInner.length)
+            }} rows"
+          >
+            <span class="rounded-bg px-2 py-1 m-2 d-flex">
+              {{ inner.parameter }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="buttons d-flex flex-row justify-content-center mt-3">
+  <app-button-primary
+    *ngIf="!editable"
+    [label]="'Editar'"
+    (click)="editable = !editable"
+  ></app-button-primary>
+  <app-button-secundary
+    *ngIf="editable"
+    [label]="'Cancelar'"
+    class="mr-3"
+    (click)="resetData()"
+  ></app-button-secundary>
+  <app-button-primary
+    *ngIf="editable"
+    [label]="'Salvar'"
+    (click)="openModalConfirm()"
+  ></app-button-primary>
+</div>

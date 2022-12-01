@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="31.5" height="31.5" style=""><rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="none" stroke="none"/><defs><filter id="f038" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" inkscape:label="Button" x="0" y="0" width="1" height="1" inkscape:menu="Bevels" inkscape:menu-tooltip="Soft bevel, slightly depressed middle" color-interpolation-filters="sRGB">
+            <feGaussianBlur stdDeviation="2.3" in="SourceAlpha" result="result0"/>
+            <feMorphology in="SourceAlpha" radius="6.6" result="result1"/>
+            <feGaussianBlur stdDeviation="8.9" in="result1"/>
+            <feColorMatrix id="feColorMatrix2861" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.3 0" result="result91"/>
+            <feComposite in="result0" operator="out" result="result2" in2="result91"/>
+            <feGaussianBlur stdDeviation="1.7" result="result4"/>
+            <feDiffuseLighting surfaceScale="10">
+                <feDistantLight azimuth="225" elevation="45"/>
+            </feDiffuseLighting>
+            <feBlend id="feBlend2863" in2="SourceGraphic" mode="multiply"/>
+            <feComposite in2="SourceAlpha" operator="in" result="result3"/>
+            <feSpecularLighting in="result4" surfaceScale="5" specularExponent="17.9">
+                <feDistantLight azimuth="225" elevation="45"/>
+            </feSpecularLighting>
+            <feComposite in2="result3" operator="atop"/>
+        </filter></defs><g class="currentLayer" style=""><title>Layer 1</title><path class="a" d="M0.75,15.75 A15,15 0 1 0 15.75,0.75 A15,15 0 0 0 0.75,15.75 z" id="svg_2" fill="none" opacity="1" stroke="#f6a058" stroke-opacity="1" filter="" stroke-width="2"/><path class="a selected" d="M15.75,21.75 l-6,-6 l6,-6 " id="svg_3" fill="none" opacity="1" stroke="#f6a058" stroke-opacity="1" filter="" stroke-width="2"/><path class="a selected" d="M21.75,15.75 H9.75 " id="svg_4" fill="none" opacity="1" stroke="#f6a058" stroke-opacity="1" filter="" stroke-width="2"/></g></svg>

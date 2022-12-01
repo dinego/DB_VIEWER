@@ -1,0 +1,73 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+.title-table {
+  min-height: $size54;
+  align-self: flex-start;
+  justify-self: left;
+  font-weight: 700;
+  font-size: $size16;
+}
+.title-col {
+  line-height: $size44;
+  font-weight: 700;
+  font-size: $size16;
+  background-color: yellow;
+  text-align: center;
+  padding-top: $size5;
+  padding-bottom: $size5;
+}
+.click-modal {
+  cursor: pointer;
+  font-size: $size14;
+  &:hover {
+    font-weight: 700;
+    color: $blue-link;
+    text-decoration: underline;
+  }
+}
+
+.data-body {
+  font-weight: 600;
+  border: $size1 solid $gray-dbd;
+  border-bottom: 0;
+
+  &:nth-child(even) {
+    background: $gray-f0;
+  }
+  &:nth-child(odd) {
+    background: $white;
+  }
+
+  &:last-child {
+    border-bottom: $size1 solid $gray-dbd;
+  }
+}
+
+.columns-data {
+  & > .title-col {
+    color: $white;
+  }
+  &:nth-child(2) {
+    .title-col {
+      background: transparent linear-gradient(180deg, #6685be 0%, #516a98 100%)
+        0% 0% no-repeat padding-box;
+    }
+  }
+  &:nth-child(3) {
+    .title-col {
+      background: transparent linear-gradient(180deg, #a0527e 0%, #713557 100%)
+        0% 0% no-repeat padding-box;
+    }
+  }
+  &:nth-child(4) {
+    .title-col {
+      background: transparent
+        linear-gradient(180deg, #989898 0%, #a0a0a0 100%, #668979 100%) 0% 0%
+        no-repeat padding-box;
+    }
+  }
+}
+
+.col-md-3 {
+  max-width: 23%;
+}

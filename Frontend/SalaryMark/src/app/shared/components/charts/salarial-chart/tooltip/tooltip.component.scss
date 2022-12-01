@@ -1,0 +1,46 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.tooltip-container {
+  & > .gsm {
+    background-color: gainsboro;
+    border-radius: $size30;
+    color: $black-1f;
+    font-size: $size12;
+    height: $size23;
+    font-weight: 600;
+    align-items: center;
+    display: flex;
+  }
+
+  & > .midpoint {
+    & > .midpoint-formater {
+      font-size: $size12;
+      font-weight: 400;
+      color: gray;
+    }
+
+    & > .midpoint-value {
+      font-size: $size12;
+      font-weight: 600;
+      color: $black-1f;
+    }
+  }
+
+  & > .container-lines {
+    & > .align-self-start {
+      & > .link-position {
+        font-size: $size12;
+        color: $blue-link;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      & > .has-occupant-clt {
+        color: $default-gray;
+      }
+      & > .has-occupant-pj {
+        color: $blue-277;
+      }
+    }
+  }
+}

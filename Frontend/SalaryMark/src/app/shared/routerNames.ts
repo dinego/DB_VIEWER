@@ -1,0 +1,46 @@
+const Routes = {
+  HOME: "",
+  DASHBOARD: "dashboard",
+  LOGIN: "login",
+  SALARY_TABLE: {
+    BASE: "tabela-salarial",
+    SHARE: "compartilhar-tabela-salarial/:secretkey",
+  },
+  POSITIONS: {
+    BASE: "cargos",
+    SETTINGS: "configuracoes",
+    LIST: "arquitetura-cargos",
+    MAP: "mapa-cargos",
+    SHARE_LIST: "compartilhar-arquitetura-cargos/:secretkey",
+    SHARE_MAP: "compartilhar-mapa-cargos/:secretkey",
+  },
+  POSITIONING: {
+    BASE: "posicionamento",
+    FRAMEWORK: "enquadramento",
+    SETTINGS: "configuracoes",
+    FINANCIAL_IMPACT: "impacto-financeiro",
+    COMPARATIVE_ANALYSIS: "analise-comparativa",
+    DISTRIBUTION_ANALYSIS: "analise-distribuicao",
+    PROPOSED_MOVEMENTS: "movimentos-propostos",
+    SHARE_FRAMEWORK: "compartilhar-enquadramento/:secretkey",
+    SHARE_FINANCIAL_IMPACT: "compartilhar-impacto-financeiro/:secretkey",
+    SHARE_COMPARATIVE_ANALYSIS: "compartilhar-analise-comparativa/:secretkey",
+    SHARE_DISTRIBUTION_ANALYSIS: "compartilhar-analise-distribuicao/:secretkey",
+    SHARE_PROPOSED_MOVEMENTS: "compartilhar-movimentos-propostos/:secretkey",
+  },
+  PARAMETERS: {
+    BASE: "parametros",
+    LEVELS: "niveis",
+    SETTINGS: "configuracoes",
+    SALARY_STRATEGY: "estrategia-salarial",
+    HOURLY_BASIS: "base-horaria",
+    CORPORATE_SETTINGS: "configuracoes-pj",
+    USERS: "usuarios",
+    GLOBAL_LABELS: "rotulos-globais",
+    CONFIGURE_DISPLAY: "configure-display",
+  },
+  MY_REPORTS: "meus-relatorios",
+  STUDIES_PUBLICATIONS: "estudos-publicacoes",
+};
+
+export default Routes;

@@ -1,0 +1,68 @@
+<!-- <div
+  class="container-description d-flex flex-column mt-3"
+  *ngIf="descriptionPosition"
+>
+  <div
+    class="summary card d-flex flex-column"
+    *ngIf="descriptionPosition.descriptionArea"
+  >
+    <div class="title">Descrição Sumária</div>
+    <div
+      class="content"
+      [innerHTML]="descriptionPosition.descriptionArea.summary"
+    ></div>
+  </div>
+  <div class="detail card">
+    <div class="title">Descrição Detalhada</div>
+    <hr />
+    <div
+      class="content"
+      [innerHTML]="descriptionPosition.descriptionArea.full"
+    ></div>
+  </div>
+  <div class="detail card" *ngIf="descriptionPosition.responsabilityArea">
+    <div class="title">Responsabilidades comuns ao nível do cargo</div>
+    <hr />
+    <div
+      class="content"
+      [innerHTML]="descriptionPosition.responsabilityArea.responsabilities"
+    ></div>
+  </div>
+  <div
+    class="d-flex flex-row content-row"
+    *ngIf="descriptionPosition.descriptionArea"
+  >
+    <div class="card mr-3 w-50">
+      <div class="title">Formação</div>
+      <hr />
+      <div class="content d-flex flex-column">
+        <span class="title-item">Mínima</span>
+        <span class="description-item">{{
+          descriptionPosition?.trainingAndExperiences?.academicTraining
+            ?.trainingRequired
+        }}</span>
+        <span class="title-item mt-1">Desejável</span>
+        <span class="description-item">{{
+          descriptionPosition?.trainingAndExperiences?.academicTraining
+            ?.desirableFormation
+        }}</span>
+      </div>
+    </div>
+    <div class="card w-50">
+      <div class="title">Experiência</div>
+      <hr />
+      <div class="content d-flex flex-column">
+        <span class="title-item">Mínima</span>
+        <span class="description-item">{{
+          descriptionPosition?.trainingAndExperiences?.desiredExperience
+            ?.minimumExperience
+        }}</span>
+        <span class="title-item mt-1">Desejável</span>
+        <span class="description-item">{{
+          descriptionPosition?.trainingAndExperiences?.desiredExperience
+            ?.experienceTime
+        }}</span>
+      </div>
+    </div>
+  </div>
+</div> -->

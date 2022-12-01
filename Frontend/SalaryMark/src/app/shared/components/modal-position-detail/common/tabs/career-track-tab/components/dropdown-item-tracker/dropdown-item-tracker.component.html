@@ -1,0 +1,118 @@
+<div class="d-flex flex-column flex-fill align-items-center">
+  <div
+    class="
+      d-flex
+      flex-row flex-fill
+      w-100
+      item
+      justify-content-center
+      align-items-center
+    "
+    *ngIf="editable"
+  >
+    <div
+      [ngClass]="{
+        bordered: position.isHighlighted,
+        possibility: position.isPossibility,
+        disabled:
+          (!position.isHighlighted && !position.isPossibility) ||
+          !position.isDrop,
+        'is-drop': position.isDrop,
+        'enabled ml-2': editable
+      }"
+      class="
+        item
+        d-flex
+        flex-row
+        justify-content-between
+        align-items-center
+        flex-fill
+        mt-0
+      "
+      aria-controls="dropdown-animated"
+      id="dropdownMenuTracker"
+      data-toggle="dropdown"
+    >
+      <span class="title mr-3 ml-2"> {{ selected.title }} </span>
+      <div
+        class="arrow d-flex justify-content-center align-items-center"
+        *ngIf="position.isDrop && editable"
+      >
+        <i class="fas fa-caret-down"></i>
+      </div>
+    </div>
+
+    <img
+      src="../../../../../../../../../assets/imgs/svg/delete.svg"
+      class="remove-icon ml-1 mr-1"
+      *ngIf="position.isDrop && editable"
+      (click)="removeItemClick()"
+    />
+
+    <ul
+      *ngIf="position.isDrop && editable"
+      aria-labelledby="dropdownMenuTracker"
+      class="dropdown-menu"
+      role="menu"
+      aria-labelledby="button-basic"
+    >
+      <li
+        role="menuitem"
+        *ngFor="let item of position.dropItems"
+        (click)="selectItem(item); $event.preventDefault()"
+      >
+        <a class="dropdown-item" href="#">{{ item.title }}</a>
+      </li>
+    </ul>
+  </div>
+  <div
+    *ngIf="!editable"
+    [ngClass]="{
+      bordered: position.isHighlighted,
+      possibility: position.isPossibility,
+      disabled:
+        (!position.isHighlighted && !position.isPossibility) ||
+        !position.isDrop,
+      'is-drop': position.isDrop,
+      enabled: editable
+    }"
+    class="
+      item
+      d-flex
+      flex-row
+      justify-content-between
+      align-items-center
+      flex-fill
+      w-100
+      mt-0
+    "
+  >
+    <span class="title mr-3 ml-2"> {{ selected.title }} </span>
+    <div
+      class="arrow d-flex justify-content-center align-items-center"
+      *ngIf="position.isDrop && editable"
+    >
+      <i class="fas fa-caret-down"></i>
+    </div>
+  </div>
+
+  <div
+    [ngClass]="{ arrowed: position.isArrow }"
+    class="possibility"
+    *ngIf="position.isPossibility"
+  ></div>
+  <div class="d-flex flex-row w-100" *ngIf="position.isPossibility">
+    <div class="possibility-line w-50" *ngIf="position.isPossibility"></div>
+    <div
+      class="possibility-line w-50"
+      *ngIf="position.isPossibility && !isLast"
+    ></div>
+  </div>
+
+  <div
+    class="not-possibility"
+    *ngIf="!position.isPossibility && !position.isFirst"
+  >
+    <div [ngClass]="{ arrowed: position.isArrow }" class="normal-line"></div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div fxLayout="column" fxLayoutAlign="center center" class="py-1">
+  <img
+    src="../../../../../../assets/imgs/svg/arrow-down_v3.svg"
+    class="open-modal-img"
+    [tooltip]="tipSee"
+    placement="right"
+    (click)="openModal(templateModal)"
+  />
+  <ng-template #templateModal>
+    <div class="header pt-1 pl-2 pr-3 pb-0 d-flex justify-content-between">
+      <ng-content select=".header"></ng-content>
+      <button
+        type="button"
+        class="close btn-close"
+        aria-label="Close"
+        (click)="modalRef?.hide()"
+      >
+        <img src="../../../../assets/imgs/svg/close-modal.svg" />
+      </button>
+    </div>
+
+    <div class="modal-body pt-0">
+      <hr class="mt-0 mb-0" />
+      <ng-content select=".body"></ng-content>
+    </div>
+  </ng-template>
+  <ng-template #tipSee>
+    <div class="content-tooltip tooltip-employee" fxLayout="column">
+      <span class="label-tooltip">Ver gráfico completo</span>
+    </div>
+  </ng-template>
+</div>

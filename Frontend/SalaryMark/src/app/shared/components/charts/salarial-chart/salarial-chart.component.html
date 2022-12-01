@@ -1,0 +1,22 @@
+<ng-container
+  *ngIf="
+    valuesSalaryChartInput && valuesSalaryChartInput.length > 0;
+    else noData
+  "
+>
+  <highcharts-chart
+    [Highcharts]="Highcharts"
+    [constructorType]="chartConstructor"
+    [options]="chartOptions"
+    [callbackFunction]="chartCallback"
+    [(update)]="updateFlag"
+    [oneToOne]="oneToOneFlag"
+    [runOutsideAngular]="runOutsideAngular"
+    style="width: 100%; display: flex"
+  ></highcharts-chart>
+</ng-container>
+<ng-template #noData>
+  <h5 class="d-flex justify-content-center align-items-center mt-2">
+    Não há Dados
+  </h5>
+</ng-template>

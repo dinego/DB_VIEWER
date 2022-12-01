@@ -1,0 +1,22 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.card {
+  background: $white 0% 0% no-repeat padding-box;
+  box-shadow: $size0 $size2 $size6 $shadow;
+  border: $size1 solid $border-gray;
+  border-radius: $size4;
+}
+
+.sub-title {
+  font-size: $size16;
+  font-weight: 700;
+}
+
+:host::ne-deep.modal-content {
+  height: auto !important;
+}
+
+.export-icon {
+  cursor: pointer;
+}

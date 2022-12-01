@@ -1,0 +1,37 @@
+<div
+  class="dropdown mt-1 pointer"
+  id="dropdownMenuButtonExport"
+  data-toggle="dropdown"
+  fxLayoutAlign="space-between center"
+>
+  <img
+    dropdownToggle
+    class="icons-header dropdown-toggle"
+    id="export-icon"
+    src="../../../../assets/imgs/svg/export-icon.svg"
+    aria-controls="dropdown-basic"
+  />
+
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonExport">
+    <div
+      class="dropdown-item"
+      (click)="exportCSV.emit()"
+      *ngIf="
+        selectedVisualization &&
+        selectedVisualization.id !== displayTypesEnum.COLUMNS
+      "
+    >
+      <span class="items"> Excel </span>
+    </div>
+    <div
+      class="dropdown-item"
+      (click)="exportChart.emit()"
+      *ngIf="
+        selectedVisualization &&
+        selectedVisualization.id === displayTypesEnum.COLUMNS
+      "
+    >
+      <span class="items"> PNG </span>
+    </div>
+  </div>
+</div>

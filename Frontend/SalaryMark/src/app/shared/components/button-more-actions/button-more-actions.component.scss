@@ -1,0 +1,36 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.btn-default {
+  background-color: $orange-button;
+  border-radius: $size6;
+  color: $white;
+  opacity: 1;
+  padding: $size8 $size15;
+  white-space: nowrap;
+  text-transform: uppercase;
+
+  letter-spacing: $size0;
+  font-size: $size13;
+  width: $remSize10_8;
+}
+
+.btn-help, .btn-share {
+  color: $gray-8c;
+  width: auto;
+  cursor: pointer;
+
+  span {
+    cursor: pointer;
+    font-size: $size25;
+  }
+}
+
+.expandDiv {
+  transition: width 10s;
+}
+
+.autoWith {
+  width: auto;
+}
+

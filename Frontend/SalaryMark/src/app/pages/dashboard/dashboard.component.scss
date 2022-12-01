@@ -1,0 +1,89 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.dashboard-container {
+  margin-top: $size5;
+
+  .card {
+    box-shadow: 0px $size3 $size10 $gray-box-shadow-00;
+  }
+
+  .btn-list {
+    min-width: $size220;
+  }
+
+  .chart-size {
+    max-height: $size350;
+  }
+
+  .card-impact {
+    border-radius: $size8;
+    .tooltip-employee {
+      padding: $size5;
+    }
+
+    .card-info {
+      border-radius: $size0 $size8 $size8 $size8;
+      color: $white;
+      padding: $size20;
+      width: 40%;
+      max-height: 85px;
+
+      .text-value-impact {
+        font-size: $remSize1_1;
+      }
+
+      .text-percentage-impact {
+        font-size: $size30;
+        font-weight: 800;
+      }
+
+      .separator {
+        background-color: $white;
+        height: $size30;
+        width: $size1;
+      }
+    }
+
+    .card-item-0 {
+      background: transparent linear-gradient(180deg, #83A589 0%, #54815C 100%) 0% 0% no-repeat padding-box;
+    }
+    .card-item-1 {
+      background: transparent linear-gradient(180deg, #F2D27C 0%, #D3AA3A 100%) 0% 0% no-repeat padding-box;
+    }
+    .card-item-2 {
+      background: transparent linear-gradient(180deg, #839CCC 0%, #5F7298 100%) 0% 0% no-repeat padding-box;
+    }
+    .card-item-3 {
+      background: transparent linear-gradient(180deg, #C15657 0%, #8E4C4D 100%) 0% 0% no-repeat padding-box;
+    }
+
+    .info-impact {
+      font-weight: 600;
+      font-size: $size14;
+      width: 60%;
+    }
+  }
+}
+
+.card {
+  background: $white 0% 0% no-repeat padding-box;
+  box-shadow: $size0 $size3 $size6 $shadow;
+  border: $size1 solid $border-gray;
+  border-radius: $size8;
+}
+.title-card {
+  & > .percent {
+    border-radius: $size4;
+    font-weight: 800;
+  }
+}
+.pbc-9 {
+  padding-bottom: $size9;
+}
+
+.title-impact {
+  font-weight: 600;
+  color: $black-40;
+  font-size: $size14;
+}

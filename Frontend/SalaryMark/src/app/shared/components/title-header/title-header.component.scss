@@ -1,0 +1,16 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.title {
+  color: $black-40;
+  font-size: $size22;
+  white-space: nowrap;
+  font-weight: 700;
+}
+.divider-title {
+  border-top: $size1 solid $gray-de;
+}
+
+.link-item {
+  cursor: pointer;
+}

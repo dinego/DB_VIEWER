@@ -1,0 +1,22 @@
+{
+  "viewportWidth": 1366,
+  "viewportHeight": 768,
+  "env": {
+    "baseURL": {
+      "local": "http://localhost:4200",
+      "dev": "https://salarymark-dev.carreira.com.br/",
+      "prod": "https://salarymark-dev.carreira.com.br/",
+      "staging": "https://salarymark-homolog.carreira.com.br/"
+    },
+    "api": {
+      "dev": "https://salarymark-api-dev.carreira.com.br/",
+      "prod": "https://salarymark-api-dev.carreira.com.br/",
+      "staging": "https://salarymark-api-homolog.carreira.com.br"
+    },
+    "token": {
+      "dev": "",
+      "prod": "",
+      "staging": ""
+    }
+  }
+}

@@ -1,0 +1,41 @@
+.cs-blocked-content {
+  & > .rowheader {
+    & > .coltitle > .title {
+      font-size: 1rem;
+    }
+
+    & > .colactionbtns {
+      & > .actionbtn {
+        cursor: pointer;
+        height: 2.187rem;
+        width: 2.187rem;
+        font-size: 0;
+        border: none;
+        background: transparent;
+        padding: 0;
+
+        &.-close {
+          &:hover {
+            filter: brightness(0.9);
+          }
+        }
+      }
+    }
+  }
+
+  & > .rowdescription {
+    & > .coldescrition {
+      height: 20rem;
+      font-size: 0.875rem;
+    }
+  }
+
+  & > .rowseparator {
+    & > .colseparator {
+      & > .lineseparator {
+        opacity: 0.5;
+        border-top: 0.125rem solid rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+}

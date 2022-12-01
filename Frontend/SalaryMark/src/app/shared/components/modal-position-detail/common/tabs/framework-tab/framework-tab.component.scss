@@ -1,0 +1,23 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.container-tab {
+  & > .filters {
+    & > .title-drop {
+      & > .title {
+        font-size: $size12;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: $black-58;
+      }
+    }
+
+    & > .divider {
+      margin-right: $size10;
+      margin-left: $size10;
+      width: $size1;
+      background-color: $border-gray;
+      min-height: $size43;
+    }
+  }
+}

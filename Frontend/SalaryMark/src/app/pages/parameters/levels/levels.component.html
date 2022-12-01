@@ -1,0 +1,819 @@
+<div
+  class="parameters-levels-container container-fluid"
+  (window:resize)="onResize()"
+>
+  <app-title-header [title]="locales.levels">
+    <app-button-primary
+      [label]="locales.edit"
+      (click)="startEditValues()"
+      *ngIf="permissions && permissions.canEditLevels && !isEdit"
+    ></app-button-primary>
+
+    <div
+      class="d-flex justify-content-between flex-align-center pl-2"
+      slot="showWithOutAnimation"
+      *ngIf="isEdit"
+    >
+      <app-button-secundary
+        [label]="locales.cancel"
+        class="mr-3"
+        (click)="cancelEdit()"
+      >
+      </app-button-secundary>
+
+      <app-button-primary
+        [label]="locales.save"
+        (click)="sendLevelsToSave()"
+      ></app-button-primary>
+    </div>
+  </app-title-header>
+
+  <div class="container-fluid p-0 hide-very-large">
+    <div
+      *ngIf="barStrategicData"
+      class="strategic-box-responsive w-100 mb-2 p-2 rounded-lg description-row"
+    >
+      <p class="text-white text-center text-uppercase font-weight-bold">
+        {{ locales.strategic }}
+      </p>
+    </div>
+  </div>
+
+  <div class="container-fluid grid-box-header p-0 pb-2">
+    <div class="box-spacing"></div>
+    <div class="section-title">
+      <p class="text-center font-weight-bold dividers-text my-2 text-nowrap">
+        {{ locales.salaryMarkStructure }}
+      </p>
+    </div>
+
+    <div class="section-title hide-big">
+      <p class="text-center font-weight-bold dividers-text my-2 text-nowrap">
+        {{ locales.yoursCompany }}
+      </p>
+    </div>
+  </div>
+
+  <div class="container-fluid grid-box-header p-0 pb-2">
+    <div class="box-spacing"></div>
+    <div class="section-title-dark hide-big">
+      <p class="ml-3 text-center text-white my-2 text-nowrap">
+        {{ locales.leadership }}
+      </p>
+      <p class="mr-3 text-center text-white my-2 text-nowrap">
+        {{ locales.individualContributors }}
+      </p>
+    </div>
+    <div class="section-title-dark">
+      <p class="ml-3 text-center text-white my-2 text-nowrap">
+        {{ locales.leadership }}
+      </p>
+      <p class="mr-3 text-center text-white my-2 text-nowrap">
+        {{ locales.individualContributors }}
+      </p>
+    </div>
+  </div>
+
+  <form
+    (ngSubmit)="sendLevelsToSave()"
+    *ngIf="form"
+    [formGroup]="form"
+    fxFlexFill
+  >
+    <div class="container-fluid grid-box p-0 pb-2">
+      <div
+        *ngIf="barStrategicData"
+        class="strategic-box w-100 rounded-lg description-row"
+      >
+        <p class="text-white text-center text-uppercase font-weight-bold">
+          {{ locales.strategic }}
+        </p>
+      </div>
+
+      <div
+        #barStrategicData
+        class="grid-area rounded-lg position-relative"
+        fxLayout="row"
+        fxLayoutAlign="flex-start space-between"
+      >
+        <div fxLayout="column" class="w-50">
+          <div
+            class="w-100"
+            *ngFor="
+              let leadershipContributor of form.value.strategic
+                .salaryMarkStructure.leadershipContributors.controls
+            "
+          >
+            <div class="d-flex mt-3 mb-3">
+              <div class="label">
+                <p class="ml-3 my-2">{{ leadershipContributor.value.code }}</p>
+              </div>
+              <div class="bar-strategic-style w-100 mx-3">
+                <p class="text-center pl-3 text-black">
+                  {{ leadershipContributor.value.level }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          fxLayout="column "
+          class="w-50 separator position-relative align-right"
+        >
+          <div
+            class="w-100"
+            *ngFor="
+              let individualContributor of form.value.strategic
+                .salaryMarkStructure.individualContributors.controls
+            "
+          >
+            <div class="d-flex mt-3 mb-3">
+              <div class="label">
+                <p class="ml-3 my-2">{{ individualContributor.value.code }}</p>
+              </div>
+              <div class="bar-strategic w-100 mx-3 rounded-lg">
+                <p class="text-center my-2 text-white">
+                  {{ individualContributor.value.level }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid grid-box-header p-0 hide-very-large">
+        <div class="section-title">
+          <p
+            class="text-center font-weight-bold dividers-text my-2 text-nowrap"
+          >
+            {{ locales.yoursCompany }}
+          </p>
+        </div>
+      </div>
+
+      <div class="container-fluid grid-box-header p-0 hide-very-large">
+        <div class="section-title-dark">
+          <p class="ml-3 text-center text-white my-2 text-nowrap">
+            {{ locales.leadership }}
+          </p>
+          <p class="mr-3 text-center text-white my-2 text-nowrap">
+            {{ locales.individualContributors }}
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="grid-area rounded-lg position-relative"
+        fxLayout="row"
+        fxLayoutAlign="center"
+        *ngIf="barStrategicData"
+        formGroupName="strategic"
+      >
+        <div
+          fxLayout="column"
+          class="w-50"
+          fxLayoutAlign="space-between"
+          [formGroup]="
+            form.get('strategic').value.yourCompanyStructure
+              .leadershipContributors
+          "
+        >
+          <div
+            class="w-100"
+            *ngFor="
+              let leadershipContributor of form.get('strategic').value
+                .yourCompanyStructure.leadershipContributors.controls;
+              let i = index
+            "
+          >
+            <div class="d-flex mb-3 mt-3">
+              <div class="ml-3 flex-align-center" [formGroupName]="i">
+                <app-switch-button
+                  formControlName="active"
+                  [disabled]="
+                    permissions && permissions.canEditLevels && !isEdit
+                  "
+                  SliderBlue="true"
+                  (click)="isEdit ? invertValue(leadershipContributor) : ''"
+                ></app-switch-button>
+              </div>
+
+              <div
+                class="bar-strategic w-100 mx-3 rounded-lg flex-align-center"
+                [formGroupName]="i"
+              >
+                <label class="sr-only" for="formInputTitle">{{
+                  locales.level
+                }}</label>
+                <input
+                  type="text"
+                  class="form-control input-strategic-style pl-3"
+                  [readonly]="
+                    !leadershipContributor.value.active ||
+                    (!(permissions && !permissions.canEditLevels) && !isEdit)
+                  "
+                  formControlName="level"
+                  placeholder=""
+                  [ngClass]="
+                    !permissions.canEditLevels
+                      ? 'input-edit-values'
+                      : 'input-strategic-style'
+                  "
+                />
+              </div>
+            </div>
+
+            <label
+              class="required-field pl-3"
+              *ngIf="
+                leadershipContributor.value.active &&
+                leadershipContributor.controls.level.errors?.required
+              "
+            >
+              *Preenchimento Obrigatorio
+            </label>
+          </div>
+        </div>
+        <div
+          fxLayout="column"
+          class="w-50 separator position-relative align-right"
+          fxLayoutAlign="space-between"
+          [formGroup]="
+            form.get('strategic').value.yourCompanyStructure
+              .individualContributors
+          "
+        >
+          <div
+            class="w-100"
+            *ngFor="
+              let individualContributor of form.value.strategic
+                .yourCompanyStructure.individualContributors.controls;
+              let i = index
+            "
+          >
+            <div class="d-flex mt-3 mb-3">
+              <div class="ml-3 flex-align-center" [formGroupName]="i">
+                <app-switch-button
+                  formControlName="active"
+                  [disabled]="
+                    permissions && !permissions.canEditLevels && !isEdit
+                  "
+                  (click)="isEdit ? invertValue(individualContributor) : ''"
+                  SliderBlue="true"
+                ></app-switch-button>
+              </div>
+
+              <div
+                class="bar-strategic w-100 mx-3 rounded-lg flex-align-center"
+                [formGroupName]="i"
+              >
+                <label class="sr-only" for="formInputTitle">{{
+                  locales.level
+                }}</label>
+                <input
+                  type="text"
+                  class="form-control input"
+                  [readonly]="
+                    !individualContributor.value.active ||
+                    (permissions && !permissions.canEditLevels && !isEdit)
+                  "
+                  formControlName="level"
+                  placeholder=""
+                />
+              </div>
+            </div>
+            <label
+              class="required-field pl-3"
+              *ngIf="
+                individualContributor.value.active &&
+                individualContributor.controls.level.errors?.required
+              "
+            >
+              *Preenchimento Obrigatorio
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid p-0 hide-very-large">
+      <div
+        *ngIf="barTaticData"
+        class="tatic-box-responsive grid-area w-100 mb-2 p-2 rounded-lg"
+      >
+        <p class="text-white text-center text-uppercase font-weight-bold">
+          {{ locales.tatic }}
+        </p>
+      </div>
+    </div>
+
+    <div class="container-fluid grid-box-header p-0 pb-2 hide-very-large">
+      <div class="box-spacing"></div>
+      <div class="section-title">
+        <p class="text-center font-weight-bold dividers-text my-2 text-nowrap">
+          {{ locales.salaryMarkStructure }}
+        </p>
+      </div>
+
+      <div class="section-title hide-big">
+        <p class="text-center font-weight-bold dividers-text my-2 text-nowrap">
+          {{ locales.yoursCompany }}
+        </p>
+      </div>
+    </div>
+
+    <div class="container-fluid grid-box-header p-0 pb-2 hide-very-large">
+      <div class="section-title-dark hide-big">
+        <p class="ml-3 text-center text-white my-2 text-nowrap">
+          {{ locales.leadership }}
+        </p>
+        <p class="mr-3 text-center text-white my-2 text-nowrap">
+          {{ locales.individualContributors }}
+        </p>
+      </div>
+      <div class="section-title-dark">
+        <p class="ml-3 text-center text-white my-2 text-nowrap">
+          {{ locales.leadership }}
+        </p>
+        <p class="mr-3 text-center text-white my-2 text-nowrap">
+          {{ locales.individualContributors }}
+        </p>
+      </div>
+    </div>
+
+    <div class="container-fluid grid-box p-0 pb-2">
+      <div *ngIf="barTaticData" class="bar-tatic grid-area w-100 rounded-lg">
+        <p class="text-white text-center text-uppercase font-weight-bold">
+          {{ locales.tatic }}
+        </p>
+      </div>
+
+      <div
+        #barTaticData
+        class="grid-area rounded-lg position-relative"
+        fxLayout="row"
+        fxLayoutAlign="flex-start space-between"
+      >
+        <div fxLayout="column" class="w-50">
+          <div
+            class="w-100"
+            *ngFor="
+              let leadershipContributor of form.value.tatic.salaryMarkStructure
+                .leadershipContributors.controls
+            "
+          >
+            <div class="d-flex mt-3 mb-3">
+              <div class="label">
+                <p class="ml-3 my-2">{{ leadershipContributor.value.code }}</p>
+              </div>
+              <div class="bar-tactical-style w-100 mx-3">
+                <p class="text-center ml-3 text-black">
+                  {{ leadershipContributor.value.level }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          fxLayout="column"
+          class="w-50 separator position-relative align-right"
+        >
+          <div
+            class="w-100"
+            *ngFor="
+              let individualContributor of form.value.tatic.salaryMarkStructure
+                .individualContributors.controls
+            "
+          >
+            <div class="d-flex mt-3 mb-3">
+              <div class="label">
+                <p class="ml-3 my-2">{{ individualContributor.value.code }}</p>
+              </div>
+              <div class="bar-tactical-style w-100 mx-3">
+                <p class="text-center ml-3 text-black">
+                  {{ individualContributor.value.level }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid grid-box-header p-0 hide-very-large">
+        <div class="section-title">
+          <p
+            class="text-center font-weight-bold dividers-text my-2 text-nowrap"
+          >
+            {{ locales.yoursCompany }}
+          </p>
+        </div>
+      </div>
+
+      <div class="container-fluid grid-box-header p-0 hide-very-large">
+        <div class="section-title-dark">
+          <p class="ml-3 text-center text-white my-2 text-nowrap">
+            {{ locales.leadership }}
+          </p>
+          <p class="mr-3 text-center text-white my-2 text-nowrap">
+            {{ locales.individualContributors }}
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="grid-area rounded-lg position-relative"
+        fxLayout="row"
+        fxLayoutAlign="center"
+        *ngIf="barTaticData"
+      >
+        <div
+          fxLayout="column"
+          class="w-50"
+          fxLayoutAlign="space-between"
+          [formGroup]="
+            form.get('tatic').value.yourCompanyStructure.leadershipContributors
+          "
+        >
+          <div
+            class="w-100 last-item"
+            *ngFor="
+              let leadershipContributor of form.get('tatic').value
+                .yourCompanyStructure.leadershipContributors.controls;
+              let i = index
+            "
+          >
+            <div class="d-flex mt-3 mb-3">
+              <div class="ml-3 flex-align-center" [formGroupName]="i">
+                <app-switch-button
+                  formControlName="active"
+                  [disabled]="
+                    permissions && permissions.canEditLevels && !isEdit
+                  "
+                  SliderRed="true"
+                  (click)="isEdit ? invertValue(leadershipContributor) : ''"
+                ></app-switch-button>
+              </div>
+
+              <div
+                class="bar-strategic w-100 mx-3 rounded-lg flex-align-center"
+                [formGroupName]="i"
+              >
+                <label class="sr-only" for="formInputTitle">{{
+                  locales.level
+                }}</label>
+                <input
+                  type="text"
+                  class="form-control input-tactical-style pl-3"
+                  [readonly]="
+                    !leadershipContributor.value.active ||
+                    (!(permissions && !permissions.canEditLevels) && !isEdit)
+                  "
+                  formControlName="level"
+                  placeholder=""
+                  [ngClass]="
+                    !permissions.canEditLevels
+                      ? 'input-edit-values'
+                      : 'input-tactical-style'
+                  "
+                />
+              </div>
+            </div>
+            <label
+              class="required-field pl-3"
+              *ngIf="
+                leadershipContributor.value.active &&
+                leadershipContributor.controls.level.errors?.required
+              "
+            >
+              *Preenchimento Obrigatorio
+            </label>
+          </div>
+        </div>
+        <div
+          fxLayout="column"
+          class="w-50 separator position-relative align-right"
+          fxLayoutAlign="space-between"
+          [formGroup]="
+            form.get('tatic').value.yourCompanyStructure.individualContributors
+          "
+        >
+          <div
+            class="w-100 last-item"
+            *ngFor="
+              let individualContributor of form.get('tatic').value
+                .yourCompanyStructure.individualContributors.controls;
+              let i = index
+            "
+          >
+            <div class="d-flex mt-3 mb-3">
+              <div class="ml-3 flex-align-center" [formGroupName]="i">
+                <app-switch-button
+                  formControlName="active"
+                  [disabled]="
+                    permissions && permissions.canEditLevels && !isEdit
+                  "
+                  SliderRed="true"
+                  (click)="isEdit ? invertValue(individualContributor) : ''"
+                ></app-switch-button>
+              </div>
+              <div
+                class="bar-strategic w-100 mx-3 rounded-lg flex-align-center"
+                [formGroupName]="i"
+              >
+                <label class="sr-only" for="formInputTitle">{{
+                  locales.level
+                }}</label>
+                <input
+                  type="text"
+                  class="form-control input-tactical-style pl-3"
+                  [readonly]="
+                    !individualContributor.value.active ||
+                    (!(permissions && !permissions.canEditLevels) && !isEdit)
+                  "
+                  formControlName="level"
+                  placeholder=""
+                  [ngClass]="
+                    !permissions.canEditLevels
+                      ? 'input-edit-values'
+                      : 'input-tactical-style'
+                  "
+                />
+              </div>
+            </div>
+            <label
+              class="required-field pl-3"
+              *ngIf="
+                individualContributor.value.active &&
+                individualContributor.controls.level.errors?.required
+              "
+            >
+              *Preenchimento Obrigatorio
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid p-0 hide-very-large">
+      <div
+        *ngIf="barOperationalData"
+        class="operational-box-responsive grid-area w-100 mb-2 p-2 rounded-lg"
+      >
+        <p class="text-white text-center text-uppercase font-weight-bold">
+          {{ locales.operational }}
+        </p>
+      </div>
+    </div>
+
+    <div class="container-fluid grid-box-header p-0 pb-2 hide-very-large">
+      <div class="box-spacing"></div>
+      <div class="section-title">
+        <p class="text-center font-weight-bold dividers-text my-2 text-nowrap">
+          {{ locales.salaryMarkStructure }}
+        </p>
+      </div>
+
+      <div class="section-title hide-big">
+        <p class="text-center font-weight-bold dividers-text my-2 text-nowrap">
+          {{ locales.yoursCompany }}
+        </p>
+      </div>
+    </div>
+
+    <div class="container-fluid grid-box-header p-0 pb-2 hide-very-large">
+      <div class="section-title-dark hide-big">
+        <p class="ml-3 text-center text-white my-2 text-nowrap">
+          {{ locales.leadership }}
+        </p>
+        <p class="mr-3 text-center text-white my-2 text-nowrap">
+          {{ locales.individualContributors }}
+        </p>
+      </div>
+      <div class="section-title-dark">
+        <p class="ml-3 text-center text-white my-2 text-nowrap">
+          {{ locales.leadership }}
+        </p>
+        <p class="mr-3 text-center text-white my-2 text-nowrap">
+          {{ locales.individualContributors }}
+        </p>
+      </div>
+    </div>
+
+    <div class="container-fluid grid-box p-0 pb-2">
+      <div *ngIf="barOperationalData" class="bar-operational w-100 rounded-lg">
+        <p class="text-white text-center text-uppercase font-weight-bold">
+          {{ locales.operational }}
+        </p>
+      </div>
+
+      <div
+        #barOperationalData
+        class="grid-area rounded-lg position-relative"
+        fxLayout="row"
+        fxLayoutAlign="flex-start space-between"
+      >
+        <div fxLayout="column" class="w-50">
+          <div
+            class="w-100"
+            *ngFor="
+              let leadershipContributor of form.value.operational
+                .salaryMarkStructure.leadershipContributors.controls
+            "
+          >
+            <div class="d-flex mt-3 mb-3">
+              <div class="label">
+                <p class="ml-3 my-2">{{ leadershipContributor.value.code }}</p>
+              </div>
+              <div class="bar-operational-style w-100 mx-3">
+                <p class="text-center pl-3 text-black">
+                  {{ leadershipContributor.value.level }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          fxLayout="column"
+          class="w-50 separator position-relative align-right"
+        >
+          <div
+            class="w-100"
+            *ngFor="
+              let individualContributor of form.value.operational
+                .salaryMarkStructure.individualContributors.controls
+            "
+          >
+            <div class="d-flex mt-3 mb-3">
+              <div class="label">
+                <p class="ml-3 my-2">{{ individualContributor.value.code }}</p>
+              </div>
+              <div class="bar-operational-style w-100 mx-3">
+                <p class="text-center pl-3 text-black">
+                  {{ individualContributor.value.level }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid grid-box-header p-0 hide-very-large">
+        <div class="section-title">
+          <p
+            class="text-center font-weight-bold dividers-text my-2 text-nowrap"
+          >
+            {{ locales.yoursCompany }}
+          </p>
+        </div>
+      </div>
+
+      <div class="container-fluid grid-box-header p-0 hide-very-large">
+        <div class="section-title-dark">
+          <p class="ml-3 text-center text-white my-2 text-nowrap">
+            {{ locales.leadership }}
+          </p>
+          <p class="mr-3 text-center text-white my-2 text-nowrap">
+            {{ locales.individualContributors }}
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="grid-area rounded-lg position-relative"
+        fxLayout="row"
+        fxLayoutAlign="center"
+        *ngIf="barOperationalData"
+      >
+        <div
+          fxLayout="column"
+          class="w-50"
+          fxLayoutAlign="space-between"
+          [formGroup]="
+            form.get('operational').value.yourCompanyStructure
+              .leadershipContributors
+          "
+        >
+          <div
+            class="w-100 last-item"
+            *ngFor="
+              let leadershipContributor of form.get('operational').value
+                .yourCompanyStructure.leadershipContributors.controls;
+              let i = index
+            "
+          >
+            <div class="d-flex mt-3 mb-3">
+              <div class="ml-3 flex-align-center" [formGroupName]="i">
+                <app-switch-button
+                  formControlName="active"
+                  [disabled]="
+                    permissions && permissions.canEditLevels && !isEdit
+                  "
+                  SliderGreen="true"
+                  (click)="isEdit ? invertValue(leadershipContributor) : ''"
+                ></app-switch-button>
+              </div>
+
+              <div
+                class="bar-strategic w-100 mx-3 rounded-lg flex-align-center"
+                [formGroupName]="i"
+              >
+                <label class="sr-only" for="formInputTitle">{{
+                  locales.level
+                }}</label>
+                <input
+                  type="text"
+                  class="form-control input-operational-style pl-3"
+                  [readonly]="
+                    !leadershipContributor.value.active ||
+                    (!(permissions && !permissions.canEditLevels) && !isEdit)
+                  "
+                  formControlName="level"
+                  placeholder=""
+                  [ngClass]="
+                    !permissions.canEditLevels
+                      ? 'input-edit-values'
+                      : 'input-operational-style'
+                  "
+                />
+              </div>
+            </div>
+            <label
+              class="required-field pl-3"
+              *ngIf="
+                leadershipContributor.value.active &&
+                leadershipContributor.controls.level.errors?.required
+              "
+            >
+              *Preenchimento Obrigatorio
+            </label>
+          </div>
+        </div>
+        <div
+          fxLayout="column"
+          class="w-50 separator position-relative align-right"
+          fxLayoutAlign="space-between"
+          [formGroup]="
+            form.get('operational').value.yourCompanyStructure
+              .individualContributors
+          "
+        >
+          <div
+            class="w-100 last-item"
+            *ngFor="
+              let individualContributor of form.get('operational').value
+                .yourCompanyStructure.individualContributors.controls;
+              let i = index
+            "
+          >
+            <div class="d-flex mt-3 mb-3">
+              <div class="ml-3 flex-align-center" [formGroupName]="i">
+                <app-switch-button
+                  formControlName="active"
+                  [disabled]="
+                    permissions && permissions.canEditLevels && !isEdit
+                  "
+                  SliderGreen="true"
+                  (click)="isEdit ? invertValue(individualContributor) : ''"
+                ></app-switch-button>
+              </div>
+              <div
+                class="bar-strategic w-100 mx-3 rounded-lg flex-align-center"
+                [formGroupName]="i"
+              >
+                <label class="sr-only" for="formInputTitle">{{
+                  locales.level
+                }}</label>
+                <input
+                  type="text"
+                  class="form-control input-operational-style pl-3"
+                  [readonly]="
+                    !individualContributor.value.active ||
+                    (!(permissions && !permissions.canEditLevels) && !isEdit)
+                  "
+                  formControlName="level"
+                  placeholder=""
+                  [ngClass]="
+                    !permissions.canEditLevels
+                      ? 'input-edit-values'
+                      : 'input-operational-style'
+                  "
+                />
+              </div>
+            </div>
+            <label
+              class="required-field pl-3"
+              *ngIf="
+                individualContributor.value.active &&
+                individualContributor.controls.level.errors?.required
+              "
+            >
+              *Preenchimento Obrigatorio
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

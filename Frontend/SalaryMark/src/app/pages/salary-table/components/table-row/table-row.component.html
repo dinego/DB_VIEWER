@@ -1,0 +1,94 @@
+<div class="table-row-container" [ngClass.gt-lg]="{ 'full-size': true }">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    class="{{ rowSelect }}"
+  >
+    <div
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      class="check-all-container"
+    >
+      <input
+        #input
+        class="cb-item-body"
+        id="{{ 'rowSalaryIndex' + index }}"
+        [value]="index"
+        type="checkbox"
+        [checked]="isActive"
+        (change)="filterItem($event.target.checked)"
+      />
+      <label
+        class="lb-item pt-1 m-0"
+        for="{{ 'rowSalaryIndex' + index }}"
+      ></label>
+    </div>
+
+    <div
+      class="items"
+      [ngClass.gt-lg]="{ 'full-size': true }"
+      fxLayout="row"
+      fxLayoutAlign="center"
+      *ngFor="let item of getColumnsFilter(); let i = index"
+      (click)="i === 0 ? clickExpandItem(item.subItems) : null"
+    >
+      <label *ngIf="item.type === 'Double' && item.colPos !== 0">
+        {{ item.value | number: "1.0-3" }}
+      </label>
+      <label *ngIf="item.type !== 'Double' || item.colPos === 0">
+        {{ item.value }}
+      </label>
+      <img
+        *ngIf="i === 0 && headers[i].isChecked"
+        class="ml-3 mt-1"
+        src="{{ changeIcon }}"
+      />
+    </div>
+  </div>
+  <div
+    *ngIf="isRowSelect && listPositions"
+    [ngClass.gt-lg]="{ 'full-size': true }"
+    class="card mt-1 mb-1 p-3 info-expand-container"
+    fxLayout="row"
+    fxLayout.xs="column"
+  >
+    <div fxLayout="column" fxFlex="65">
+      <div fxLayout="column" *ngFor="let item of listPositions; let i = index">
+        <div class="pl-3" fxLayout="row" fxLayoutAlign="start center">
+          <i
+            class="mr-3 fas fa-user {{ item.type === 2 ? 'text-info' : '' }}"
+          ></i>
+          <label class="m-0">
+            {{ item.name }}
+          </label>
+        </div>
+        <div
+          *ngIf="!(i === listPositions.length - 1)"
+          class="mt-2 mb-2 separator"
+        ></div>
+      </div>
+    </div>
+    <div
+      class="mt-2"
+      fxFlex="35"
+      fxLayoutAlign="baseline end"
+      fxLayoutAlign.xs="start center"
+      fxLayout="column"
+    >
+      <div>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <i class="mr-3 fas fa-user"></i>
+          <label class="m-0">
+            {{ locales.occupantCLT }}
+          </label>
+        </div>
+        <div class="mt-2" fxLayout="row" fxLayoutAlign="start center">
+          <i class="mr-3 text-info fas fa-user"></i>
+          <label class="m-0">
+            {{ locales.occupantPJ }}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div
+  class="dropdown button-list-light-container justify-content-center"
+  id="dropdownMenuButtonVisualization"
+  data-toggle="dropdown"
+  *ngIf="selectedItem"
+>
+  <div class="pr-2 table-icon d-flex align-items-center">
+    <img src="../../../../assets/imgs/svg/{{ selectedItem.image }}-white.svg" />
+  </div>
+  <div>
+    <i class="fas fa-angle-down"> </i>
+  </div>
+
+  <div
+    class="dropdown-menu item-list-menu-light"
+    aria-labelledby="dropdownMenuButtonVisualization"
+  >
+    <ng-container *ngFor="let item of list">
+      <div
+        class="dropdown-item d-flex justify-content-between"
+        (click)="changeText(item)"
+      >
+        <span
+          [ngClass]="{ selected: selectedItem.title == item.title }"
+          class="items"
+        >
+          {{ item.title }}
+        </span>
+
+        <img
+          src="../../../../assets/imgs/svg/{{ item.image }}{{
+            selectedItem.title === item.title ? '-selected' : '-gray'
+          }}.svg"
+          class="mr-2"
+        />
+      </div>
+    </ng-container>
+  </div>
+</div>

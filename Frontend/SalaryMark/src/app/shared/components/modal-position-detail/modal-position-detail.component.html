@@ -1,0 +1,85 @@
+<div
+  class="p-3 w-100"
+  *ngIf="positionDetail && positionDetail.header && permissions"
+>
+  <div class="title-modal d-flex justify-content-between flex-row">
+    <div class="icon-title d-flex align-items-center">
+      <img
+        src="../../../../assets/imgs/svg/position-background.svg"
+        class="mr-2"
+      />
+      <h6 class="title m-0">{{ positionDetail.header.position }}</h6>
+    </div>
+    <button type="button" class="close btn-close" (click)="modalRef.hide()">
+      <img src="../../../../assets/imgs/svg/close-modal.svg" />
+    </button>
+  </div>
+  <hr class="w-100 mt-2 mb-2" />
+  <div class="body-modal">
+    <tabset>
+      <tab
+        [heading]="titlesTabs.positionDetail"
+        (selectTab)="onSelect($event)"
+        *ngIf="permissions.canEditListPosition"
+      >
+        <app-position-detail-tab
+          *ngIf="positionDetail && levelCombo && profileCombo"
+          [moduleId]="moduleId"
+          [gsmGlobalLabel]="gsmGlobalLabel"
+          [positionDetail]="positionDetail"
+          [listParameters]="listParameters"
+          [levelCombo]="levelCombo"
+          [profileCombo]="profileCombo"
+          [canEditListPosition]="permissions.canEditListPosition"
+          [modalRef]="modalRef"
+          (hideModalPosition)="hideModalPositionByConfirm($event)"
+          (showModalPosition)="showModalPosition()"
+        ></app-position-detail-tab>
+      </tab>
+      <tab
+        [heading]="titlesTabs.salaryTable"
+        (selectTab)="onSelect($event)"
+        *ngIf="permissions"
+      >
+        <app-salary-table-tab
+          [moduleId]="moduleId"
+          [contractTypeId]="contractTypeId"
+          [hoursTypeId]="hoursTypeId"
+          [positionId]="positionId"
+          [unitId]="unitId"
+          [tableId]="tableId"
+          [modalRef]="modalRef"
+          (hideModalPosition)="hideModalPositionByConfirm($event)"
+          (showModalPosition)="showModalPosition()"
+          *ngIf="selectedTab === titlesTabs.salaryTable"
+        ></app-salary-table-tab>
+      </tab>
+      <tab
+        [heading]="titlesTabs.framework"
+        (selectTab)="onSelect($event)"
+        *ngIf="permissions"
+        ><app-framework-tab
+          *ngIf="selectedTab === titlesTabs.framework"
+        ></app-framework-tab
+      ></tab>
+      <tab (selectTab)="onSelect($event)" *ngIf="permissions">
+        <ng-template tabHeading>
+          <img src="../../../../assets/imgs/svg/lobbu-icon.png" />
+        </ng-template>
+        <app-lobbu-tab [descriptionPosition]="positionDetail"></app-lobbu-tab
+      ></tab>
+      <tab
+        [heading]="titlesTabs.careerTrack"
+        (selectTab)="onSelect($event)"
+        *ngIf="permissions"
+        ><app-career-track-tab
+          [moduleId]="moduleId"
+          [modalRef]="modalRef"
+          (hideModalPosition)="hideModalPositionByConfirm($event)"
+          (showModalPosition)="showModalPosition()"
+          *ngIf="selectedTab === titlesTabs.careerTrack"
+        ></app-career-track-tab
+      ></tab>
+    </tabset>
+  </div>
+</div>

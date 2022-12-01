@@ -1,0 +1,34 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.title-list {
+  color: $black-58;
+  font-weight: 600;
+  font-size: $size12;
+  text-transform: uppercase;
+}
+.has-error {
+  & > .title-list {
+    color: $error;
+  }
+  & > .form-control {
+    border: $size1 solid $error !important;
+  }
+}
+
+.file-import {
+  height: $size31;
+  background: transparent
+    linear-gradient(180deg, $orange-f7 0%, $orange-f2 100%) 0% 0% no-repeat
+    padding-box;
+  box-shadow: $size0 $size2 $size6 $shadow;
+  border-radius: $size42;
+  color: $white;
+  font-size: $size14;
+
+  & > img {
+    height: $size18;
+    width: $size18;
+    cursor: pointer;
+  }
+}

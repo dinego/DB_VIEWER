@@ -1,0 +1,60 @@
+<div class="table-row-container" [ngClass.gt-lg]="{ 'full-size': true }">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    class="{{ rowSelect }}"
+  >
+    <div
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      class="check-all-container"
+    >
+      <input
+        #input
+        class="cb-item-body"
+        id="{{ 'rowSalaryIndex' + index }}"
+        [value]="index"
+        type="checkbox"
+        [checked]="isActive"
+        (change)="filterItem($event.target.checked)"
+      />
+      <label
+        class="lb-item pt-1 m-0"
+        for="{{ 'rowSalaryIndex' + index }}"
+      ></label>
+    </div>
+
+    <div
+      [ngClass.gt-lg]="{ 'full-size': true }"
+      class="items"
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      *ngFor="let item of getColumnsFilter(); let i = index"
+      (click)="onClickItem(item)"
+    >
+      <label
+        *ngIf="
+          headers[i].colName === 'Salário' || headers[i].colName === 'Salary'
+        "
+      >
+        {{ getFormatValue(item.value) | number: "1.0-3" }}
+      </label>
+      <label
+        *ngIf="
+          item.type !== 'String' &&
+          headers[i].colName !== 'Salário' && headers[i].colName !== 'Salary'
+        "
+      >
+        {{ getFormatValue(item.value) | number: "1.0-3" }}
+      </label>
+      <label
+        *ngIf="
+          item.type === 'String' &&
+          (headers[i].colName !== 'Salário' && headers[i].colName !== 'Salary')
+        "
+      >
+        {{ item.value }}
+      </label>
+    </div>
+  </div>
+</div>

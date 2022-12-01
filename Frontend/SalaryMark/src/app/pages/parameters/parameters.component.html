@@ -1,0 +1,141 @@
+<div class="parameters-nav-header-container container">
+  <div
+    fxLayout="row wrap"
+    fxFlex="flex-grow"
+    class="btn-content d-flex justify-content-center"
+  >
+    <div
+      class="btn-area"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      *ngIf="canAccessDisplayConfiguration()"
+    >
+      <button
+        class="btn btn-default"
+        routerLinkActive="activated-route"
+        [routerLink]="routerNames.PARAMETERS.CONFIGURE_DISPLAY"
+      >
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span>{{ locales.configureDisplay }}</span>
+        </div>
+      </button>
+    </div>
+
+    <div
+      class="btn-area"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      *ngIf="canAccess(subModules.levels)"
+    >
+      <button
+        class="btn btn-default"
+        routerLinkActive="activated-route"
+        [routerLink]="routerNames.PARAMETERS.LEVELS"
+      >
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span>{{ locales.levels }}</span>
+        </div>
+      </button>
+    </div>
+
+    <div
+      class="btn-area"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      *ngIf="canAccess(subModules.salaryStrategy)"
+    >
+      <button
+        class="btn btn-default"
+        routerLinkActive="activated-route"
+        [routerLink]="routerNames.PARAMETERS.SALARY_STRATEGY"
+      >
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span>{{ locales.salaryStrategy }}</span>
+        </div>
+      </button>
+    </div>
+    <div
+      class="btn-area"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      *ngIf="
+        canAccess(subModules.globalLabels) &&
+        permissions &&
+        permissions.canRenameColumns
+      "
+    >
+      <button
+        class="btn btn-default"
+        routerLinkActive="activated-route"
+        [routerLink]="routerNames.PARAMETERS.GLOBAL_LABELS"
+      >
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span>{{ locales.globalLabel }}</span>
+        </div>
+      </button>
+    </div>
+    <div
+      class="btn-area"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      *ngIf="
+        canAccess(subModules.hourlyBasis) &&
+        userParameterAccess &&
+        userParameterAccess.showHourlyBasis
+      "
+    >
+      <button
+        class="btn btn-default"
+        routerLinkActive="activated-route"
+        [routerLink]="routerNames.PARAMETERS.HOURLY_BASIS"
+      >
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span>{{ locales.hourlyBasis }}</span>
+        </div>
+      </button>
+    </div>
+
+    <div
+      class="btn-area"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      *ngIf="
+        canAccess(subModules.corporateSettings) &&
+        userParameterAccess &&
+        userParameterAccess.showPjSettings
+      "
+    >
+      <button
+        class="btn btn-default"
+        routerLinkActive="activated-route"
+        [routerLink]="routerNames.PARAMETERS.CORPORATE_SETTINGS"
+      >
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span>{{ locales.corporateSettings }}</span>
+        </div>
+      </button>
+    </div>
+
+    <div
+      class="btn-area"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      *ngIf="
+        canAccess(subModules.users) &&
+        userParameterAccess &&
+        userParameterAccess.showUsers
+      "
+    >
+      <button
+        class="btn btn-default"
+        routerLinkActive="activated-route"
+        [routerLink]="routerNames.PARAMETERS.USERS"
+      >
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span>{{ locales.users }}</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

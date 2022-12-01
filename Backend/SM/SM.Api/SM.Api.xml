@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SM.Api</name>
+    </assembly>
+    <members>
+        <member name="M:SM.Api.Controllers.FakeController.Get(System.Int64)">
+            <summary>
+            Fake controller return a fake response object
+            </summary>
+            <param name="fakeId">my fake id</param>
+            <returns>fake object response</returns>
+            <response code="200">FakeResponse retorned with successfully</response>
+            <response code="400">Internal Error</response>
+        </member>
+        <member name="M:SM.Api.Controllers.FakeController.Post(SM.Application.Fake.Command.FakeSaveRequest)">
+            <summary>
+            Fake post controller
+            </summary>
+            <param name="request">request object</param>
+            <returns>message</returns>
+            <response code="200">return message with successfully</response>
+            <response code="400">return message Internal Error</response>
+        </member>
+    </members>
+</doc>

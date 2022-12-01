@@ -1,0 +1,112 @@
+<div class="container-table m-3">
+  <div class="row row-titles m-0">
+    <div class="title-filter col-md-3 mr-3">
+      {{ filterText }}
+    </div>
+
+    <div
+      class="col-md-3 text-center mr-3 titles title-colored-{{ i }}"
+      *ngFor="let item of rowCollapse; let i = index"
+    >
+      {{ item }}
+    </div>
+  </div>
+
+  <div
+    class="row rows-collapsers m-0"
+    *ngFor="let rowItem of rowItems; let i = index"
+  >
+    <!--left col with titles-->
+    <div class="col-md-3 body-rows mr-3">
+      <div class="row main-row">
+        <div
+          class="col-md-12 pt-2 pb-2 d-flex align-items-center {{
+            i % 2 == 0 ? 'bg-gray' : 'bg-white'
+          }}"
+          (click)="collapseGroupControl[i] = !collapseGroupControl[i]"
+          [attr.aria-expanded]="!collapseGroupControl[i]"
+        >
+          <span class="mr-auto">{{ rowItem.titleCollapser }}</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div
+          class="col-md-12 size-inner {{ j % 2 == 0 ? 'bg-white' : 'bg-gray' }}"
+          *ngFor="let inside of rowItem.rowsInside; let j = index"
+          [collapse]="!collapseGroupControl[i]"
+          [isAnimated]="true"
+        >
+          <div class="px-3 py-2">
+            <span>{{ inside.title }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--col with values-->
+    <div class="col-md-3 col-data mr-3">
+      <div class="row">
+        <div
+          class="col-md-12 pt-2 pb-2 text-center {{
+            i % 2 == 0 ? 'bg-gray' : 'bg-white'
+          }}"
+        >
+          <span>{{ rowItem.belowValue }}%</span>
+        </div>
+        <div
+          class="col-md-12 size-inner text-center {{
+            j % 2 == 0 ? 'bg-white' : 'bg-gray'
+          }}"
+          *ngFor="let inside of rowItem.rowsInside; let j = index"
+          [collapse]="!collapseGroupControl[i]"
+          [isAnimated]="true"
+        >
+          <div class="px-3 py-2">&nbsp;</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-data mr-3">
+      <div class="row">
+        <div
+          class="col-md-12 pt-2 pb-2  text-center {{
+            i % 2 == 0 ? 'bg-gray' : 'bg-white'
+          }} "
+        >
+          <span>{{ rowItem.insideValue }}%</span>
+        </div>
+        <div
+          class="col-md-12 size-inner text-center {{
+            j % 2 == 0 ? 'bg-white' : 'bg-gray'
+          }}"
+          *ngFor="let inside of rowItem.rowsInside; let j = index"
+          [collapse]="!collapseGroupControl[i]"
+          [isAnimated]="true"
+        >
+          <div class="px-3 py-2">
+            <span>{{ inside.value }}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-data">
+      <div class="row">
+        <div
+          class="col-md-12 pt-2 pb-2  text-center {{
+            i % 2 == 0 ? 'bg-gray' : 'bg-white'
+          }}"
+        >
+          <span>{{ rowItem.aboveValue }}%</span>
+        </div>
+        <div
+          class="col-md-12 size-inner text-center {{
+            j % 2 == 0 ? 'bg-white' : 'bg-gray'
+          }}"
+          *ngFor="let inside of rowItem.rowsInside; let j = index"
+          [collapse]="!collapseGroupControl[i]"
+          [isAnimated]="true"
+        >
+          <div class="px-3 py-2">&nbsp;</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

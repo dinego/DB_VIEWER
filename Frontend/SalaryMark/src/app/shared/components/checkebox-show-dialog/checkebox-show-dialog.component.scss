@@ -1,0 +1,97 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.checkedBox-show-dialog-container {
+  .visible-check-container {
+    height: 70vh;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: $size10;
+    }
+  }
+
+  .checked-name {
+    font-size: $remSize09;
+  }
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  .cbModalShow + label:before {
+    border: $size1 solid $black-40;
+    content: "\00a0";
+    display: inline-block;
+    font: $size16;
+    margin: 0 0.9em 0 0;
+    padding: 0;
+    vertical-align: top;
+    width: $size24;
+    height: $size24;
+    border-radius: $size3;
+  }
+
+  .cbModalShow:checked + label:before {
+    background: $white;
+    color: $black-40;
+    content: "\2714";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cbModalShow:disabled + label:before {
+    color: $white;
+    text-align: center;
+    border: $size1 solid $gray-d0;
+    background: $gray-d0;
+    content: "\2714";
+  }
+
+  .cbModalShow:checked + label:after {
+    font-weight: bold;
+  }
+
+  .cbModalShow:focus + label::before {
+    outline: rgb(59, 153, 252) auto $size5;
+  }
+
+  .cbModalShow + label {
+    display: flex;
+    align-items: center;
+    font-size: $remSize09;
+    margin-bottom: $remSize05;
+    cursor: pointer;
+  }
+  .line {
+    height: 100%;
+    border: $size1 solid #707070;
+    opacity: 0.2;
+    margin-left: $size10;
+    margin-right: $size10;
+  }
+}
+
+.btn-show-modal {
+  background: $white 0% 0% no-repeat padding-box;
+  border: $size1 solid $orange-f0;
+  color: $orange-f0;
+  width: $size46;
+  height: $size39;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $size14;
+
+  img {
+    width: $size21;
+    height: $size21;
+  }
+}
+.btn-show-modal:focus {
+  box-shadow: none;
+}
+
+.set-padding-end {
+  padding-left: 235px;
+}

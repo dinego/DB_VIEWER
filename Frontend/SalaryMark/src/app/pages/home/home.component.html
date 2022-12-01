@@ -1,0 +1,327 @@
+<div id="home" class="mt-4">
+  <div class="row rowheader mx-1">
+    <div class="col coltitle p-0 m-0">
+      <h3 class="text-dark">
+        Olá,
+        <span class="text-dark-blue font-weight-bold">
+          {{ replaceUserName(user.name) }}
+        </span>
+      </h3>
+    </div>
+  </div>
+  <hr class="mt-0 mb-0 mx-2 hr-name" />
+  <div class="d-flex flex-column">
+    <div class="mt-2 slider-controller mb-4" #defineWidthMsg>
+      <div
+        [ngClass]="[
+          swiperIndex === 0 ? 'control-item-active' : 'control-item',
+          notificationsList.notifications.length > 0
+            ? 'padding-reset'
+            : 'message-icon'
+        ]"
+        (click)="gotToSlide(0)"
+        class="message-icon"
+      >
+        <span class="item-page align-items-center d-flex"> Mensagens </span>
+        <div
+          class="notification-label"
+          *ngIf="
+            notificationsList &&
+            notificationsList.notifications &&
+            getTotalNotReaded() > 0
+          "
+        >
+          {{ getTotalNotReaded() }}
+        </div>
+      </div>
+
+      <div
+        [ngClass]="swiperIndex === 1 ? 'control-item-active' : 'control-item'"
+        (click)="gotToSlide(1)"
+      >
+        <span class="item-page align-items-center d-flex ajustc-padding-button"
+          >Conteúdo</span
+        >
+      </div>
+    </div>
+
+    <swiper
+      #swiperRef
+      (swiper)="onSwiper($event)"
+      (slideChange)="onSlideChange($event)"
+      [pagination]="true"
+      class="mySwiper"
+    >
+      <ng-template #firstSlide>
+        <ng-template swiperSlide>
+          <div
+            class="
+              d-flex
+              justify-content-md-start justify-content-around
+              flex-wrap
+              pr-2
+            "
+          >
+            <app-slider-card
+              class="pr-md-2"
+              *ngFor="let item of itemsToSlide"
+              imageLink="{{ item.image }}"
+              label="{{ item.label }}"
+              routeLink="{{ item.route }}"
+            ></app-slider-card>
+          </div>
+        </ng-template>
+      </ng-template>
+      <ng-template swiperSlide>
+        <div class="cs-home-content mt-1">
+          <div
+            class="
+              d-flex
+              align-content-center
+              justify-content-center
+              align-self-center
+            "
+            *ngIf="
+              !notificationsList.notifications.length && call?.closed;
+              else displayNotificationsList
+            "
+          >
+            <h5 class="text-secondary">Você não possui mensagens</h5>
+          </div>
+          <ng-template #displayNotificationsList>
+            <div
+              id="notificationsMobile"
+              class="notifications h-100 pt-1 pb-2 notifications-card-width"
+              infiniteScroll
+              [infiniteScrollDistance]="2"
+              [infiniteScrollThrottle]="150"
+              [scrollWindow]="false"
+              (scrolled)="onScrollDown()"
+            >
+              <accordion
+                class="mr-2"
+                *ngFor="let notification of notificationsList.notifications"
+                [id]="'notification' + notification.id"
+              >
+                <accordion-group
+                  [isOpen]="isNotificationCollapsed(notification)"
+                  (isOpenChange)="
+                    handleNotificationCollapsedState(notification, $event)
+                  "
+                  class="mb-3"
+                >
+                  <button
+                    accordion-heading
+                    class="btn header w-100 px-3 py-2"
+                    [ngClass]="{
+                      '-isopen': isNotificationCollapsed(notification)
+                    }"
+                    type="button"
+                  >
+                    <div class="controls w-100">
+                      <div class="d-flex justify-content-between">
+                        <span
+                          class="title"
+                          [ngClass]="{
+                            '-notreaded': isNotificationsNotReaded(notification)
+                          }"
+                        >
+                          {{ notification.title }}
+                        </span>
+                        <div (click)="deleteNotification(notification)">
+                          <img src="../../../assets/imgs/svg/close.svg" />
+                        </div>
+                      </div>
+                    </div>
+                    <span
+                      class="descrition w-100 mt-0"
+                      [ngClass]="{
+                        '-notreaded': isNotificationsNotReaded(notification)
+                      }"
+                    >
+                      <ng-container
+                        *ngIf="!isNotificationCollapsed(notification)"
+                      >
+                        <p
+                          class="mt-1 m-0 p-0 mb-2"
+                          [innerHTML]="
+                            handleOverflowOfContent(
+                              notification.description,
+                              isMobileView ? 150 : 300
+                            )
+                          "
+                        ></p>
+
+                        <div class="pt-4 pb-2">
+                          <span
+                            class="showmore"
+                            *ngIf="!isNotificationCollapsed(notification)"
+                          >
+                            <img
+                              src="../../../assets/imgs/svg/arrow_down_v2.svg"
+                              alt=""
+                            />
+                            ver mais
+                          </span>
+                        </div>
+
+                        <span class="date">
+                          {{ notification.create | date: "dd/MM/yyyy" }}
+                        </span>
+                      </ng-container>
+                    </span>
+                  </button>
+                  <ng-container *ngIf="isNotificationCollapsed(notification)">
+                    <span
+                      [ngClass]="{
+                        notreaded: isNotificationsNotReaded(notification)
+                      }"
+                    >
+                      <p [innerHTML]="notification.description"></p>
+                    </span>
+                    <span
+                      class="showless"
+                      (click)="
+                        handleNotificationCollapsedState(notification, false)
+                      "
+                    >
+                      <img
+                        src="../../../assets/imgs/svg/arrow_up_v2.svg"
+                        alt=""
+                      />
+                      ver menos
+                    </span>
+                    <span class="date">
+                      {{ notification.create | date: "dd/MM/yyyy" }}
+                    </span>
+                  </ng-container>
+                </accordion-group>
+              </accordion>
+            </div>
+          </ng-template>
+        </div>
+      </ng-template>
+
+      <ng-template swiperSlide>
+        <div class="swiper-content-overlap mt-1 pb-1">
+          <div
+            class="
+              d-flex
+              flex-column
+              section-style
+              mb-3
+              mr-2
+              mt-1
+              ml-1
+              px-3
+              py-2
+            "
+          >
+            <div class="d-flex flex-column">
+              <div class="title-video-card">Webinar</div>
+              <div class="description-video-card mb-1">
+                Especialistas de Remuneração debatem temas importantes para o RH
+                e apresentam nossos estudos, trazendo insights e explicações
+                mais técnicas.
+              </div>
+            </div>
+            <div>
+              <swiper class="swiper-video" [config]="swiperConfig">
+                <ng-template
+                  swiperSlide
+                  *ngFor="let video of videos; trackBy: trackByIndex"
+                >
+                  <div class="card-video">
+                    <div (click)="openVideoDetail(video)">
+                      <span class="video-tag-image">
+                        <img
+                          src="{{
+                            video.snippet.thumbnails.maxres
+                              ? video.snippet.thumbnails.maxres.url
+                              : video.snippet.thumbnails.medium.url
+                          }}"
+                          alt=""
+                        />
+                      </span>
+                      <div class="content-text">
+                        <div class="title">
+                          {{ handleOverflowOfContent(video.snippet.title, 29) }}
+                        </div>
+                        <p class="video-date p-0 m-0">
+                          {{ video.snippet.publishedAt | date: "dd/MM/yyyy" }}
+                        </p>
+                        <p class="descrition p-0 m-0">
+                          {{
+                            handleOverflowOfContent(
+                              video.snippet.description,
+                              50
+                            )
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </swiper>
+            </div>
+          </div>
+          <div class="d-flex flex-column section-style mr-2 ml-1 px-3 py-2">
+            <div class="d-flex flex-column">
+              <div class="title-video-card">Podcasts</div>
+              <div class="description-video-card mb-2">
+                O "Quinto dia útil" vem pra provar que remuneração pode ser tema
+                de conversas leves e descontraídas. <br />
+                Vamos descomplicar assuntos técnicos, ouvir opiniões de
+                especialistas na área e trazer diferentes pontos de vista sobre
+                tudo que tange o universo dos salários e do RH.
+              </div>
+            </div>
+            <div>
+              <swiper
+                class="swiper-video"
+                [config]="swiperConfig"
+                [navigation]="true"
+              >
+                <ng-template
+                  swiperSlide
+                  *ngFor="let video of videosPodcasts; trackBy: trackByIndex"
+                >
+                  <div class="card-video">
+                    <div (click)="openVideoDetail(video)">
+                      <span class="video-tag-image">
+                        <img
+                          src="{{
+                            video.snippet.thumbnails.maxres
+                              ? video.snippet.thumbnails.maxres.url
+                              : video.snippet.thumbnails.medium.url
+                          }}"
+                          alt=""
+                        />
+                      </span>
+                      <div class="content-text">
+                        <div class="title">
+                          {{ handleOverflowOfContent(video.snippet.title, 29) }}
+                        </div>
+                        <p class="video-date p-0 m-0">
+                          {{ video.snippet.publishedAt | date: "dd/MM/yyyy" }}
+                        </p>
+                        <p class="descrition p-0 m-0">
+                          {{
+                            handleOverflowOfContent(
+                              video.snippet.description,
+                              50
+                            )
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </swiper>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </swiper>
+  </div>
+</div>

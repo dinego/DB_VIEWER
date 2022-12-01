@@ -1,0 +1,24 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+::ng-deep {
+  .nav-tabs .nav-link:hover {
+    background-color: rgb(245, 245, 245);
+    color: $black-1f;
+  }
+
+  .nav-link {
+    color: $black-1f;
+    &.active {
+      font-weight: 600;
+      border-bottom: $size3 solid $orange-f7 !important;
+      border-top: 0;
+      border-right: 0;
+      border-left: 0;
+    }
+  }
+
+  .full-size {
+    max-width: 80% !important;
+  }
+}

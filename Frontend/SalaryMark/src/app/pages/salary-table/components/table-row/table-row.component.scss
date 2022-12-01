@@ -1,0 +1,108 @@
+@import 'src/app/shared/styles/colors.scss';
+@import 'src/app/shared/styles/dimensions.scss';
+
+.table-row-container {
+  display: flex;
+  flex-direction: column;
+  .row-light-container {
+    width: 100% !important;
+    background-color: $white;
+    color: $black-3e;
+
+    font-size: $remSize08;
+  }
+  .row-light-container:hover {
+    background-color: $gray-da;
+    color: $black;
+
+  }
+  .row-dark-container {
+    width: 100% !important;
+    background-color: $gray-eb;
+    color: $black-3e;
+
+    font-size: $remSize08;
+    width: fit-content;
+  }
+  .row-dark-container:hover {
+    background-color: $gray-da;
+    color: $black;
+
+  }
+  .row-expand {
+    width: 100% !important;
+    background-color: $gray-da;
+    color: $black;
+
+    font-size: $remSize08;
+  }
+
+  .check-all-container {
+    padding: $size0 $size10;
+    input[type='checkbox'] {
+      display: none;
+    }
+    .cb-item-body + label:before {
+      border: $size1 solid $gray-8c;
+      content: '\00a0';
+      display: inline-block;
+      font: 16px/1em sans-serif;
+      height: $remSize09;
+      margin: 0;
+      padding: 0;
+      vertical-align: top;
+      width: $remSize09;
+      border-radius: $size3;
+    }
+    .cb-item-body:checked + label:before {
+      background: $gray-8c;
+      color: $white;
+      background-image: url('/assets/imgs/svg/foursquare-check-in.svg');
+      background-size: 10px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .items {
+    border-left: $size1 solid $gray-ca;
+    min-width: $size200;
+    max-width: $size300;
+    padding: $size8 $size6;
+    label {
+      margin-bottom: 0;
+    }
+
+    img {
+      cursor: pointer;
+      height: $size12;
+      width: $size12;
+    }
+  }
+}
+
+.info-expand-container {
+  box-shadow: 0 $size3 $size6 $gray-box-shadow-00;
+  width: $fullSize;
+
+  .separator {
+    background-color: $gray-70;
+    height: $size1;
+    opacity: 0.3;
+    width: $fullSize;
+  }
+
+  label {
+    color: $black-2f;
+
+    font-size: $remSize075;
+  }
+  i {
+    font-size: $remSize07;
+  }
+}
+
+.full-size {
+  width: 100%;
+  max-width: inherit !important;
+}

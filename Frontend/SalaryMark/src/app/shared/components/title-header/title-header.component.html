@@ -1,0 +1,25 @@
+<div class="d-flex justify-content-between align-items-center mt-0">
+  <div
+    class="d-flex justify-content-between align-items-center w-100 mb-2 flex-wrap"
+  >
+    <img
+      *ngIf="hasBack"
+      src="../../../../assets/imgs/svg/back-item.svg"
+      class="link-item mr-2"
+      [tooltip]="'Voltar'"
+      [placement]="'bottom'"
+      (click)="backPage()"
+    />
+    <label class="title pr-3">
+      {{ title | titlecase }}
+    </label>
+    <div
+      class="d-flex flex-grow-1 align-items-center justify-content-end {{
+        customClass
+      }}"
+    >
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>
+<hr class="divider-title mt-1 mb-3" />

@@ -1,0 +1,141 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.parameters-hourly-basis-container {
+  padding-right: $size50;
+  padding-left: $size50;
+  font-size: $remSize09;
+}
+
+.card-title {
+  margin-top: $remSize1;
+}
+
+.card-header {
+  background-color: transparent;
+  border-bottom: none;
+}
+
+.card-body {
+}
+
+.card-width {
+  width: $remSize19;
+}
+.bottom-separator:before {
+  content: "";
+  position: absolute;
+  left: 5%;
+  bottom: 0;
+  height: 1px;
+  width: 90%;
+  border-bottom: 1px solid $gray-ee;
+}
+
+.flex-align-center {
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+
+.btn-gray {
+  background-color: $gray-ee;
+  border-color: $gray-ee;
+  font-size: $remSize08;
+}
+
+.btn-gray:not(:disabled):not(.disabled).active,
+.btn-gray:not(:disabled):not(.disabled):active,
+.show > .btn-gray.dropdown-toggle {
+  background-color: $gray-95;
+  border-color: $gray-95;
+}
+
+.btn-save {
+  background: transparent 0% 0% no-repeat padding-box;
+  border-width: 2px;
+  border-color: $orange-button;
+  opacity: 1;
+  height: $size40;
+  padding: 0 1.9375rem;
+  text-align: left;
+
+  letter-spacing: $size0;
+  opacity: 1;
+  text-transform: uppercase;
+  font-size: small;
+  background-color: $orange-button;
+  color: $white;
+
+  &:hover {
+    background-color: $white;
+    color: $orange-button;
+
+    .logo {
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  &:disabled {
+    background-color: $gray-f2;
+    color: $gray-65;
+    border-color: $gray-f2;
+  }
+}
+
+.text-style {
+  letter-spacing: $size0;
+  white-space: nowrap;
+  color: $black-40;
+  opacity: 1;
+  font-size: $size18;
+  font-weight: 600;
+}
+
+.font-text-style {
+  letter-spacing: $size0;
+  white-space: nowrap;
+  opacity: 0.8;
+  font-size: $size14;
+}
+
+.font-custom {
+  letter-spacing: $size0;
+  white-space: nowrap;
+  color: $black-58;
+  text-transform: uppercase;
+  opacity: 1;
+  font: normal normal bold $size12 proxima-nova;
+}
+
+.button-list-light-container {
+  border: $size1 solid $border-orange;
+  border-radius: $size2;
+  position: relative;
+  height: $size35;
+  width: auto;
+  display: flex;
+  background-color: $white;
+  align-items: center;
+  cursor: pointer;
+
+  .arrow-icon {
+    height: $size31;
+    width: $size31;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    border-radius: $size2;
+    & > i {
+      height: $size20;
+    }
+  }
+}
+
+.text-size {
+  font-size: $size15;
+}
+.rotate {
+  transform: rotate(180deg);
+}

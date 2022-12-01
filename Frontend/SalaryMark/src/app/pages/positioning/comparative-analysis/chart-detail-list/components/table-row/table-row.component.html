@@ -1,0 +1,45 @@
+<div class="table-row-container" [ngClass.gt-lg]="{ 'full-size': true }">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    class="{{ rowSelect }}"
+  >
+    <div
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      class="check-all-container"
+    >
+      <input
+        #input
+        class="cb-item-body"
+        id="{{ 'rowSalaryIndex' + index }}"
+        [value]="index"
+        type="checkbox"
+        [checked]="isActive"
+        (change)="filterItem($event.target.checked)"
+      />
+      <label
+        class="lb-item pt-1 m-0"
+        for="{{ 'rowSalaryIndex' + index }}"
+      ></label>
+    </div>
+
+    <div
+      class="items"
+      [ngClass.gt-lg]="{ 'full-size': true }"
+      fxLayout="row"
+      fxLayoutAlign="center"
+      *ngFor="let item of getColumnsFilter(); let i = index"
+      (click)="i === 0 ? clickExpandItem(item.subItems) : null"
+    >
+      <label>
+        {{ item.value }}
+      </label>
+      <img
+        *ngIf="i === 0 && headers[i].isChecked"
+        class="ml-3 mt-1"
+        src="{{ changeIcon }}"
+      />
+    </div>
+  </div>
+</div>

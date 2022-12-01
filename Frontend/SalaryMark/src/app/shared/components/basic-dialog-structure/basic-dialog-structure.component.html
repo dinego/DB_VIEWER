@@ -1,0 +1,82 @@
+<div class="modal" tabindex="-1" role="dialog" id="{{ input.idModal }}">
+  <div
+    [ngClass]="{
+      'share-modal': isShareModal,
+      'full-size': input.fullSize,
+      'modal-lg': input.isInfoPosition,
+      'modal-edit-right': input.isRightModal,
+      'send-modal': IsSendModal,
+      'modal-analyse': isAnalyseModal
+    }"
+    class="modal-dialog modal-dialog-centered"
+    role="document"
+  >
+    <div class="modal-content">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center pt-3 pb-2"
+      >
+        <div class="d-flex flex-row align-items-center">
+          <img
+            *ngIf="!isShareModal"
+            src="../../../../assets/imgs/svg/config-account.svg"
+            class="mr-3"
+          />
+          <img
+            *ngIf="isShareModal"
+            src="../../../../assets/imgs/svg/orange-share-icon.svg"
+            class="mr-3"
+          />
+
+          <h5 class="modal-title w-100">{{ input.title }}</h5>
+        </div>
+
+        <button
+          type="button"
+          class="close btn-close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <img class="pr-2" src="../../../../assets/imgs/svg/close-modal.svg" />
+        </button>
+      </div>
+
+      <div class="mt-1 mb-2 ml-3 mr-3 style-line"></div>
+
+      <div
+        class="modal-body pt-0 d-flex flex-column align-items-center justify-content-center"
+      >
+        <ng-content></ng-content>
+      </div>
+
+      <div
+        *ngIf="!input.disableFooter"
+        class="mr-3 mb-4 remove-buttons"
+        fxLayout="row"
+        fxLayoutAlign="end end"
+      >
+        <app-button-secundary
+          [label]="input.btnSecondaryTitle"
+          data-dismiss="modal"
+          class="mr-2"
+        >
+        </app-button-secundary>
+        <button
+          *ngIf="input.btnWithoutCancel"
+          type="button"
+          class="mr-2 btn btn-save-show"
+          (click)="onShow()"
+        >
+          {{ input.btnSecondaryTitle }}
+        </button>
+
+        <app-button-primary
+          [disabled]="disabledSave"
+          [label]="input.btnPrimaryTitle"
+          (click)="disabledSave ? $event.stopPropagation() : onSave()"
+          data-dismiss="modal"
+        >
+        </app-button-primary>
+      </div>
+    </div>
+  </div>
+</div>

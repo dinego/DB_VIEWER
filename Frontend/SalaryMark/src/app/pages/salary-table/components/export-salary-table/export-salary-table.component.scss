@@ -1,0 +1,48 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.pointer {
+  cursor: pointer;
+}
+.dropdown-menu {
+  padding: 0;
+  & > .dropdown-item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-radius: $size2;
+    font-size: $size14;
+    padding: $size5 $size10;
+    border-bottom: $size1 solid $border-gray;
+    min-height: $size35;
+    &:last-child {
+      border-bottom: 0;
+    }
+    &:hover {
+      background-color: $gray-ed;
+    }
+    & > .item {
+      font-size: $size14;
+    }
+    & > .selected {
+      color: $orange-f7;
+      font-weight: 600;
+    }
+  }
+}
+
+.text-size {
+  font-size: $size14;
+}
+.text-ellipsis {
+  width: 100%;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: $size6;
+  margin-left: $size3;
+}
+.rotate {
+  transform: rotate(180deg);
+}

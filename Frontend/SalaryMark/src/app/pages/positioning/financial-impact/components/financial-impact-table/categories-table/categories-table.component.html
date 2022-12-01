@@ -1,0 +1,14 @@
+<div class="d-flex flex-column mt-3 mb-3">
+  <div class="title-filter-by p-3">
+    <span>{{ filterBy }}</span>
+  </div>
+  <table class="table table-striped">
+    <tbody>
+      <ng-container *ngFor="let item of categories">
+        <tr>
+          <td>{{ item.name }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

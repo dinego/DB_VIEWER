@@ -1,0 +1,124 @@
+<div class="parameters-hourly-basis-container container-fluid">
+  <app-title-header [title]="locales.hourlyBasis">
+    <app-button-primary
+      [label]="locales.edit"
+      (click)="startEditValues()"
+      *ngIf="permissions && permissions.canEditHourlyBasis && !canEdit"
+    ></app-button-primary>
+
+    <div
+      class="d-flex justify-content-between flex-align-center pl-2"
+      slot="showWithOutAnimation"
+      *ngIf="permissions && permissions.canEditHourlyBasis && canEdit"
+    >
+      <app-button-secundary
+        [label]="locales.cancel"
+        class="mr-3"
+        (click)="cancelEdit()"
+      ></app-button-secundary>
+
+      <app-button-primary
+        [label]="locales.save"
+        (click)="sendHourlyBasisToSave()"
+      >
+      </app-button-primary>
+    </div>
+  </app-title-header>
+
+  <div class="d-flex flex-wrap">
+    <div
+      class="card card-width mr-3 mb-3"
+      *ngFor="
+        let hourlyBase of form.get('hourlyBasis')['controls'];
+        let i = index
+      "
+    >
+      <form
+        (ngSubmit)="sendHourlyBasisToSave()"
+        *ngIf="form"
+        [formGroup]="form"
+        class="card-body"
+      >
+        <div [formGroup]="form.get('hourlyBasis')">
+          <div class="column">
+            <div class="col-6 p-0">
+              <p class="text-style pt-3 mb-0">
+                {{ hourlyBase.value.baseSalary }}
+              </p>
+              <p class="font-text-style card-title m-0">
+                {{ locales.baseSalary }}
+              </p>
+            </div>
+
+            <p class="font-custom card-title">{{ locales.show }}</p>
+
+            <div class="col flex-align-center p-0" [formGroupName]="i">
+              <app-switch-button
+                data-placement="bottom"
+                [title]="!canEdit ? locales.enableEditing : ''"
+                formControlName="display"
+                [disabled]="
+                  permissions && permissions.canEditHourlyBasis && !canEdit
+                "
+              ></app-switch-button>
+            </div>
+
+            <p class="font-custom card-title mb-0">{{ locales.title }}</p>
+
+            <div class="col flex-align-center p-0 pb-3 mb-0 mt-2">
+              <div
+                class="btn-group"
+                *ngIf="hourlyBase.value.parameters.enabled"
+              >
+                <span *ngIf="!canEdit" class="text-size">
+                  {{ hourlyBase.value.parameters.selectedValue }}
+                </span>
+
+                <div
+                  class="dropdown button-list-light-container"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  fxLayoutAlign="space-between center"
+                  *ngIf="canEdit"
+                >
+                  <div (click)="isCollapsed = !isCollapsed">
+                    <label class="m-0 pl-2 pr-4 text-size text-nowrap">
+                      {{ hourlyBase.value.parameters.selectedValue }}
+                    </label>
+                  </div>
+
+                  <div class="arrow-icon" (click)="isCollapsed = !isCollapsed">
+                    <i
+                      [ngClass]="!isCollapsed ? 'rotate' : ''"
+                      class="fas fa-sort-down"
+                    >
+                    </i>
+                  </div>
+                </div>
+
+                <div class="dropdown-menu">
+                  <div
+                    fxFlexFill
+                    (click)="setParameterOptionSelected(hourlyBase, option)"
+                    *ngFor="
+                      let option of hourlyBase.value.parameters.options;
+                      let y = index
+                    "
+                  >
+                    <a class="dropdown-item" role="button">{{ option }}</a>
+                    <div
+                      class="dropdown-divider"
+                      *ngIf="
+                        hourlyBase.value.parameters.options.length - 1 !== y
+                      "
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

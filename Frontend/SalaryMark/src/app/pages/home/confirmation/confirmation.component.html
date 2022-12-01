@@ -1,0 +1,49 @@
+<div class="modal-header d-flex align-items-center">
+  <div class="d-flex align-items-center">
+    <img
+      class="mr-3"
+      src="../../../../assets/imgs/svg/sucesso_laranja.svg"
+      alt=""
+    />
+    <h5 class="title-size m-0">Confirmação</h5>
+  </div>
+
+  <div
+    class="col-2 d-flex justify-content-end align-items-center colactionbtns"
+  >
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="bsModalRef.hide()"
+    >
+      <img
+        (click)="bsModalRef.hide()"
+        src="../../../../assets/imgs/svg/close_rounded.svg"
+        alt=""
+      />
+    </button>
+  </div>
+</div>
+
+<hr class="mt-0 mb-0 mb-3" />
+
+<div class="p-3">
+  <p class="text-center font-weight-bold w-100 m-0">
+    {{ title }}
+  </p>
+</div>
+
+<div class="modal-body" *ngIf="content">
+  {{ content }}
+</div>
+
+<div class="modal-footer d-flex justify-content-center mb-4">
+  <button type="button" class="btn cancel-btn" (click)="decline()">
+    {{ closeBtnName }}
+  </button>
+
+  <button type="button" class="btn confirm-btn" (click)="confirm()">
+    {{ confirmBtnName }}
+  </button>
+</div>

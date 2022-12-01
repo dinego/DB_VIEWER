@@ -1,0 +1,57 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+@import "src/app/shared/styles/timings.scss";
+
+.label-radio {
+  cursor: pointer;
+  font-size: $size14;
+}
+
+div.options > label > input {
+  visibility: hidden;
+}
+
+div.options > label {
+  display: block;
+  padding: 0;
+}
+
+div.options > label > span {
+  display: inline-block;
+  padding: $size0;
+  height: $size24;
+  min-width: $size24;
+  box-shadow: $size0 $size2 $size6 $shadow;
+  border-radius: 50%;
+  border: $size1 solid $orange-f4;
+  background: $white;
+  -webkit-transition: background-color $transition ease-out;
+  -moz-transition: background-color $transition ease-out;
+  -o-transition: background-color $transition ease-out;
+  transition: background-color $transition ease-out;
+  &:hover {
+    background-image: url("../../../../../assets/imgs/svg/check-in.svg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-radius: 50%;
+    background-size: $size16 $size16;
+    background: $orange-f4;
+    opacity: 0.3;
+    cursor: pointer;
+  }
+}
+
+div.options > label > span.selected {
+  background-image: url("../../../../../assets/imgs/svg/check-in.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 50%;
+  border: 0;
+  margin: 0;
+  background-size: $size16 $size16;
+  background-color: $orange-f4;
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+}

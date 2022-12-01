@@ -1,0 +1,40 @@
+<div
+  class="dropdown button-list-light-container"
+  id="dropdownMenuButton"
+  data-toggle="dropdown"
+  fxLayoutAlign="space-between center"
+  [ngClass]="{ disabled: disabled }"
+>
+  <div>
+    <label *ngIf="text" class="m-0 pl-2 pr-4 text-size text-nowrap">{{
+      text
+    }}</label>
+    <label
+      class="placeholder m-0 pl-2 pr-4 text-size text-nowrap"
+      *ngIf="!text && placeholder && placeholder.length > 0"
+      >{{ placeholder }}</label
+    >
+  </div>
+
+  <div class="arrow-icon">
+    <i class="fas fa-sort-down"> </i>
+  </div>
+
+  <div
+    class="dropdown-menu item-list-menu-light"
+    aria-labelledby="dropdownMenuButton"
+  >
+    <ng-container #list *ngFor="let defItem of list">
+      <div class="dropdown-item" (click)="changeText(defItem)">
+        <span
+          [ngClass]="{ selected: text === defItem.title }"
+          class="items {{
+            defItem && text && defItem.title === text ? 'selected' : ''
+          }}"
+        >
+          {{ defItem.title }}
+        </span>
+      </div>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,264 @@
+<div class="salary-strategy-container container-fluid mt-1">
+  <app-title-header [title]="locales.salaryStrategy">
+    <app-button-primary
+      *ngIf="permissions && permissions.canEditSalaryStrategy && !editable"
+      [label]="'Editar'"
+      (click)="editable = !editable"
+    ></app-button-primary>
+
+    <app-button-secundary
+      class="mr-3"
+      *ngIf="permissions && permissions.canEditSalaryStrategy && editable"
+      [label]="'Cancelar'"
+      (click)="cancelEditableSalaryStrategy()"
+    ></app-button-secundary>
+
+    <app-button-primary
+      *ngIf="permissions && permissions.canEditSalaryStrategy && editable"
+      [label]="'Salvar'"
+      (click)="saveSalaryStrategy()"
+    ></app-button-primary>
+  </app-title-header>
+
+  <app-filter-header
+    [listTables]="!editable ? listTables : null"
+    [shareFilterTitle]="locales.table"
+    (tableSelected)="changeTable($event)"
+  >
+    <div
+      *ngIf="editable"
+      class="title-content mr-3"
+      fxLayout="column"
+      fxLayoutAlign="space-between"
+    >
+      <div class="tiny-title mb-2">
+        {{ locales.table }}
+      </div>
+      <div class="super-title">
+        <span
+          class="fas fa-align-right fa-rotate-180"
+          aria-hidden="true"
+        ></span>
+        <input type="text" class="form-control" [(ngModel)]="tableName" />
+      </div>
+    </div>
+  </app-filter-header>
+
+  <app-clear-filter
+    *ngIf="isClearFilter"
+    (clearFilters)="onClearFilter()"
+    (filters)="onFilterChecked()"
+  >
+  </app-clear-filter>
+
+  <div
+    class="mt-3 table-container w-100"
+    fxLayout="column"
+    *ngIf="listTables.length >= 1 && columHeaders.length >= 1"
+  >
+    <ngx-datatable
+      #myTable
+      class="bootstrap"
+      [rows]="data"
+      [columnMode]="ColumnMode.force"
+      [selectionType]="SelectionType.checkbox"
+      [headerHeight]="headerHeight"
+      [rowHeight]="rowHeight"
+      [selected]="selected"
+      [selectAllRowsOnPage]="false"
+      [scrollbarV]="true"
+      [scrollbarH]="true"
+      [loadingIndicator]="isLoading"
+      [messages]="{ emptyMessage: commonLocales.emptyResult }"
+      (sort)="onSort($event)"
+      [externalSorting]="true"
+      (select)="onSelect($event)"
+    >
+      <!-- Column Templates -->
+      <ngx-datatable-column
+        [width]="50"
+        [sortable]="false"
+        [canAutoResize]="false"
+        [draggable]="false"
+        [resizeable]="false"
+      >
+        <ng-template
+          ngx-datatable-header-template
+          let-value="value"
+          let-allRowsSelected="allRowsSelected"
+          let-selectFn="selectFn"
+        >
+          <label class="container-cb">
+            <input
+              type="checkbox"
+              id="customCheck"
+              [checked]="allRowsSelected"
+              (change)="selectFn(!allRowsSelected)"
+            />
+            <span class="checkmark"></span>
+          </label>
+        </ng-template>
+        <ng-template
+          ngx-datatable-cell-template
+          let-value="value"
+          let-isSelected="isSelected"
+          let-onCheckboxChangeFn="onCheckboxChangeFn"
+        >
+          <label class="container-cb">
+            <input
+              type="checkbox"
+              [checked]="isSelected"
+              (change)="onCheckboxChangeFn($event)"
+            />
+            <span class="checkmark-item"></span>
+          </label>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column
+        name="{{ item.colName }}"
+        prop="{{ item.columnId }}"
+        [sortable]="item.sortable"
+        [headerClass]="item.colPos > 3 ? 'header-column-cell' : ''"
+        [width]="230"
+        *ngFor="let item of columHeaders"
+      >
+        {{ item }}
+        <ng-template
+          let-rowIndex="rowIndex"
+          let-row="row"
+          ngx-datatable-cell-template
+        >
+          <div
+            fxLayout="row"
+            [fxLayoutAlign]="item.colPos > 3 ? 'center center' : 'start center'"
+          >
+            <ng-container
+              *ngIf="item.colPos === 0; then initialCol; else othersCol"
+            >
+            </ng-container>
+
+            <ng-template #initialCol>
+              <div fxLayoutAlign="space-between center" class="w-100">
+                {{ transformText(row, item) }}
+              </div>
+            </ng-template>
+
+            <ng-template #othersCol>
+              <div *ngIf="getRowResult(row, item).type === 'Double'">
+                <div
+                  *ngIf="
+                    transformText(row, item) !== '-' &&
+                    item.columnId === salaryStrategyColumnEnum.ReferenceMedian
+                  "
+                >
+                  <input
+                    *ngIf="
+                      (editable &&
+                        item.columnId === salaryStrategyColumnEnum.Others) ||
+                      item.columnId === salaryStrategyColumnEnum.Percentagens
+                    "
+                    class="form-control"
+                    value="{{ getFormatValue(row, item) }}"
+                    (input)="
+                      changeItemRowCol(
+                        $event.target.value,
+                        rowIndex,
+                        item.colPos
+                      )
+                    "
+                  />
+                  <div
+                    *ngIf="
+                      !editable ||
+                      item.columnId > salaryStrategyColumnEnum.Others ||
+                      item.columnId === salaryStrategyColumnEnum.Percentagens
+                    "
+                  >
+                    {{ getFormatValue(row, item) | number: "1.0-3" }}%
+                  </div>
+                </div>
+                <div
+                  *ngIf="
+                    transformText(row, item) !== '-' &&
+                    item.columnId !== salaryStrategyColumnEnum.ReferenceMedian
+                  "
+                >
+                  <input
+                    *ngIf="editable"
+                    class="form-control"
+                    value="{{ getFormatValue(row, item) }}"
+                    (input)="
+                      changeItemRowCol(
+                        $event.target.value,
+                        rowIndex,
+                        item.colPos
+                      )
+                    "
+                  />
+                  <div
+                    *ngIf="
+                      !editable ||
+                      item.columnId > salaryStrategyColumnEnum.Others ||
+                      item.columnId === salaryStrategyColumnEnum.Percentagens
+                    "
+                  >
+                    {{ getFormatValue(row, item) | number: "1.0-3" }}
+                  </div>
+                </div>
+                <div *ngIf="transformText(row, item) === '-'">
+                  <input
+                    *ngIf="editable"
+                    class="form-control"
+                    value="{{ getFormatValue(row, item) }}"
+                    (input)="
+                      changeItemRowCol(
+                        $event.target.value,
+                        rowIndex,
+                        item.colPos
+                      )
+                    "
+                  />
+                  <div
+                    *ngIf="
+                      !editable ||
+                      item.columnId > salaryStrategyColumnEnum.Others ||
+                      item.columnId === salaryStrategyColumnEnum.Percentagens
+                    "
+                  >
+                    {{ transformText(row, item) }}
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="getRowResult(row, item).type !== 'Double'">
+                <input
+                  *ngIf="
+                    (editable &&
+                      transformText(row, item) != '' &&
+                      item.columnId === salaryStrategyColumnEnum.Others) ||
+                    item.columnId === salaryStrategyColumnEnum.Percentagens
+                  "
+                  class="form-control"
+                  value="{{ getFormatValue(row, item) }}"
+                  (input)="
+                    changeItemRowCol($event.target.value, rowIndex, item.colPos)
+                  "
+                />
+                <div
+                  *ngIf="
+                    !editable ||
+                    item.columnId > salaryStrategyColumnEnum.Others ||
+                    item.columnId === salaryStrategyColumnEnum.Percentagens
+                  "
+                >
+                  {{ transformText(row, item) }}
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+</div>

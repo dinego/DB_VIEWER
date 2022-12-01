@@ -1,0 +1,54 @@
+<div class="d-flex flex-wrap">
+  <div fxLayout="column" class="container-report-item">
+    <div
+      class="image"
+      *ngIf="image && reportType !== reportTypeEnum.Embed; else withoutImage"
+    >
+      <img src="data:image/png;base64,{{ image }}" class="image-config" />
+    </div>
+
+    <div>
+      <ng-template #withoutImage>
+        <div
+          class="image-withoutBg"
+          *ngIf="reportType !== reportTypeEnum.Embed"
+        >
+          <img src="../../../../assets/imgs/svg/photo.svg" />
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="content">
+      <div class="title pb-4">
+        <div class="title-box pb-1">{{ title }}</div>
+        <div class="date">{{ date }}</div>
+      </div>
+
+      <div
+        [ngClass]="{ 'd-none col-8 p-0 mt-5': isCollapse }"
+        #HtmlEmbeded
+      ></div>
+
+      <div class="download-button">
+        <button
+          *ngIf="reportType == reportTypeEnum.File"
+          class="btn btn-options"
+          fxLayoutAlign="center center"
+          (click)="onClickEvent()"
+        >
+          {{ commonLocales.download }}
+        </button>
+
+        <button
+          *ngIf="reportType == reportTypeEnum.Embed"
+          class="btn btn-options float-right"
+          fxLayoutAlign="center center"
+          (click)="viewMore()"
+        >
+          <span [ngClass]="{ 'd-none': !isCollapse }">VER MAIS</span>
+          <span [ngClass]="{ 'd-none': isCollapse }">VER MENOS</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="modal-header mx-3 mt-4">
+  <div class="d-inline-flex w-100">
+    <h5 class="text-dark-blue font-weight-bold w-100">
+      Mensagem
+      <hr />
+    </h5>
+  </div>
+  <button
+    type="button"
+    class="close pull-right"
+    aria-label="Close"
+    (click)="bsModalRef.hide()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body pt-0 mb-4 mx-3">
+  <h5 class="font-weight-bold m-0">
+    {{ title }}
+  </h5>
+  <!-- <small class="text-secondary">{{ create | date: 'dd/MM/yyyy' }}</small> -->
+  <div class="message p-2 mt-4 rounded">
+    <p class="text-gray-65 mx-3 my-2">
+      {{ description }}
+    </p>
+  </div>
+</div>

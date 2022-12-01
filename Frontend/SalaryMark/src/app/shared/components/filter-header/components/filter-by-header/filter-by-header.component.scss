@@ -1,0 +1,77 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.tiny-title {
+  font-size: $size12;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: $black-58;
+}
+
+.title-content {
+  .super-title {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 18px;
+
+    display: flex;
+    align-items: center;
+    width: max-content;
+    > span {
+      margin-right: $remSize1;
+    }
+  }
+  .item-menu-list-table {
+    box-shadow: 0 $size3 $size6 $gray-box-shadow-00;
+
+    .btn-table {
+      font-size: $remSize09;
+    }
+    .btn-table-selected {
+      color: $orange-f4;
+      font-size: $size14;
+      font-weight: 600;
+    }
+  }
+}
+
+.layoutSpaced {
+  display: flex;
+  align-items: center;
+}
+
+.layoutStart {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.table-title {
+  width: auto;
+  font-weight: 600;
+  font-size: $size18;
+}
+
+.dropdown-menu {
+  padding: 0;
+  -webkit-animation-name: fade-in;
+  animation-name: fade-in;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  & > .dropdown-item {
+    width: $size188;
+    height: $size35;
+    text-align: center;
+    font-size: $size14;
+    padding: 0;
+    font-size: $size14;
+    border-bottom: $size1 solid rgba(0, 0, 0, 0.15);
+    align-items: center;
+    cursor: pointer;
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+}

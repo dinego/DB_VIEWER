@@ -1,0 +1,207 @@
+@import "./youtube-card-body";
+
+.cs-home-content {
+  width: 100%;
+  display: flex;
+
+  & > .yournotifications {
+    & > .card {
+      background: $white 0% 0% no-repeat padding-box;
+      box-shadow: $size0 $size3 $size6 $shadow;
+      border: $size1 solid $border-gray;
+      border-radius: $size8;
+
+      & > .yournotificationsbody {
+        padding: $remSize1_25;
+        border-radius: $remSize0937;
+
+        // stylelint-disable-next-line rscss/class-format
+        & > .image {
+          height: $remSize1_875;
+          width: $remSize1_875;
+        }
+      }
+    }
+  }
+
+  & > .suggestedcontent {
+    grid-area: suggestedcontent;
+    padding-right: $remSize1;
+    padding-left: $remSize03;
+    margin-right: $remSize1;
+
+    & > .card {
+      border-radius: $remSize0937;
+      box-shadow: 0 $size3 $size6 $black-5f5f;
+      border: 0;
+
+      & > .suggestedcontentbody {
+        padding: $remSize1_25;
+        border-radius: $remSize0937;
+
+        // stylelint-disable-next-line rscss/class-format
+        & > .image {
+          height: $remSize1_875;
+          width: $remSize1_875;
+        }
+      }
+    }
+  }
+
+  & > .notifications {
+    max-height: 70vh;
+    overflow-y: auto;
+
+    ::ng-deep .panel-default {
+      background-color: $white;
+      box-shadow: 0 3px 6px #5f5f5f29;
+      border: none;
+      border-radius: $remSize0937;
+      margin-left: $size1;
+
+      & > .panel-collapse {
+        border-radius: $remSize0937;
+
+        & > .panel-body {
+          font-size: $remSize0875;
+          border-radius: $remSize0937;
+          padding-bottom: $remSize05;
+          white-space: pre-line;
+
+          & > .notreaded {
+            font-weight: bold;
+          }
+
+          & > .showless {
+            font-weight: normal;
+            font-size: $remSize0812;
+
+            &:hover {
+              color: $blue-107;
+              cursor: pointer;
+            }
+          }
+
+          & > .date {
+            position: absolute;
+            right: $remSize1_5;
+            font-size: $remSize075;
+            bottom: $remSize07;
+            font-weight: normal;
+            color: $black-1f;
+            opacity: 0.46;
+          }
+        }
+      }
+
+      & > .panel-heading {
+        border-radius: $remSize0937;
+        height: min-content;
+
+        & > .panel-title {
+          border-radius: $remSize0937;
+
+          & > .accordion-toggle {
+            border-radius: $remSize0937;
+
+            & > .header {
+              border-radius: $remSize0937;
+              display: grid;
+              text-align: left;
+              box-shadow: none;
+              padding-top: 0;
+
+              &.-isopen {
+                display: block;
+              }
+
+              & > .controls {
+                width: 90%;
+                & > .d-flex {
+                  & > .title {
+                    color: $orange-f4;
+                    font-size: $size16;
+                    font-weight: 600;
+
+                    &.-notreaded {
+                      font-weight: bold;
+                    }
+                  }
+                }
+              }
+
+              & > .controls .pull-right.float-right {
+                font-size: 0;
+                background: transparent;
+                top: $remSize1;
+                right: $remSize1;
+                position: absolute;
+              }
+
+              & > .descrition {
+                font-size: $size14;
+                margin-top: $remSize02;
+                font-weight: normal;
+
+                &.-notreaded {
+                  font-weight: bold;
+                }
+
+                & > .showmore {
+                  font-weight: normal;
+                  font-size: $remSize0812;
+
+                  &:hover {
+                    color: $blue-107;
+                    cursor: pointer;
+                  }
+                }
+
+                & > .date {
+                  position: absolute;
+                  right: $remSize1_5;
+                  font-size: $remSize075;
+                  bottom: $remSize07;
+                  font-weight: normal;
+                  color: $black-1f;
+                  opacity: 0.46;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  & > .youtube {
+    grid-area: youtube;
+    padding-left: $remSize03;
+    display: grid;
+    grid-auto-flow: column;
+    overflow-x: scroll;
+    grid-template-rows: repeat(2, $remSize15_625);
+    grid-gap: $remSize1;
+    margin-right: $remSize2;
+    margin-bottom: $remSize3;
+    height: $remSize34_5;
+
+    & > .card {
+      border-radius: $remSize0937;
+      box-shadow: 0 $size3 $size6 $black-5f5f;
+      border: 0;
+      cursor: pointer;
+    }
+  }
+}
+:host::ng-deep.card-header {
+  background-color: $white !important;
+  border-bottom: 0 !important;
+  padding: 0;
+}
+
+:host::ng-deep.card-body {
+  padding: inherit;
+  padding-left: $remSize1;
+  padding-right: $remSize1;
+}

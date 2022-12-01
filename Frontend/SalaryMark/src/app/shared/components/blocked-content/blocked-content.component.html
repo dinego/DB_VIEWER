@@ -1,0 +1,31 @@
+<div class="cs-blocked-content container-fluid mt-4" id="cs-blocked-content">
+  <div class="row rowheader pb-3">
+    <div class="col-10 d-flex coltitle">
+      <img
+        class="mr-3"
+        src="/assets/images/lock_background_lightblue.svg"
+        alt=""
+      />
+      <h5 class="title text-dark font-weight-bold mt-2">Conteúdo Bloqueado.</h5>
+    </div>
+    <div
+      class="col-2 d-flex justify-content-end align-items-center colactionbtns"
+    >
+      <button class="actionbtn -close mr-3" (click)="bsModalRef.hide()">
+        <img
+          (click)="bsModalRef.hide()"
+          src="/assets/images/close_rounded.svg"
+          alt=""
+        />
+      </button>
+    </div>
+  </div>
+  <div class="row rowseparator mb-3">
+    <div class="col colseparator">
+      <hr class="my-0 lineseparator" />
+    </div>
+  </div>
+  <div class="row rowdescription">
+    <div class="col coldescrition" [innerHTML]="publication.message"></div>
+  </div>
+</div>

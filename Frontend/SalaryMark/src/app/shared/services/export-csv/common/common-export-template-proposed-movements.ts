@@ -1,0 +1,22 @@
+const columnsProposedMovements = [
+  { header: "", key: "1", width: 32 },
+  { header: "", key: "2", width: 32 },
+  { header: "", key: "3", width: 32 },
+  { header: "", key: "4", width: 32 },
+  { header: "", key: "5", width: 32 },
+  { header: "", key: "6", width: 22 },
+  { header: "", key: "7", width: 12 },
+  { header: "", key: "8", width: 12 },
+  { header: "", key: "9", width: 12 },
+  { header: "", key: "10", width: 12 },
+  { header: "", key: "11", width: 12 },
+  { header: "", key: "12", width: 12 },
+  { header: "", key: "13", width: 12 },
+  { header: "", key: "14", width: 12 },
+  { header: "", key: "15", width: 27 },
+  { header: "", key: "16", width: 17 },
+  { header: "", key: "17", width: 17 },
+  { header: "", key: "19", width: 17 },
+  { header: "", key: "30", width: 17 },
+];
+export default columnsProposedMovements;

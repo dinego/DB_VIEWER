@@ -1,0 +1,55 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.my-reports-container {
+  margin-top: $size50;
+  padding-right: $size50;
+  padding-left: $size50;
+
+  .table-container {
+    display: flex;
+  }
+
+  .report-container {
+    margin-top: $remSize3;
+  }
+
+  .report-items {
+    margin-top: $size24;
+    max-height: 74vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .search-container {
+    width: $fullSize;
+  }
+
+  .list-container {
+    width: 20%;
+    display: flex;
+    align-items: center;
+  }
+
+  .btn-list {
+    width: $fullSize;
+  }
+
+  .line {
+    width: $size0;
+    height: auto;
+    border: $size1 solid #707070;
+    opacity: 0.2;
+  }
+}
+
+.label-order-by {
+  font-size: $size12;
+  font-weight: 700;
+  color: $black-58;
+  text-transform: uppercase;
+}
+
+:host::ng-deep.search {
+  height: $size46 !important;
+}

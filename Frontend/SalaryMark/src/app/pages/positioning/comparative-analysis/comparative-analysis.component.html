@@ -1,0 +1,352 @@
+<div
+  class="comparative-analysis-container container-fluid mt-0"
+  (window:resize)="check()"
+>
+  <app-title-header [title]="locales.comparativeAnalysis">
+    <app-button-more-actions
+      *ngIf="!shared"
+      [isHelp]="false"
+      [isMore]="true"
+      [isShare]="permissions && permissions.canShare"
+      idModal="shareModal"
+      (onShareClick)="getShareKey()"
+    >
+      <button
+        class="ml-1 btn btn-show"
+        fxLayoutAlign="center center"
+        data-toggle="modal"
+        data-target="#showModalShowAs"
+      >
+        {{ locales.show }}
+      </button>
+      <!-- export pdf png-->
+      <app-export-button
+        *ngIf="
+          permissions &&
+          permissions.canDownloadExcel &&
+          selectedVisualization.id !== displayTypes.TABLE
+        "
+        class="btn-list-reset"
+        (export)="getImageExportChart()"
+      >
+      </app-export-button>
+
+      <app-export-button
+        *ngIf="
+          permissions &&
+          permissions.canDownloadExcel &&
+          selectedVisualization.id === displayTypes.TABLE
+        "
+        class="btn-list-reset"
+        (export)="getFileSpreadsheet()"
+      >
+      </app-export-button>
+    </app-button-more-actions>
+
+    <div *ngIf="shared && share">
+      <div fxLayout="row">
+        <div fxLayout="column" class="mr-3">
+          <div fxLayout="row">
+            {{ locales.name }}
+          </div>
+          <div fxLayout="row">
+            <span class="text-orange font-'proxima-nova'">{{
+              share.user
+            }}</span>
+          </div>
+        </div>
+        <div fxLayout="column" class="mr-3">
+          <div fxLayout="row">
+            {{ locales.date }}
+          </div>
+          <div fxLayout="row">
+            <span class="text-orange font-'proxima-nova'">{{
+              share.date | date: "dd/MM/yyyy"
+            }}</span>
+          </div>
+        </div>
+        <div fxLayout="column" class="mr-3">
+          <div fxLayout="row">
+            {{ locales.scenario }}
+          </div>
+          <div fxLayout="row">
+            <span class="text-orange font-'proxima-nova'">{{
+              share.scenario
+            }}</span>
+          </div>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row">
+            {{ locales.units }}
+          </div>
+          <div fxLayout="row">
+            <span class="text-orange font-'proxima-nova'">{{
+              share.unit
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-title-header>
+  <app-filter-header
+    [share]="share"
+    [shareFilterTitle]="locales.showTo"
+    [listTables]="listShowBy"
+    [shareFilter]="share && share.displayBy"
+    (tableSelected)="changeTable($event)"
+    (versusTableSelected)="versusChangeTable($event)"
+    [isSpacedBetween]="false"
+    [showVersusCompare]="
+      comparativeAnalysisTableInput &&
+      selectedVisualization.id === displayTypes.TABLE
+    "
+  >
+    <div class="d-flex justify-content-between">
+      <div
+        class="title-content w-20"
+        ngClass.lt-md="mt-3"
+        fxLayout="row"
+        fxLayout.lt-md="row"
+        fxLayoutAlign="start"
+      >
+        <div *ngIf="!shared" fxHide.lt-md class="ml-3 ml-3 line"></div>
+        <div
+          *ngIf="!shared"
+          ngClass.lt-md="mb-3"
+          class="left-separator ml-3"
+          fxLayout="column"
+          fxLayoutAlign="space-between"
+        >
+          <div class="tiny-title">{{ locales.units }}</div>
+          <app-button-list-light
+            [isDropUnit]="true"
+            class="btn-list"
+            *ngIf="units"
+            text="{{ changeUnitLabel(units) }}"
+            [list]="units"
+            [addAllInList]="true"
+            [showList]="true"
+            [textAllDefautl]="changeUnitLabel(units)"
+            (textSelected)="changeSelectUnit($event)"
+          ></app-button-list-light>
+        </div>
+        <div *ngIf="!shared" fxHide.lt-md class="ml-3 ml-3 line"></div>
+        <div
+          *ngIf="!shared"
+          ngClass.lt-md="mb-3"
+          class="left-separator ml-3"
+          fxLayout="column"
+          fxLayoutAlign="space-between"
+        >
+          <div class="tiny-title">{{ locales.scenario }}</div>
+          <app-button-list-light
+            class="btn-list"
+            [text]="scenarioSelected?.title"
+            [list]="scenarios"
+            [showList]="true"
+            (textSelected)="changeSelectScenario($event)"
+          ></app-button-list-light>
+        </div>
+      </div>
+    </div>
+
+    <div class="ml-auto">
+      <div
+        ngClass.lt-md="mb-3"
+        class="left-separator ml-3"
+        fxLayout="column"
+        fxLayoutAlign="space-between"
+      >
+        <div class="tiny-title">{{ locales.visualization }}</div>
+        <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between">
+          <app-button-list-visualization
+            [selected]="selectedVisualization"
+            [list]="visualizations"
+            (textSelected)="changeVisualization($event)"
+          >
+          </app-button-list-visualization>
+        </div>
+      </div>
+    </div>
+  </app-filter-header>
+  <div
+    class="card w-100 border-0 shadow mt-3"
+    *ngIf="
+      comparativeAnalysisChartInput &&
+        selectedVisualization &&
+        (selectedVisualization.id === displayTypes.COLUMNS ||
+          selectedVisualization.id === displayTypes.BAR);
+      else showTable
+    "
+  >
+    <div class="card-body chart p-3">
+      <app-comparative-analysis-chart
+        [type]="selectedVisualization.id"
+        *ngIf="comparativeAnalysisChartInput && chartHeight"
+        (clickPoint)="openListModal($event)"
+        [isWithLine]="showLine"
+        [showDataLabels]="true"
+        [valuesComparativeAnalysis]="
+          showEnabledChartData(comparativeAnalysisChartInput)
+        "
+        className="my-2"
+        [height]="chartHeight"
+      >
+      </app-comparative-analysis-chart>
+    </div>
+  </div>
+  <ng-template #showTable>
+    <div
+      *ngIf="
+        comparativeAnalysisTableInput &&
+        selectedVisualization.id === displayTypes.TABLE
+      "
+    >
+      <div class="mt-3">
+        <div class="itemTable" *ngIf="tableClass">
+          <ngx-datatable
+            class="comparative-analysis"
+            [rows]="showEnabledTableRow()"
+            [columnMode]="ColumnMode.force"
+            [ngClass]="tableClass"
+            [scrollbarV]="true"
+            [scrollbarH]="true"
+            [headerHeight]="50"
+            [rowHeight]="46"
+            [messages]="{ emptyMessage: commonLocales.emptyResult }"
+          >
+            <ngx-datatable-column
+              [width]="setWidthColumn(item)"
+              [sortable]="false"
+              [canAutoResize]="true"
+              [draggable]="false"
+              [resizeable]="true"
+              *ngFor="let item of tablesHeaders; let i = index"
+            >
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <div
+                  class="column {{ i === 0 ? 'row-name' : '' }} {{
+                    i >= 1 && i < fixedTableHeader.length
+                      ? 'spacing border-radious-left border-radious-right'
+                      : ''
+                  }} {{
+                    i === fixedTableHeader.length
+                      ? 'border-radious-left full-w'
+                      : ''
+                  }} {{
+                    i === tablesHeaders.length - 1
+                      ? 'border-radious-right full-w'
+                      : ''
+                  }}"
+                >
+                  {{ item.name }}
+                </div>
+              </ng-template>
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <div *ngIf="i === 0; else showValue" class="row-name">
+                  {{ row[i].name }}
+                </div>
+                <ng-template #showValue>
+                  <div
+                    class="fixed-row-value"
+                    *ngIf="i >= 1 && i < fixedTableHeader.length"
+                    [style]="
+                      !row[i].amount &&
+                      ((row[i].total && item.columnId === 4) ||
+                        row[i].categoryId !== 'All')
+                        ? getStylesBasedOnDataValue(
+                            row[i].percentage || row[i].total
+                          )
+                        : (row[i].total && item.columnId === 4) ||
+                          row[i].categoryId === 'All'
+                        ? 'background-color: #ddd'
+                        : ''
+                    "
+                  >
+                    <span *ngIf="row[i].amount" class="amount">{{
+                      row[i].amount
+                    }}</span>
+
+                    <span
+                      *ngIf="row[i].total && item.columnId === 4"
+                      (click)="openListModalTable(row[i])"
+                      class="percentage-bold add-cursor"
+                    >
+                      {{ row[i].total }}%
+                    </span>
+
+                    <span
+                      *ngIf="item.columnId === 4 && row[i].percentage"
+                      (click)="openListModalTable(row[i])"
+                      class="percentage-bold add-cursor"
+                    >
+                      {{ row[i].percentage }}%
+                    </span>
+
+                    <span
+                      *ngIf="row[i].percentage && item.columnId !== 4"
+                      class="percentage"
+                    >
+                      {{ row[i].percentage }}
+                      <span *ngIf="row[i].percentage !== '-'">%</span>
+                    </span>
+
+                    <span
+                      *ngIf="row[i].total && item.columnId !== 4"
+                      class="percentage-bold"
+                    >
+                      {{ row[i].total | number: "1.0-3" }}
+                    </span>
+                  </div>
+                  <div
+                    class="dynamic-row-value {{
+                      i === fixedTableHeader.length ? 'border-radious-left' : ''
+                    }} {{
+                      i === tablesHeaders.length - 1
+                        ? 'border-radious-right'
+                        : ''
+                    }}"
+                    *ngIf="i >= fixedTableHeader.length"
+                    [style]="
+                      getStylesBasedOnDataValue(
+                        row[i].percentage || row[i].total
+                      )
+                    "
+                  >
+                    <span
+                      style="cursor: pointer"
+                      (click)="openListModalTable(row[i], true)"
+                      >{{ row[i].percentage || row[i].total }}
+                      <span *ngIf="row[i].percentage !== '-'">%</span>
+                    </span>
+                  </div>
+                </ng-template>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<app-show-as (closed)="check()" [form]="form"></app-show-as>
+
+<app-chart-detail-list
+  [clickComparativeAnalyseChartDataInput]="
+    clickComparativeAnalyseChartDataInput
+  "
+  [secretKey]="secretKey"
+>
+</app-chart-detail-list>
+
+<app-basic-dialog-structure
+  [input]="inputShareModal"
+  [hidden]="!shareURL"
+  (save)="onSendEmail()"
+  *ngIf="permissions"
+  [isShareModal]="true"
+>
+  <app-modal-share-table [url]="shareURL" (onChangeEmail)="onPutEmail($event)">
+  </app-modal-share-table>
+</app-basic-dialog-structure>

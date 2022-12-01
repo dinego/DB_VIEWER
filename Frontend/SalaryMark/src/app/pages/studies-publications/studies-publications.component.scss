@@ -1,0 +1,171 @@
+@import "../../../assets/scss/breakpoints.scss";
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+@import "./grid-studies-publications";
+
+.title-header {
+  font-size: $size12;
+  font-weight: 700;
+  color: $black-58;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.date-title-card {
+  background: $gray-eae;
+  border-radius: $size40;
+  opacity: 1;
+  font-size: $size12;
+  padding: $size3 $size10 $size3 $size10;
+}
+
+.title-card {
+  font-size: $size18;
+  font-weight: 700;
+  letter-spacing: $size0;
+  color: $black-1f;
+  opacity: 1;
+  text-align: center;
+}
+
+.description-card {
+  text-align: center;
+  font-size: $remSize0875;
+  opacity: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  max-height: $size65;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.image-style {
+  width: 100%;
+  max-height: $remSize8;
+  position: relative;
+  height: 100%;
+}
+
+.card-style {
+  background-color: white;
+  box-shadow: $size0 $remSize0125 $remSize0375 $gray-b7b;
+  border: 0 solid $gray-eae;
+  border-radius: $remSize0625;
+  height: $remSize27;
+}
+
+.button-share {
+  width: 45%;
+  height: $size38;
+  background: $white;
+  border: $size1 solid $orange-f4;
+  border-radius: $size2;
+  opacity: 1;
+  color: $orange-f4;
+  border: $orange-f4 $size1 solid;
+  font-size: $remSize0875;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.button-open {
+  width: 45%;
+  height: $size38;
+  background: $orange-gradient;
+  border-radius: $size2;
+  opacity: 1;
+  color: $white;
+  border: none;
+  font-size: $remSize0875;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.image {
+  width: 100%;
+  max-height: $size150;
+  height: $remSize8_2;
+  position: relative;
+  background: $gray-eae;
+}
+
+.padding-container {
+  padding: $size0 $size20 $size0 $size20;
+}
+.mobile-header {
+  background-color: $white;
+  border: $size1 solid $gray-dfd;
+  width: 100%;
+  padding: $size10;
+  display: none !important;
+}
+
+.hidden-header {
+  display: flex;
+}
+
+.title-share {
+  color: $black-58;
+  font-weight: 700;
+  text-transform: uppercase;
+  white-space: nowrap;
+  font-size: $size12;
+}
+.text-share {
+  white-space: nowrap;
+  font-size: $size12;
+
+  text-transform: uppercase;
+}
+
+@media (max-width: 764px) {
+  .mobile-header {
+    background-color: $white;
+    border: $size1 solid $gray-dfd;
+    width: 100%;
+    padding: $size10;
+    display: flex !important;
+  }
+  .hidden-header {
+    display: none;
+  }
+  .share-info {
+    margin-right: auto;
+  }
+}
+
+.details-card {
+  min-height: $size250;
+}
+
+@include for-tablet-landscape-only {
+  .button-share,
+  .button-open {
+    font-size: $size12;
+  }
+}
+@include for-tablet-portrait-only {
+  .button-share,
+  .button-open {
+    font-size: $size12;
+  }
+}
+
+.btn {
+  border: $size0;
+}
+
+.rounded {
+  border-radius: $size8 !important;
+}
+
+:host::ng-deep.search {
+  height: $size46 !important;
+}
+
+.report-items {
+  max-height: 75vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}

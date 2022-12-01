@@ -1,0 +1,352 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+@import "./../../../../../assets/scss/breakpoints.scss";
+
+.parameters-pj-settings-container {
+  padding-right: $size50;
+  padding-left: $size50;
+}
+
+.text {
+  font-size: $remSize08;
+}
+
+.name-details {
+  font-size: $remSize1;
+}
+
+.flex-align-center {
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+
+.text-vertical-align-fix {
+  margin-top: $remSize1;
+  margin-bottom: $remSize1;
+}
+
+.avatar {
+  width: $size60;
+  height: $size60;
+  border-radius: 50%;
+  background-size: cover;
+}
+
+.avatar-default {
+  padding-top: $remSize1_4;
+  font-size: $remSize4;
+  background-color: $green-24;
+  color: $white;
+  padding-left: $remSize2;
+}
+
+.card-header {
+  background-color: transparent;
+  border-bottom: none;
+}
+
+.bottom-separator-100:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  height: $size1;
+  width: 100%;
+  border-bottom: 1px solid $gray-ee;
+}
+
+.btn-goback {
+  background: transparent 0% 0% no-repeat padding-box;
+  border-width: $size2;
+  border-color: $orange-button;
+  opacity: 1;
+  height: $size40;
+  padding: 0 1.9375rem;
+  text-align: left;
+
+  letter-spacing: $size0;
+  color: $orange-button;
+  opacity: 1;
+  text-transform: uppercase;
+  font-size: small;
+
+  &:hover {
+    background-color: $orange-button;
+    color: $white;
+
+    .logo {
+      filter: brightness(0) invert(1);
+    }
+  }
+}
+
+.btn-save {
+  background: transparent 0% 0% no-repeat padding-box;
+  border-width: $size2;
+  border-color: $orange-button;
+  opacity: 1;
+  height: $size40;
+  padding: 0 1.9375rem;
+  text-align: left;
+
+  letter-spacing: $size0;
+  opacity: 1;
+  text-transform: uppercase;
+  font-size: small;
+  background-color: $orange-button;
+  color: $white;
+
+  &:hover {
+    background-color: $white;
+    color: $orange-button;
+
+    .logo {
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  &:disabled {
+    background-color: $gray-f2;
+    color: $gray-65;
+    border-color: $gray-f2;
+  }
+}
+
+$num-of-tabs: 5;
+
+@mixin tabs {
+  @for $i from 1 through $num-of-tabs {
+    &:nth-of-type(#{$i}) {
+      &:checked {
+        ~ .slide {
+          left: calc((50% / #{$num-of-tabs}) * #{$i - 1});
+        }
+      }
+    }
+  }
+}
+
+.tab-wrap {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+input[type="radio"][name="tabs"] {
+  position: absolute;
+  z-index: -1;
+  &:checked {
+    + .tab-label-content {
+      label {
+      }
+      .tab-content {
+        display: block;
+        margin-bottom: $remSize3;
+      }
+    }
+  }
+  @include tabs;
+  &:first-of-type {
+    &:checked {
+      ~ .slide {
+        left: 0;
+      }
+    }
+  }
+}
+
+label {
+  cursor: pointer;
+  color: $black;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: $size56;
+  transition: color 0.2s ease;
+  width: 100%;
+
+  font-size: $remSize09;
+}
+
+.slide {
+  background: $orange-gradient;
+  width: calc(50% / #{$num-of-tabs});
+  height: $size4;
+  position: absolute;
+  left: 0;
+  top: calc(100% - 4px);
+  transition: left 0.3s ease-out;
+}
+
+.tab-label-content {
+  width: 10%;
+  .tab-content {
+    position: absolute;
+    top: $remSize5;
+    left: 0;
+    line-height: 130%;
+    display: none;
+  }
+}
+
+.default-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $remSize1 $remSize3_5;
+  border-left: $size2 solid $gray-ee;
+  padding-left: $remSize1_25;
+}
+
+.default-grid-divider {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $remSize1 $remSize3_5;
+}
+
+.default-grid-divider:after {
+  position: absolute;
+  content: "";
+  left: 50%;
+  width: $size2;
+  height: 100%;
+  background-color: $gray-ee;
+}
+
+.sub-grid-divider {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $remSize1 $remSize3_5;
+  border-left: $size2 solid $gray-ee;
+  padding-left: $remSize1_25;
+}
+
+.sub-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $remSize1 $remSize3_5;
+}
+.sub-grid-class {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $remSize1 $remSize3_5;
+}
+
+.sub-grid-divider:after {
+  position: absolute;
+  content: "";
+  left: 50%;
+  width: $size2;
+  height: 100%;
+  background-color: $gray-ee;
+}
+
+.feature {
+  width: 33%;
+}
+
+.font-weight-custom {
+}
+
+.font-regular {
+  font-size: $remSize085;
+}
+
+.text-style {
+  letter-spacing: 0px;
+  color: #585858;
+  opacity: 1;
+  font-size: $size12;
+  white-space: nowrap;
+}
+.text-subtitle {
+  font-weight: bold;
+  font-size: $size14;
+  letter-spacing: 0px;
+  color: #1f1f1f;
+  opacity: 1;
+}
+
+.custom-card {
+  box-shadow: $size0 $size2 $size6 #aaaaaa29;
+  border: $size1 solid #d5d5d5;
+  border-radius: $size4;
+  opacity: 1;
+}
+
+.header-info {
+  box-shadow: 0px 2px 6px #aaaaaa29;
+  border: 1px solid #d5d5d5;
+  border-radius: 5px;
+  opacity: 1;
+  background: #ffffff 0% 0% no-repeat padding-box;
+}
+
+.line {
+  width: $size0;
+  height: 70%;
+  border: $size1 solid #707070;
+  opacity: 0.2;
+}
+
+.user-info {
+  min-width: $size300;
+}
+
+.sector-info {
+  min-width: $size170;
+}
+
+@include for-desktop-smaller {
+  .user-info {
+    min-width: $size0;
+  }
+  .sector-info {
+    min-width: $size0;
+  }
+
+  .last-access-info {
+    padding-left: $size16;
+  }
+
+  .set-flex {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+@include for-phone-only {
+  .sub-grid-divider {
+    display: flex;
+    flex-wrap: wrap;
+    grid-template-columns: 0;
+    gap: $size10;
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .sub-grid-divider:after {
+    position: none;
+    content: none;
+    left: 0;
+    width: 0;
+    height: 0;
+    background-color: none;
+  }
+  .sub-grid {
+    display: flex;
+    flex-wrap: wrap;
+    grid-template-columns: 0;
+    gap: $size10;
+  }
+
+  .box-responsive {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

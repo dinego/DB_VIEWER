@@ -1,0 +1,245 @@
+@import 'src/app/shared/styles/colors.scss';
+@import 'src/app/shared/styles/dimensions.scss';
+
+p {
+
+  font-size: $remSize09;
+  margin-bottom: $remSize05;
+}
+
+.header-img {
+  width: auto;
+  height: $remSize13;
+  background: transparent url('../../../assets/imgs/positioning.png') 0%
+    0% no-repeat;
+  opacity: 1;
+
+  > div {
+    text-align: left;
+    color: $white;
+    opacity: 1;
+    font-size: $remSize2_5;
+    padding-right: $remSize9_25;
+    padding-bottom: $remSize1;
+  }
+}
+
+.dv-content {
+  padding-left: $remSize7_18;
+  padding-right: $remSize1_53125;
+  font-size: $remSize09;
+}
+
+.title {
+  padding-left: $remSize7_18;
+  color: $orange-f0;
+  text-align: left;
+  opacity: 1;
+  margin-top: $remSize2_5;
+}
+
+.title-mobile {
+  display: none;
+}
+
+.body {
+  margin-top: $remSize1;
+  margin-bottom: $remSize3_75;
+}
+
+.card-body {
+  text-align: left;
+  color: $black-231f;
+  opacity: 1;
+  padding: $remSize2_1875;
+  font-size: $remSize09;
+}
+
+.card {
+  background: $white 0% 0% no-repeat padding-box;
+  box-shadow: $size0 $size3 $size12 $gray-box-shadow-00;
+  border-radius: $size10;
+  opacity: 1;
+  height: $remSize14_81;
+  width: 48%;
+
+  &:before {
+    background-color: $orange-f0;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: $remSize4_18;
+    height: $remSize4_18;
+    position: absolute;
+    border-radius: $remSize4_18;
+    top: -$remSize2_5;
+    left: -$remSize2_7;
+  }
+}
+
+.first-card {
+  &:before {
+    content: '';
+    background-image: url('../../../assets/imgs/svg/diagram.svg');
+  }
+}
+
+.second-card {
+  &:before {
+    content: '';
+    background-image: url('../../../assets/imgs/svg/balance.svg');
+  }
+}
+
+.separator {
+  width: $size0;
+  height: $remSize25;
+  border: $size1 solid #707070;
+  opacity: 0.23;
+}
+
+.btn-default {
+  background: $orange-button 0% 0% no-repeat padding-box;
+  box-shadow: $size0 $size3 $size10 $gray-box-shadow-43;
+  border-radius: 57px;
+  opacity: 1;
+  color: $white;
+  width: $remSize18;
+  height: $size65;
+  padding: 0 1.9375rem;
+  text-align: left;
+
+  letter-spacing: $size0;
+  color: $white;
+  opacity: 1;
+  text-transform: uppercase;
+  font-size: $remSize08;
+
+  img {
+    width: $remSize1_4;
+    height: $remSize1_5;
+  }
+}
+
+.margin-list {
+  margin-bottom: $remSize1_25;
+}
+
+.text-button {
+  text-align: center;
+  font-family: MontserratLight;
+  letter-spacing: 0.18px;
+  color: $black-231f;
+  opacity: 1;
+  margin-top: 1.125rem;
+}
+
+@media only screen and (max-width: $screen-laptop-large) {
+  .card {
+    font-size: $remSize0875;
+    width: 46%;
+  }
+}
+
+@media only screen and (min-width: $screen-laptop-large) {
+  .header-img {
+    width: auto;
+    background: transparent url('../../../assets/imgs/positioning@2x.png')
+      0% 0% no-repeat;
+    background-size: cover;
+  }
+}
+
+@media only screen and (max-width: $screen-laptop) {
+  .btn-content {
+    display: none;
+  }
+
+  .body {
+    font-size: $remSize0875;
+  }
+
+  .card {
+    font-size: $remSize0875;
+    width: 80%;
+    height: auto;
+    margin-bottom: $remSize3;
+
+    &:before {
+      width: $remSize4_37;
+      height: $remSize4_37;
+      border-radius: $remSize4_37;
+    }
+  }
+
+  .text-button {
+    font-size: $remSize0875;
+  }
+
+  .dv-content {
+    padding-left: $remSize1;
+    padding-right: $remSize1;
+  }
+
+  .btn-default {
+    font-size: small;
+    border-radius: 57px;
+    opacity: 1;
+    color: $white;
+    width: $size200;
+    height: $size50;
+    padding: 0 1.9375rem;
+    text-align: left;
+
+    letter-spacing: $size0;
+    color: $white;
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: $screen-tablet) {
+  .header-img {
+    > div {
+      font-size: $remSize2;
+    }
+  }
+
+  .card {
+    width: 70%;
+    &:before {
+      width: $remSize3_75;
+      height: $remSize3_75;
+      border-radius: $remSize3_75;
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-mobile-large) {
+  .header-img {
+    height: $remSize10;
+    > div {
+      font-size: $remSize2;
+    }
+  }
+
+  .separator {
+    display: none;
+  }
+
+  .title {
+    display: none;
+  }
+
+  .title-mobile {
+    display: block;
+    color: $orange-f0;
+
+    text-align: center;
+    letter-spacing: 0.22px;
+    opacity: 1;
+    margin-top: $remSize1;
+  }
+
+  .btn-content {
+    margin-top: $remSize2;
+  }
+}

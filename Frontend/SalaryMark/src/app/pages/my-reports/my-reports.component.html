@@ -1,0 +1,65 @@
+<div class="my-reports-container container-fluid mt-0">
+  <app-title-header [title]="locales.myReportsTitle">
+    <div class="w-50">
+      <app-button-list-light
+        *ngIf="unitList && unitList.length > 1"
+        class="btn-list d-flex"
+        [text]="unitSelected"
+        [unitList]="unitList"
+        [showList]="true"
+        (textUnitSelected)="changeUnit($event)"
+      >
+      </app-button-list-light>
+    </div>
+
+    <div class="d-flex flex-fill align-items-center justify-content-end">
+      <span class="label-order-by mr-3">
+        {{ commonLocales.orderBy }}
+      </span>
+      <app-button-list-light
+        class="d-flex"
+        [text]="orderTypes[0].title"
+        [list]="orderTypes"
+        [showList]="true"
+        (textSelected)="changeSelectOrderType($event)"
+      >
+      </app-button-list-light>
+    </div>
+  </app-title-header>
+
+  <div class="container-fluid report-container m-0 p-0">
+    <div>
+      <div class="search-container">
+        <app-search
+          [isFullSize]="true"
+          (searchQuery)="onChangeSearch($event)"
+          text="{{ commonLocales.searchRelatories }}"
+        ></app-search>
+      </div>
+    </div>
+
+    <div
+      class="report-items row"
+      *ngIf="reports"
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="50"
+      (scrolled)="onScrollDown()"
+      [scrollWindow]="false"
+    >
+      <app-report-item
+        class="col-sm-12 col-md-6 col-lg-4 col-xl-3"
+        *ngFor="let item of reports"
+        [title]="item.title"
+        [date]="item.date"
+        [id]="item.id"
+        [image]="item.image"
+        [reportType]="item.reportType"
+        [embedHtml]="item.html"
+        [embedScript]="item.script"
+        [fileName]="item.fileName"
+        (download)="downloadFile($event)"
+      ></app-report-item>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<input
+  class="ml-2 cbModalShow"
+  id="{{ item.nickName ? item.nickName : item.colName }}"
+  type="checkbox"
+  [disabled]="item.disabled"
+  aria-label="Checkbox for following text input"
+  #inputMdShow
+  [(ngModel)]="isChecked"
+/>
+<label for="{{ item.nickName ? item.nickName : item.colName }}">
+  <ng-container
+    *ngIf="
+      !editCols || (editCols && !item.editable);
+      then label;
+      else inputEdit
+    "
+  ></ng-container>
+  <ng-template #label>
+    {{ item.nickName ? item.nickName : item.colName }}
+  </ng-template>
+  <ng-template #inputEdit>
+    <input
+      [disabled]="item.disabled && !item.editable"
+      class="form-control inputEdit {{
+        item.disabled && !item.editable ? 'disabled' : ''
+      }}"
+      type="text"
+      [(ngModel)]="value"
+      (change)="onValueChange.emit(value)"
+    />
+  </ng-template>
+</label>

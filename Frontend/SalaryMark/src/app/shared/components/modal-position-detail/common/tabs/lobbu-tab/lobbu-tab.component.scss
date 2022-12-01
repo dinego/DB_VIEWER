@@ -1,0 +1,56 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.container-description {
+  max-height: 60vh;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  width: $size20;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border: $size4 solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  border-radius: 9999px;
+  background-color: #aaaaaa;
+}
+
+.container-description,
+.content-row {
+  font-size: $size14;
+
+  & > .card {
+    background: $white 0% 0% no-repeat padding-box;
+    box-shadow: $size0 $size3 $size6 $shadow;
+    border: $size1 solid $border-gray;
+    border-radius: $size4;
+    padding: $remSize075;
+    margin-bottom: $remSize075;
+
+    & > .content {
+      & > .title-item {
+        font-weight: 600;
+        color: $black-58;
+        text-transform: uppercase;
+        font-size: $size12;
+      }
+    }
+
+    & > hr {
+      margin-top: $remSize05;
+      margin-bottom: $remSize05;
+    }
+
+    & > .title {
+      font-weight: 600;
+      font-size: $size16;
+    }
+  }
+}

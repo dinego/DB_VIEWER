@@ -1,0 +1,56 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.modal-share-table-container {
+  #email {
+    margin-bottom: $remSize1;
+  }
+  .copy-link {
+    background: $gray-f2 0% 0% no-repeat padding-box;
+    font-size: $size13;
+    overflow-wrap: anywhere;
+    width: $size570;
+    height: $size49;
+    border-radius: $size4;
+    opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+}
+
+.label-style {
+  font-size: $size14;
+  letter-spacing: $size0;
+  color: $black-58;
+  opacity: 1;
+  font-weight: bold;
+}
+
+.copy-container {
+  width: $size69;
+  height: $size35;
+  background: $gray-dd 0% 0% no-repeat padding-box;
+  border: $size1 solid $border-gray;
+  border-radius: $size50;
+  opacity: 1;
+  letter-spacing: $size0;
+  color: $black-1f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $size14;
+  cursor: pointer;
+}
+
+.text-wrap {
+  word-break: break-word;
+  white-space: pre-wrap;
+  text-align: center;
+}
+
+
+::ng-deep.modal-share {
+  max-width: $size604;
+}

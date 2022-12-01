@@ -1,0 +1,181 @@
+<div class="container-tab">
+  <div class="filters d-flex flex-row p-2 align-items-end">
+    <app-search
+      class="mr-3 flex-fill"
+      (searchQuery)="onChangeSearch($event)"
+    ></app-search>
+    <div class="title-drop d-flex flex-column">
+      <span class="title"> Cenário </span>
+      <app-button-list-light
+        *ngIf="movementsList && movementSelected"
+        [list]="movementsList"
+        [text]="movementSelected.title"
+        (textSelected)="setMovementSelected($event)"
+      ></app-button-list-light>
+    </div>
+    <div class="divider"></div>
+    <div class="title-drop d-flex flex-column">
+      <span class="title"> Unidade </span>
+      <app-button-list-light
+        *ngIf="unitList && unitSelected"
+        [unitList]="unitList"
+        [text]="unitSelected.unit"
+        (textSelected)="setUnitSelected($event)"
+      ></app-button-list-light>
+    </div>
+    <div class="divider"></div>
+    <div class="title-drop d-flex flex-column">
+      <span class="title"> Visualização </span>
+      <app-button-list-visualization
+        [list]="displayTypesList"
+        [selected]="displaySelected"
+        (textSelected)="changeSelectVisualization($event)"
+      ></app-button-list-visualization>
+    </div>
+  </div>
+  <div class="table-graph d-flex">
+    <div
+      class="mt-3 table-container w-100"
+      fxLayout="column"
+      *ngIf="
+        dataResult &&
+        tableClass &&
+        displaySelected &&
+        displaySelected.id === displayTypeEnum.TABLE
+      "
+    >
+      <ngx-datatable
+        class="bootstrap"
+        [rows]="dataResult"
+        [columnMode]="ColumnMode.force"
+        [ngClass]="tableClass"
+        [selectionType]="SelectionType.checkbox"
+        [headerHeight]="headerHeight"
+        [rowHeight]="rowHeight"
+        [selectAllRowsOnPage]="false"
+        [scrollbarV]="true"
+        [scrollbarH]="true"
+        [loadingIndicator]="isLoading"
+        [offset]="myPage"
+        [limit]="pageLimit"
+        [messages]="{ emptyMessage: 'Não há dados' }"
+        (sort)="onSort($event)"
+        [externalSorting]="true"
+        (scroll)="onScroll($event.offsetY)"
+      >
+        <ngx-datatable-column
+          *ngFor="let item of columHeaders; let i = index"
+          name="{{ item.nickName }}"
+          prop="{{ item.columnId }}"
+          [sortable]="item.sortable"
+          [headerClass]="setClassHeader(item)"
+          [cellClass]="setClassBody(item)"
+          [width]="setColumnWidth(item)"
+        >
+          <ng-template
+            let-rowIndex="rowIndex"
+            let-row="row"
+            ngx-datatable-cell-template
+          >
+            <div
+              *ngIf="frameworkColumnsEnum.CompareMidPoint === item.columnId"
+              fxLayout="row"
+              fxLayoutAlign="center center"
+              [style]="
+                getRowResult(row, item)
+                  ? styleButton(transformTextToNumber(row, item))
+                  : ''
+              "
+            >
+              <div *ngIf="getRowResult(row, item)">
+                {{ getFormatValue(row, item) | number: "1.0-3" }}%
+              </div>
+            </div>
+
+            <div
+              *ngIf="frameworkColumnsEnum.CompareMidPoint !== item.columnId"
+              fxLayout="row"
+              [fxLayoutAlign]="
+                getRowResult(row, item) &&
+                (getRowResult(row, item).type === 'Double' ||
+                  getRowResult(row, item).type === 'Int64' ||
+                  transformText(row, item) === '-')
+                  ? 'center center'
+                  : 'start center'
+              "
+            >
+              <div
+                *ngIf="
+                  getRowResult(row, item) &&
+                  getRowResult(row, item).type === 'Double'
+                "
+                [ngClass]="
+                  item.columnId !== 8 && item.columnId !== 9
+                    ? 'font-weight-bold'
+                    : ''
+                "
+              >
+                <div
+                  *ngIf="
+                    transformText(row, item) !== '-' &&
+                    hoursType === hourlyBasisEnum.HourSalary
+                  "
+                >
+                  {{ getFormatValue(row, item) | number: "1.2-2" }}
+                </div>
+                <div
+                  *ngIf="
+                    transformText(row, item) !== '-' &&
+                    hoursType !== hourlyBasisEnum.HourSalary
+                  "
+                >
+                  {{ getFormatValue(row, item) | number: "1.0-3" }}
+                </div>
+                <div *ngIf="transformText(row, item) === '-'">
+                  {{ transformText(row, item) }}
+                </div>
+              </div>
+
+              <div
+                *ngIf="item.columnId === frameworkColumnsEnum.CurrentPosition"
+                style="cursor: pointer"
+              >
+                <span
+                  [innerHTML]="transformText(row, item) | highlightsCase: query"
+                ></span>
+              </div>
+
+              <div
+                *ngIf="
+                  item.columnId !== frameworkColumnsEnum.CurrentPosition &&
+                  getRowResult(row, item) &&
+                  getRowResult(row, item).type !== 'Double'
+                "
+              >
+                <span
+                  [innerHTML]="transformText(row, item) | highlightsCase: query"
+                ></span>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+    <div
+      class="mt-3 table-container mr-0 ml-0 w-100"
+      fxLayout="column"
+      *ngIf="
+        displaySelected && displaySelected.id === displayTypeEnum.INTENSITY
+      "
+    >
+      <app-intensity-table
+        (scrollGetFramework)="getFramework(true)"
+        [data]="movementTable.body"
+        [minBar]="minBar"
+        [maxBar]="maxBar"
+        [displayInModal]="true"
+        [query]="query"
+      ></app-intensity-table>
+    </div>
+  </div>
+</div>

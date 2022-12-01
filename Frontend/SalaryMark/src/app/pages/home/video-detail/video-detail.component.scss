@@ -1,0 +1,26 @@
+@import "src/app/shared/styles/dimensions.scss";
+
+.close {
+  text-shadow: none;
+  opacity: 1;
+  font-size: 3rem;
+  color: rgb(160, 160, 160);
+  position: absolute;
+  left: 104.75%;
+}
+
+.modal-body {
+  padding: 0;
+  margin: $size25;
+  // height: 50vh;
+}
+
+:host::ng-deep .modal-content {
+  border-radius: $size20;
+}
+::ng-deep .modal {
+  @media (max-width: 576px) {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}

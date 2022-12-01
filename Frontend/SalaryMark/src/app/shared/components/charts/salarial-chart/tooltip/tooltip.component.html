@@ -1,0 +1,34 @@
+<div
+  class="tooltip-container d-flex justify-content-center align-items-center flex-column"
+>
+  <div class="gsm px-2">{{ gsmGlobalLabel }}: {{ gsm }}</div>
+  <div class="midpoint">
+    <span class="midpoint-formater">Midpoint: </span>
+    <span class="midpoint-value">{{ midPoint }}</span>
+  </div>
+  <ng-container *ngIf="positions.length > 0; else noPositions">
+    <div
+      *ngFor="let item of positions"
+      class="d-flex flex-row container-lines justify-content-start"
+    >
+      <div class="align-self-start">
+        <a
+          id="link-position-{{ item.id }}"
+          class="link-position"
+          attr.data-position="{{ item.id }}"
+          >{{ item.positionDescription }}</a
+        >
+
+        <i
+          class="fas fa-user ml-2 has-occupant-clt"
+          *ngIf="item.occupantCLT && showOccupantCLT"
+        ></i>
+        <i
+          class="fas fa-user mr-2 has-occupant-pj"
+          *ngIf="item.occupantPJ && showOccupantPJ"
+        ></i>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #noPositions> Não há cargos para esse GSM </ng-template>
+</div>

@@ -1,0 +1,58 @@
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <div
+    fxLayout.lt-md="row"
+    [ngClass]="{ layoutSpaced: isSpacedBetween, layoutStart: !isSpacedBetween }"
+    class="filter-content container-fluid py-2 px-3"
+  >
+    <div
+      *ngIf="share && (shareFilterTitle || shareFilter)"
+      class="title-content dropdown"
+      fxLayout="column"
+    >
+      <div class="tiny-title mb-2">
+        {{ shareFilterTitle }}
+      </div>
+      <div class="super-title">
+        {{ shareFilter }}
+      </div>
+    </div>
+    <app-filter-by-header
+      *ngIf="
+        (!share && listDisplay && listDisplay.length > 0) ||
+        (listTables && listTables.length > 0)
+      "
+      class="align-self-end pb-1"
+      [share]="share"
+      [listDisplay]="listDisplay"
+      [listTables]="listTables"
+      [selectedItem]="selectedItem"
+      [selectedTable]="selectedTable"
+      [shareFilterTitle]="shareFilterTitle"
+      (changeTableEmitter)="changeTable($event)"
+      (changeDisplayEmitter)="changeDisplay($event)"
+    >
+    </app-filter-by-header>
+    <ng-container *ngIf="showVersusCompare">
+      <div class="mr-3 align-self-end mb-1">
+        <span class="versus-icon">X</span>
+      </div>
+      <app-filter-by-header
+        *ngIf="
+          (!share && listDisplay && listDisplay.length > 0) ||
+          (listTables && listTables.length > 0)
+        "
+        class="align-self-end pb-1"
+        [showLabel]="false"
+        [share]="share"
+        [listDisplay]="listDisplay"
+        [listTables]="listTables"
+        [selectedItem]="versusSelectedItem"
+        [selectedTable]="versusSelectedTable"
+        [shareFilterTitle]="shareFilterTitle"
+        (changeTableEmitter)="versusChangeTable($event)"
+      >
+      </app-filter-by-header>
+    </ng-container>
+    <ng-content></ng-content>
+  </div>
+</div>

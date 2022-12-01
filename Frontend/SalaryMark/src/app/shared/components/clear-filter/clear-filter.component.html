@@ -1,0 +1,12 @@
+<div class="mt-3" fxLayout="row" fxLayoutAlign="start center">
+  <app-button-secundary
+    [label]="locales.clearFilters"
+    class="mr-3"
+    (click)="clearFilters.emit(false)"
+  ></app-button-secundary>
+
+  <app-button-primary
+    (click)="filters.emit()"
+    [label]="locales.filters"
+  ></app-button-primary>
+</div>

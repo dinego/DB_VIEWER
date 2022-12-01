@@ -1,0 +1,95 @@
+<div class="modal-control p-3">
+  <div class="header-control d-flex justify-content-between">
+    <div class="header-title d-flex align-items-center">
+      <img src="../../../../../assets/imgs/svg/edit-icon.svg" class="mr-2" />
+      <span class="title-modal">{{ locales.editTitle }}</span>
+    </div>
+    <div class="close btn-close">
+      <img
+        src="../../../../../assets/imgs/svg/close-modal.svg"
+        (click)="modalRef.hide()"
+      />
+    </div>
+  </div>
+  <ng-container *ngIf="errorList.length > 0">
+    <app-error-message
+      *ngFor="let error of errorList"
+      [error]="error && error.message ? error.message : ''"
+    ></app-error-message>
+  </ng-container>
+  <hr />
+  <div class="errors-control"></div>
+  <div class="body-control">
+    <div class="radios-edits d-flex" *ngIf="canEditGSMMappingTable">
+      <app-radio-button
+        [label]="locales.applyUpdates"
+        [itemId]="typesEnum.APPLY_UPDATES"
+        [checked]="itemTypeChecked === typesEnum.APPLY_UPDATES"
+        (checkEvent)="changeCheckedType($event)"
+        class="mr-3"
+      ></app-radio-button>
+      <app-radio-button
+        [label]="locales.editTracks"
+        [itemId]="typesEnum.EDIT_TRACKS"
+        [checked]="itemTypeChecked === typesEnum.EDIT_TRACKS"
+        (checkEvent)="changeCheckedType($event)"
+        class="mr-3"
+      ></app-radio-button>
+      <app-radio-button
+        [label]="locales.importExcel"
+        [itemId]="typesEnum.IMPORT_EXCEL"
+        [checked]="itemTypeChecked === typesEnum.IMPORT_EXCEL"
+        (checkEvent)="changeCheckedType($event)"
+        class="mr-3"
+      ></app-radio-button>
+    </div>
+    <div class="content-control mt-3">
+      <ng-container
+        *ngIf="itemTypeChecked && itemTypeChecked === typesEnum.APPLY_UPDATES"
+      >
+        <app-apply-update
+          [gsmGlobalLabel]="gsmGlobalLabel"
+          [bsModalRef]="modalRef"
+          [data]="data"
+          [tableId]="tableId"
+          [projectId]="projectId"
+          (eventErrors)="updateErrors($event)"
+          (hideModalPosition)="hideModalPositionByConfirm($event)"
+          (showModalPosition)="showModalPosition()"
+        >
+        </app-apply-update>
+      </ng-container>
+
+      <ng-container
+        *ngIf="itemTypeChecked && itemTypeChecked === typesEnum.EDIT_TRACKS"
+      >
+        <app-edit-tracks
+          [data]="data"
+          [tableId]="tableId"
+          [projectId]="projectId"
+          [bsModalRef]="modalRef"
+          (eventErrors)="updateErrors($event)"
+          (hideModalPosition)="hideModalPositionByConfirm($event)"
+          (showModalPosition)="showModalPosition()"
+        >
+        </app-edit-tracks>
+      </ng-container>
+
+      <ng-container
+        *ngIf="itemTypeChecked && itemTypeChecked === typesEnum.IMPORT_EXCEL"
+      >
+        <app-import-excel
+          [tableId]="tableId"
+          [bsModalRef]="modalRef"
+          [tableId]="tableId"
+          [headersForTemplate]="headersForTemplate"
+          [data]="data"
+          [salaryTables]="salaryTables"
+          (eventErrors)="updateErrors($event)"
+        >
+        </app-import-excel>
+      </ng-container>
+    </div>
+  </div>
+  <div class="footer-control"></div>
+</div>

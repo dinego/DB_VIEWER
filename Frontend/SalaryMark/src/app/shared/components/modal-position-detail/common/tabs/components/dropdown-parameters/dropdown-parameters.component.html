@@ -1,0 +1,55 @@
+<div
+  class="d-flex bordered-drop"
+  aria-controls="dropdown-animated"
+  id="dropdownMenuButtonAdd"
+  data-toggle="dropdown"
+>
+  <div class="d-flex justify-content-between content">
+    <span class="item-selected ml-2 mr-4">
+      {{ selectedText ? selectedText : text }}
+    </span>
+    <div class="d-flex ml-auto carret">
+      <i class="fas fa-sort-down"></i>
+    </div>
+  </div>
+</div>
+<ul
+  aria-labelledby="dropdownMenuButtonAdd"
+  class="dropdown-menu"
+  role="menu"
+  aria-labelledby="button-basic"
+  [ngClass]="{
+    'limited-scroll': isLimitedDropdown
+  }"
+>
+  <li
+    role="menuitem"
+    *ngFor="let item of list"
+    (click)="addItem(item); $event.preventDefault()"
+  >
+    <a class="dropdown-item" href="#">{{ item.title }}</a>
+  </li>
+
+  <li
+    role="menuitem"
+    *ngIf="
+      paramTypeById === parametersEnum.ParameterOne ||
+      paramTypeById === parametersEnum.ParameterTwo ||
+      paramTypeById === parametersEnum.ParameterThree
+    "
+  >
+    <div class="d-flex">
+      <input
+        class="form-control"
+        placeholder="Adicione"
+        [(ngModel)]="addNewParameter"
+      />
+      <img
+        src="../../../../../../../../assets/imgs/svg/add-circle.svg"
+        width="35"
+        class="add-pointer ml-1"
+        (click)="addParameter(); $event.preventDefault()"
+      />
+    </div>
+  </li>
+</ul>

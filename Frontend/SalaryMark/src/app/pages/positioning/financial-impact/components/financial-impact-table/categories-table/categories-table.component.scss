@@ -1,0 +1,22 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.title-filter-by {
+  min-height: $size96;
+  font-weight: 700;
+  font-size: $size16;
+}
+
+table {
+  & > tbody {
+    & > tr {
+      &:last-child {
+        background: transparent
+          linear-gradient(180deg, #6f6e6e 0%, #909090 100%) 0% 0% no-repeat
+          padding-box;
+        color: $white;
+        font-weight: 700;
+      }
+    }
+  }
+}

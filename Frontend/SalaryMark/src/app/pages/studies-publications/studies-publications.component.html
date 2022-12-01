@@ -1,0 +1,186 @@
+<div class="container-fluid mt-3" id="studies-publications">
+  <app-title-header [title]="locales.studiesPublications">
+    <div class="hidden-header" *ngIf="!isShare">
+      <div class="d-flex align-items-center mr-3">
+        <p class="title-header m-0 mr-3">{{ locales.withPermissionAccess }}</p>
+        <app-switch-button
+          [isChecked]="withPermission"
+          (expandAllRows)="changeWithPermissions($event)"
+        ></app-switch-button>
+      </div>
+
+      <div class="d-flex align-items-center">
+        <p class="title-header m-0 mr-3">{{ locales.orderBy }}</p>
+        <app-button-list-light
+          class="d-flex"
+          [text]="orderTypes[0].title"
+          [list]="orderTypes"
+          [showList]="true"
+          (textSelected)="changeSelectOrderType($event)"
+        >
+        </app-button-list-light>
+      </div>
+    </div>
+
+    <div class="d-flex flex-wrap share-info" *ngIf="isShare">
+      <div class="d-flex pr-2">
+        <span class="title-share pr-1"> {{ locales.createdBy }} </span>
+        <span class="text-share"> {{ studyShared.userName }} </span>
+      </div>
+
+      <div class="d-flex">
+        <span class="title-share pr-1"> {{ locales.created }} </span>
+        <span class="text-share">
+          {{ studyShared.create | date: "dd/MM/yyyy" }}
+        </span>
+      </div>
+    </div>
+  </app-title-header>
+
+  <div class="mobile-header d-flex flex-wrap mb-3" *ngIf="isShare">
+    <div class="mr-auto">
+      <p class="title-header m-0 mr-3">{{ locales.withPermissionAccess }}</p>
+      <app-switch-button
+        [isChecked]="withPermission"
+        (expandAllRows)="changeWithPermissions($event)"
+      ></app-switch-button>
+    </div>
+
+    <div class="">
+      <p class="title-header m-0 mr-3">{{ locales.orderBy }}</p>
+      <app-button-list-light
+        class="d-flex"
+        [text]="orderTypes[0].title"
+        [list]="orderTypes"
+        [showList]="true"
+        (textSelected)="changeSelectOrderType($event)"
+      >
+      </app-button-list-light>
+    </div>
+  </div>
+
+  <app-search
+    [text]="locales.searchPublications"
+    (searchQuery)="onChangeSearch($event)"
+  >
+  </app-search>
+
+  <div
+    class="report-items mt-3"
+    *ngIf="publications"
+    infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScrollDown()"
+    [scrollWindow]="false"
+  >
+    <div class="begin-card d-none d-sm-block pb-5">
+      <div class="row rowstudies">
+        <div class="col-12 colstudies">
+          <ng-template #noResultsFound>
+            <h4 class="noresultsfoundtext">
+              <span *ngIf="publications.length">{{ locales.noResult }}</span>
+            </h4>
+          </ng-template>
+          <div
+            class="cs-grid-studies row row-cols-1 row-cols-md-4 row-cols-sm-2 row-cols-xs-1"
+            *ngIf="publications.length; else noResultsFound"
+          >
+            <div
+              class="col"
+              *ngFor="let publication of publications; let i = index"
+            >
+              <div
+                [ngClass]="{ 'cursor-not-allowed': !publication.hasAccess }"
+                class="card mb-4"
+              >
+                <div *ngIf="publication.image; else noImageCard" class="image">
+                  <img
+                    class="cardIMG img-fluid rounded"
+                    [src]="'data:image/jpg;base64,' + publication.image"
+                    alt=""
+                  />
+                  <img
+                    *ngIf="!publication.hasAccess"
+                    class="lockicon"
+                    src="../../../../assets/imgs/svg/study-lock.svg"
+                  />
+                </div>
+
+                <ng-template #noImageCard>
+                  <div class="emptyimage">
+                    <img
+                      *ngIf="!publication.hasAccess"
+                      class="lockicon"
+                      src="../../../../assets/imgs/svg/study-lock.svg"
+                    />
+                  </div>
+                </ng-template>
+                <div class="card-body body">
+                  <span
+                    class="mb-1 font-weight-bold title"
+                    [tooltip]="publication.title"
+                    placement="right"
+                  >
+                    {{ publication.title }}
+                  </span>
+                  <span class="date mb-2">{{
+                    publication.date | date: "dd/MM/yyyy"
+                  }}</span>
+                  <p class="message">
+                    {{ publication.article }}
+                  </p>
+                  <div
+                    class="d-flex justify-content-between bottombuttons"
+                    [ngClass]="{
+                      'justify-content-between':
+                        publication.hasAccess && !isSharedView,
+                      'justify-content-end':
+                        !publication.hasAccess || isSharedView
+                    }"
+                  >
+                    <button
+                      [ngClass]="{
+                        'cursor-not-allowed':
+                          !publication.hasAccess || isSharedView
+                      }"
+                      type="button"
+                      *ngIf="publication.hasAccess && !isSharedView"
+                      class="btn button -sharebutton"
+                      data-toggle="modal"
+                      data-target="#shareModal"
+                      tooltip="{{ locales.share }}"
+                      placement="bottom"
+                      (click)="sharePublication(publication)"
+                    >
+                      Compartilhar
+                    </button>
+                    <button
+                      type="button"
+                      class="btn button"
+                      (click)="openPublicationDetail(publication)"
+                    >
+                      Abrir
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-basic-dialog-structure
+  [input]="inputShareModal"
+  [hidden]="!shareURL"
+  (save)="onSendEmail()"
+  *ngIf="permissions && inputShareModal"
+  [isShareModal]="true"
+>
+  <app-modal-share-table
+    [url]="shareURL"
+    (onChangeEmail)="onPutEmail($event)"
+  ></app-modal-share-table>
+</app-basic-dialog-structure>

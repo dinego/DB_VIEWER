@@ -1,0 +1,106 @@
+@use "sass:math";
+
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.btn-options {
+  height: $size35;
+  background: transparent
+    linear-gradient(180deg, $orange-f7 0%, $orange-f2 100%) 0% 0% no-repeat
+    padding-box;
+  box-shadow: $size0 $size2 $size6 $shadow;
+  border-radius: $size42;
+  font-size: $size14;
+  color: $white;
+  cursor: pointer;
+  font-weight: 400;
+  border: 0;
+  &:hover {
+    transition: transform 300ms linear;
+    background: transparent
+      linear-gradient(180deg, $orange-ec1 0%, $orange-ec2 100%) 0% 0% no-repeat
+      padding-box;
+  }
+
+  & > label {
+    white-space: nowrap;
+    font-weight: 400;
+    cursor: pointer;
+  }
+
+  & > .fas {
+    transform: rotateX(0deg);
+    transition: transform 200ms linear;
+    font-size: 20px;
+  }
+
+ 
+}
+
+.dropdown {
+  & > .dropdown-menu {
+    box-shadow: $size0 $size2 $size6 $shadow;
+    border-radius: $size2;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-weight: 600;
+    z-index: 1080;
+
+    animation-name: fade-in;
+    animation-fill-mode: both;
+    animation-duration: 0.5s;
+
+    & > .dropdown-item {
+      border-bottom: $size1 solid $border-gray;
+      min-height: $size35;
+      font-size: $size14;
+      padding: 0;
+      cursor: pointer;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+      & > .selected {
+        color: $orange-f4;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+$animationDelay: 1;
+@for $i from 1 through 15 {
+  .projects div:nth-of-type(#{$i}) {
+    animation-delay: #{0.3 + math.div($i, 30)}s;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.large-button {
+  width: 150px;
+  background: transparent
+    linear-gradient(180deg, $orange-f7 0%, $orange-f2 100%) 0% 0% no-repeat
+    padding-box;
+}
+
+
+.show {
+  & > .btn-options {
+    & > .fas {
+      transform: rotateX(180deg);
+      transition: transform 200ms linear;
+    }
+  }
+}

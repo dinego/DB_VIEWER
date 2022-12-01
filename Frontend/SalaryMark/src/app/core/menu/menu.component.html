@@ -1,0 +1,500 @@
+<div class="back-drop-menu is-show">
+  <div
+    class="menu-container is-show"
+    fxLayout="column"
+    fxLayoutAlign="start"
+    *ngIf="!share"
+  >
+    <div
+      class="menu-item padding-menusection-nav cursor-pointer menu-reset-cursor"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+    >
+      <h5 class="menu-header ml-2">{{ locales.menu }}</h5>
+      <img
+        class="close-menu m-2 cursor-pointer"
+        src="{{
+          isShow
+            ? '../../../assets/imgs/svg/menu-expand.svg'
+            : '../../../assets/imgs/svg/close-modal.svg'
+        }}"
+        (click)="closeMenu()"
+      />
+    </div>
+    <div
+      class="menu-item d-flex flex-row cursor-pointer"
+      routerLink="/"
+      routerLinkActive="route-active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      (click)="closeMenu()"
+      *ngIf="validateMenu(modules.home)"
+    >
+      <div class="selected-item"></div>
+
+      <a
+        class="cursor-pointer default-home-section"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+      >
+        <img class="fill-orange mr-3" src="../../../assets/imgs/svg/home.svg" />
+        <h6 class="ml-1">{{ locales.home }}</h6>
+      </a>
+    </div>
+    <div
+      class="menu-item d-flex flex-row cursor-pointer"
+      routerLink="/dashboard"
+      routerLinkActive="route-active"
+      (click)="closeMenu()"
+      *ngIf="validateMenu(modules.dashboard)"
+    >
+      <div class="selected-item"></div>
+      <a
+        class="cursor-pointer default-nav-padding"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+      >
+        <img
+          class="fill-orange mr-3"
+          src="../../../assets/imgs/svg/dashboard.svg"
+        />
+        <h6 class="ml-1">{{ locales.dashboard }}</h6>
+      </a>
+    </div>
+    <div
+      class="menu-item d-flex flex-row cursor-pointer"
+      routerLink="/tabela-salarial"
+      routerLinkActive="route-active"
+      (click)="closeMenu()"
+      *ngIf="validateMenu(modules.tableSalary)"
+    >
+      <div class="selected-item"></div>
+      <a
+        class="cursor-pointer default-nav-padding"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+      >
+        <img
+          class="fill-orange mr-3"
+          src="../../../assets/imgs/svg/camada1.svg"
+        />
+        <h6 class="ml-1">{{ locales.salaryTable }}</h6>
+      </a>
+    </div>
+    <!--cargos-->
+    <div
+      class="menu-item d-flex flex-row cursor-pointer"
+      (click)="showRolesMenu = !showRolesMenu"
+      *ngIf="validateMenu(modules.positions)"
+    >
+      <div class="selected-item"></div>
+      <a
+        class="cursor-pointer default-nav-padding"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+      >
+        <img
+          class="fill-orange positions-icon mr-4"
+          src="../../../assets/imgs/svg/cargos.svg"
+        />
+        <h6 class="">{{ locales.positions.positions }}</h6>
+      </a>
+      <div
+        [ngClass]="{ 'opened-menu': showRolesMenu }"
+        class="d-flex flex-grow-1 justify-content-end align-items-center pr-3"
+      >
+        <img src="../../../assets/imgs/svg/down-arrow.svg" class="arrow-down" />
+      </div>
+    </div>
+
+    <ng-container *ngIf="showRolesMenu">
+      <div
+        class="submenu-item d-flex align-items-center menu-item default-nav-padding cursor-pointer"
+      >
+        <a
+          class="cursor-pointer pl-4 pr-3 p-1"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          routerLink="/cargos/arquitetura-cargos"
+          routerLinkActive="route-active"
+          (click)="closeMenu()"
+        >
+          <img
+            src="../../../assets/imgs/svg/arrow-right.svg"
+            class="arrow-right ml-2"
+          />
+          <h6 class="ml-2">{{ locales.positions.subMenus.architecture }}</h6>
+        </a>
+      </div>
+      <div
+        class="submenu-item d-flex align-items-center menu-item default-nav-padding cursor-pointer"
+      >
+        <a
+          class="cursor-pointer pl-4 pr-3 p-1"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          routerLink="/cargos/mapa-cargos"
+          routerLinkActive="route-active"
+          (click)="closeMenu()"
+        >
+          <img
+            src="../../../assets/imgs/svg/arrow-right.svg"
+            class="arrow-right ml-2"
+          />
+          <h6 class="ml-2">{{ locales.positions.subMenus.map }}</h6>
+        </a>
+      </div>
+    </ng-container>
+    <!--posicionamentos-->
+    <div
+      class="menu-item d-flex flex-row cursor-pointer"
+      (click)="showPositionamentsMenu = !showPositionamentsMenu"
+      *ngIf="validateMenu(modules.positioning)"
+    >
+      <div class="selected-item"></div>
+      <a
+        class="cursor-pointer default-nav-padding"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+      >
+        <img class="fill-orange mr-3" src="../../../assets/imgs/svg/mapa.svg" />
+        <h6 class="ml-1">{{ locales.positioning.positioning }}</h6>
+      </a>
+      <div
+        [ngClass]="{ 'opened-menu': showPositionamentsMenu }"
+        class="d-flex flex-grow-1 justify-content-end align-items-center pr-3"
+      >
+        <img src="../../../assets/imgs/svg/down-arrow.svg" class="arrow-down" />
+      </div>
+    </div>
+    <ng-container *ngIf="showPositionamentsMenu">
+      <div
+        class="submenu-item d-flex align-items-center menu-item default-nav-padding cursor-pointer"
+        *ngIf="canAccessPositioning(subModules.framework)"
+      >
+        <a
+          class="cursor-pointer pl-4 pr-3 p-1"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          routerLink="/posicionamento/configuracoes/enquadramento"
+          routerLinkActive="route-active"
+          (click)="closeMenu()"
+        >
+          <img
+            src="../../../assets/imgs/svg/arrow-right.svg"
+            class="arrow-right ml-2"
+          />
+          <h6 class="ml-2">
+            {{ locales.positioning.subMenus.framework }}
+          </h6>
+        </a>
+      </div>
+      <div
+        class="submenu-item d-flex align-items-center menu-item default-nav-padding cursor-pointer"
+        *ngIf="canAccessPositioning(subModules.financialImpact)"
+      >
+        <a
+          class="cursor-pointer pl-4 pr-3 p-1"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          routerLink="/posicionamento/configuracoes/impacto-financeiro"
+          routerLinkActive="route-active"
+          (click)="closeMenu()"
+        >
+          <img
+            src="../../../assets/imgs/svg/arrow-right.svg"
+            class="arrow-right ml-2"
+          />
+          <h6 class="ml-2">
+            {{ locales.positioning.subMenus.financialImpact }}
+          </h6>
+        </a>
+      </div>
+      <div
+        class="submenu-item d-flex align-items-center menu-item default-nav-padding cursor-pointer"
+        *ngIf="canAccessPositioning(subModules.comparativeAnalysis)"
+      >
+        <a
+          class="cursor-pointer pl-4 pr-3 p-1"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          routerLink="/posicionamento/configuracoes/analise-comparativa"
+          routerLinkActive="route-active"
+          (click)="closeMenu()"
+        >
+          <img
+            src="../../../assets/imgs/svg/arrow-right.svg"
+            class="arrow-right ml-2"
+          />
+          <h6 class="ml-2">
+            {{ locales.positioning.subMenus.comparativeAnalysis }}
+          </h6>
+        </a>
+      </div>
+      <div
+        class="submenu-item d-flex align-items-center menu-item default-nav-padding cursor-pointer"
+        *ngIf="canAccessPositioning(subModules.distributionAnalysis)"
+      >
+        <a
+          class="cursor-pointer pl-4 pr-3 p-1"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          routerLink="/posicionamento/configuracoes/analise-distribuicao"
+          routerLinkActive="route-active"
+          (click)="closeMenu()"
+        >
+          <img
+            src="../../../assets/imgs/svg/arrow-right.svg"
+            class="arrow-right ml-2"
+          />
+          <h6 class="ml-2">
+            {{ locales.positioning.subMenus.distributionAnalysis }}
+          </h6>
+        </a>
+      </div>
+      <div
+        class="submenu-item d-flex align-items-center menu-item default-nav-padding cursor-pointer"
+        *ngIf="canAccessPositioning(subModules.movement)"
+      >
+        <a
+          class="cursor-pointer pl-4 pr-3 p-1"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          routerLink="/posicionamento/configuracoes/movimentos-propostos"
+          routerLinkActive="route-active"
+          (click)="closeMenu()"
+        >
+          <img
+            src="../../../assets/imgs/svg/arrow-right.svg"
+            class="arrow-right ml-2"
+          />
+          <h6 class="ml-2">
+            {{ locales.positioning.subMenus.proposedMoves }}
+          </h6>
+        </a>
+      </div>
+    </ng-container>
+
+    <div
+      class="menu-item d-flex flex-row cursor-pointer"
+      routerLink="/estudos-publicacoes"
+      routerLinkActive="route-active"
+      (click)="closeMenu()"
+      *ngIf="validateMenu(modules.studiesPublications)"
+    >
+      <div class="selected-item"></div>
+      <a
+        class="cursor-pointer default-nav-padding"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+      >
+        <img
+          class="fill-orange mr-3"
+          src="../../../assets/imgs/svg/studies-publications.svg"
+        />
+        <h6 class="ml-1">{{ locales.studiesPublications }}</h6>
+      </a>
+    </div>
+
+    <div
+      class="menu-item d-flex flex-row cursor-pointer"
+      routerLink="/meus-relatorios"
+      routerLinkActive="route-active"
+      (click)="closeMenu()"
+      *ngIf="validateMenu(modules.myReports)"
+    >
+      <div class="selected-item"></div>
+      <a
+        class="cursor-pointer default-nav-padding"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+      >
+        <img
+          class="fill-orange mr-3"
+          src="../../../assets/imgs/svg/camada.svg"
+        />
+        <h6 class="ml-1">{{ locales.myReports }}</h6>
+      </a>
+    </div>
+
+    <!--parametros-->
+    <div
+      class="menu-item d-flex flex-row cursor-pointer"
+      (click)="showParametersMenu = !showParametersMenu"
+      *ngIf="IsAdmin() && validateMenu(modules.parameters)"
+    >
+      <div class="selected-item"></div>
+      <a
+        class="cursor-pointer default-nav-padding"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+      >
+        <img
+          class="fill-orange mr-3"
+          src="../../../assets/imgs/svg/settings-menu.svg"
+        />
+        <h6 class="ml-1">{{ locales.parameters.parameters }}</h6>
+      </a>
+      <div
+        [ngClass]="{ 'opened-menu': showParametersMenu }"
+        class="d-flex flex-grow-1 justify-content-end align-items-center pr-3"
+      >
+        <img src="../../../assets/imgs/svg/down-arrow.svg" class="arrow-down" />
+      </div>
+    </div>
+
+    <ng-container *ngIf="showParametersMenu">
+      <div
+        *ngIf="canAccessDisplayConfiguration()"
+        class="submenu-item d-flex align-items-center menu-item default-nav-padding cursor-pointer"
+      >
+        <a
+          class="cursor-pointer pl-4 pr-3 p-1"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          routerLink="/parametros/configure-display"
+          routerLinkActive="route-active"
+          (click)="closeMenu()"
+        >
+          <img
+            src="../../../assets/imgs/svg/arrow-right.svg"
+            class="arrow-right ml-2"
+          />
+          <h6 class="ml-2">
+            {{ locales.parameters.subMenus.configureDisplay }}
+          </h6>
+        </a>
+      </div>
+      <div
+        class="submenu-item d-flex align-items-center menu-item default-nav-padding cursor-pointer"
+        *ngIf="canAccess(subModules.levels)"
+      >
+        <a
+          class="cursor-pointer pl-4 pr-3 p-1"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          routerLink="/parametros/niveis"
+          routerLinkActive="route-active"
+          (click)="closeMenu()"
+        >
+          <img
+            src="../../../assets/imgs/svg/arrow-right.svg"
+            class="arrow-right ml-2"
+          />
+          <h6 class="ml-2">{{ locales.parameters.subMenus.levels }}</h6>
+        </a>
+      </div>
+      <div
+        class="submenu-item d-flex align-items-center menu-item default-nav-padding cursor-pointer"
+        *ngIf="canAccess(subModules.salaryStrategy)"
+      >
+        <a
+          class="cursor-pointer pl-4 pr-3 p-1"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          routerLink="/parametros/estrategia-salarial"
+          routerLinkActive="route-active"
+          (click)="closeMenu()"
+        >
+          <img
+            src="../../../assets/imgs/svg/arrow-right.svg"
+            class="arrow-right ml-2"
+          />
+          <h6 class="ml-2">{{ locales.parameters.subMenus.wageStrategy }}</h6>
+        </a>
+      </div>
+      <div
+        class="submenu-item d-flex align-items-center menu-item default-nav-padding cursor-pointer"
+        *ngIf="
+          canAccess(subModules.hourlyBasis) &&
+          userParameterAccess &&
+          userParameterAccess.showHourlyBasis
+        "
+      >
+        <a
+          class="cursor-pointer pl-4 pr-3 p-1"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          routerLink="/parametros/base-horaria"
+          routerLinkActive="route-active"
+          (click)="closeMenu()"
+        >
+          <!--TODO VERIFICAR LINK-->
+          <img
+            src="../../../assets/imgs/svg/arrow-right.svg"
+            class="arrow-right ml-2"
+          />
+          <h6 class="ml-2">{{ locales.parameters.subMenus.hourlyBasis }}</h6>
+        </a>
+      </div>
+      <div
+        class="submenu-item d-flex align-items-center menu-item default-nav-padding cursor-pointer"
+        *ngIf="
+          canAccess(subModules.corporateSettings) &&
+          userParameterAccess &&
+          userParameterAccess.showPjSettings
+        "
+      >
+        <a
+          class="cursor-pointer pl-4 pr-3 p-1"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          routerLink="/parametros/configuracoes-pj"
+          routerLinkActive="route-active"
+          (click)="closeMenu()"
+        >
+          <!--TODO VERIFICAR LINK-->
+          <img
+            src="../../../assets/imgs/svg/arrow-right.svg"
+            class="arrow-right ml-2"
+          />
+          <h6 class="ml-2">
+            {{ locales.parameters.subMenus.pjConfigurations }}
+          </h6>
+        </a>
+      </div>
+
+      <div
+        class="submenu-item d-flex align-items-center menu-item default-nav-padding cursor-pointer"
+        *ngIf="
+          canAccess(subModules.users) &&
+          userParameterAccess &&
+          userParameterAccess.showUsers
+        "
+      >
+        <a
+          class="cursor-pointer pl-4 pr-3 p-1"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          routerLink="/parametros/usuarios"
+          routerLinkActive="route-active"
+          (click)="closeMenu()"
+        >
+          <!--TODO VERIFICAR LINK-->
+          <img
+            src="../../../assets/imgs/svg/arrow-right.svg"
+            class="arrow-right ml-2"
+          />
+          <h6 class="ml-2">{{ locales.parameters.subMenus.users }}</h6>
+        </a>
+      </div>
+    </ng-container>
+
+    <hr class="bottomline mt-3 ml-1" />
+
+    <div
+      class="d-flex flex-grow-1 justify-content-end mb-3 others-products flex-column ml-3 mr-3 cursor-pointer"
+      *ngIf="showCsMenu()"
+    >
+      <span class="title-products mb-2">{{ locales.otherProducts }}</span>
+      <div class="item-product align-items-end">
+        <a href="{{ siteCsUrl }}" class="link-cs" target="_blank">
+          <img
+            src="../../../assets/imgs/svg/logo-cs.svg"
+            class="logo-product"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="back-right-menu" (click)="closeMenu()"></div>
+</div>

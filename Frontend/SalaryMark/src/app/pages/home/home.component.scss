@@ -1,0 +1,256 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+@import "../../../assets/scss/breakpoints.scss";
+@import "./content.scss";
+@import "../../../../node_modules/swiper/swiper.scss";
+@import "../../../../node_modules/swiper/modules/pagination/pagination.min.css";
+
+#home {
+  height: calc(100vh - 60px) !important;
+  margin-top: $size50;
+  & > .rowheader {
+    & > .coltitle {
+    }
+  }
+}
+
+.text-gray-65 {
+  color: $gray-65;
+  font-size: $remSize09;
+}
+
+::ng-deep .text-secondary {
+  color: $gray-6e !important;
+  font-size: $remSize09;
+}
+
+.btn.btn-trash.focus {
+  box-shadow: 0 0 0 0.1rem $gray-6c;
+}
+.text-blue {
+  color: $black-40;
+  opacity: 1;
+}
+
+.control-item {
+  padding: $size0 $size7 $size0 $size15;
+  box-shadow: $size0 $size2 $size6 $gray-box-shadow-00;
+  border-radius: $size25;
+  opacity: 1;
+  margin-right: $remSize05;
+  border: $size1 solid $orange-f4;
+  color: $orange-f4;
+  display: flex;
+  height: $size37;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  & > .notification-label {
+    width: $size25;
+    height: $size25;
+    background-color: $black-58;
+    opacity: 1;
+    color: $white;
+    border-radius: $size13;
+    text-align: center;
+    margin-left: $size5;
+    font-size: $size12;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    padding-top: $size1;
+    margin-top: -$size0;
+    margin-right: -$size1;
+  }
+}
+
+.control-item-active {
+  padding: $size0 $size7 $size0 $size15;
+  box-shadow: $size0 $size2 $size6 $gray-box-shadow-00;
+  border-radius: $size25;
+  opacity: 1;
+  margin-right: $remSize05;
+  color: $white;
+  background: $orange-gradient;
+  display: flex;
+  height: $size37;
+  align-items: center;
+
+  & > .notification-label {
+    width: $size25;
+    height: $size25;
+    background: $white;
+    opacity: 1;
+    color: $black-1f;
+    border-radius: $size13;
+    text-align: center;
+    margin-left: $size5;
+    font-size: $size12;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    padding-top: $size1;
+  }
+}
+.slider-controller {
+  display: flex;
+}
+
+.swiper-content-overlap {
+  min-height: 76vh;
+  overflow-y: auto;
+}
+
+:host::ng-deep.swiper-pagination-bullet-active {
+  background-color: $orange-f2;
+}
+
+.card-video {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-text {
+  width: $size190;
+  > .title {
+    margin-top: $size5;
+    text-align: left;
+    font-size: $size13;
+    letter-spacing: $size0;
+    color: $black-1f;
+    opacity: 1;
+  }
+  > .video-date {
+    text-align: left;
+    letter-spacing: $size0;
+    font-size: $size12;
+    color: $black-1f;
+    opacity: 0.5;
+  }
+  > .descrition {
+    text-align: left;
+
+    font-size: $size13;
+    letter-spacing: $size0;
+    color: $black-1f;
+    opacity: 1;
+    word-wrap: break-word;
+  }
+}
+
+.section-style {
+  background-color: $white;
+  border-radius: $size8;
+  border: $size1 solid $border-c1;
+}
+
+.title-video-card {
+  text-align: left;
+  letter-spacing: 0;
+  opacity: 1;
+  font-size: $size20;
+  font-weight: normal;
+}
+
+.description-video-card {
+  text-align: left;
+  letter-spacing: $size0;
+  opacity: 1;
+  font-family: proxima-nova;
+  font: normal normal medium 12px/15px;
+  color: $gray-70;
+
+  font-size: $size16;
+}
+
+.swiper-content-overlap {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.video-tag-image {
+  width: $size187;
+  display: block;
+  overflow: hidden;
+
+  img {
+    position: relative;
+    top: -17%;
+    width: 100%;
+    cursor: pointer;
+    @include for-iphone5 {
+      top: -16%;
+    }
+  }
+}
+
+.slider-controller {
+  margin-left: $size7;
+}
+
+.message-icon {
+  padding: $size0 $size7 $size0 $size15;
+}
+@include for-iphone5 {
+  .message-icon {
+    padding: $remSize01 $remSize01 $remSize01 $remSize08;
+  }
+}
+
+@include for-phone-only {
+  .control-item-active,
+  .control-item {
+    padding-right: $size12;
+  }
+
+  .slider-controller {
+    margin-left: $size7;
+  }
+
+  .content-text {
+    width: auto !important;
+  }
+
+  .control-item-active {
+    display: flex;
+    align-items: center;
+  }
+  .control-item {
+    display: flex;
+    align-items: center;
+  }
+}
+.hr-name {
+  opacity: 0.5;
+  border-top: $size2 solid rgba(0, 0, 0, 0.1);
+}
+.item-page {
+  font-size: $size16;
+}
+.text-dark {
+  font-size: $remSize1687;
+  padding-left: $size3;
+}
+.text-dark-blue {
+  font-size: $remSize1687;
+}
+
+.ajustc-padding-button {
+  padding-right: $size4;
+}
+
+.padding-reset {
+  padding: $size10;
+}
+
+.notifications-card-width {
+  width: 100%;
+}

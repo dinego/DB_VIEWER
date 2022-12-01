@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AgileObjects.AgileMapper" Version="1.7.0" />
+    <PackageReference Include="CMC.Common.Abstractions" Version="1.0.0" />
+    <PackageReference Include="CMC.Common.Domain" Version="1.2.98--preview" />
+    <PackageReference Include="CMC.Common.Extensions" Version="1.0.2" />
+    <PackageReference Include="CMC.Common.Repositories.Abstractions" Version="1.0.8" />
+    <PackageReference Include="CMC.Common.Repositories.Extensions" Version="1.0.0" />
+    <PackageReference Include="EPPlus" Version="4.5.3.3" />
+    <PackageReference Include="FluentValidation" Version="9.1.2" />
+    <PackageReference Include="MediatR" Version="8.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SM.Domain\SM.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

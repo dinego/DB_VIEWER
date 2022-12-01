@@ -1,0 +1,223 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+.back-drop-menu {
+  &.is-show {
+    width: $fullWidthSize;
+    height: $fullHeightSize;
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    & > .back-right-menu {
+      background-color: $black;
+      opacity: 0.7;
+      flex-grow: 1;
+      height: $fullHeightSize;
+      width: 100%;
+      -webkit-animation: fadein 300ms; /* Safari, Chrome and Opera > 12.1 */
+      -moz-animation: fadein 300ms; /* Firefox < 16 */
+      -ms-animation: fadein 300ms; /* Internet Explorer */
+      -o-animation: fadein 300ms; /* Opera < 12.1 */
+      animation: fadein 300ms;
+    }
+  }
+}
+.menu-container {
+  box-shadow: $size0 $size4 $size6 $shadow;
+  background-color: $white;
+  height: $fullHeightSize;
+  position: fixed;
+  z-index: 5;
+  color: $black;
+  opacity: 1;
+  overflow-y: auto;
+
+  &.is-show {
+    min-width: $remSize20 !important;
+  }
+  & > .menu-item {
+    min-height: $size56;
+    &:first-child {
+      &:hover {
+        background-color: $white;
+      }
+    }
+    &:hover {
+      background-color: $shadow;
+    }
+    & > .selected-item {
+      width: $size8;
+      height: $size56;
+    }
+    &.route-active {
+      background-color: $gray-f8;
+      & > .selected-item {
+        background: transparent
+          linear-gradient(180deg, $orange-f7 0%, $orange-f2 100%) 0% 0%
+          no-repeat padding-box;
+        border-radius: 0 $remSize0_25 $remSize0_25 0;
+        opacity: 1;
+        width: $remSize0375;
+        height: $remSize3_75;
+      }
+    }
+    & > .opened-menu {
+      & > img {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+
+    & > .fill-orange {
+      filter: invert(42%) sepia(27%) saturate(966%) hue-rotate(340deg)
+        brightness(100%) contrast(100%);
+      -webkit-filter: invert(42%) sepia(27%) saturate(966%) hue-rotate(340deg)
+        brightness(100%) contrast(100%);
+      -moz-filter: invert(42%) sepia(27%) saturate(966%) hue-rotate(340deg)
+        brightness(100%) contrast(94%);
+    }
+    .close-menu {
+      height: $size32;
+      width: $size32;
+      opacity: 0.8;
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    & > .menu-header {
+      font-size: $size18;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding-bottom: $size1;
+    }
+  }
+  a {
+    text-decoration: none;
+  }
+
+  h5,
+  h6 {
+    color: $black;
+    margin: 0;
+  }
+  h6 {
+    font-size: $remSize1;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  img {
+    height: $remSize1_7;
+    width: $remSize1_7;
+  }
+  .positions-icon {
+    height: $size20;
+    width: $size24;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+.others-products {
+  padding: $remSize05;
+  & > .title-products {
+    font-size: $size12;
+    text-transform: uppercase;
+    color: $black-58;
+  }
+  & > .item-product {
+    background: $white 0% 0% no-repeat padding-box;
+    box-shadow: $size0 $size2 $size6 $shadow;
+    border: $size1 solid $border-gray;
+    border-radius: $size3;
+    cursor: pointer;
+    & > .link-cs {
+      & > .logo-product {
+        padding: $remSize05;
+        width: $size186;
+        height: $size44;
+      }
+    }
+  }
+}
+.arrow-down,
+.arrow-right {
+  width: $size16 !important;
+  height: $size16 !important;
+}
+
+.default-nav-padding {
+  padding-left: $size24;
+  padding-top: $size0;
+}
+
+.default-home-section {
+  padding-left: $size26;
+  padding-top: 0px;
+  padding-bottom: $size0;
+}
+
+.padding-menusection-nav {
+  padding: $size9 $size8 $size6 $size24;
+}
+
+.bottomline {
+  background-color: $default-gray;
+  width: 40%;
+  position: relative;
+  left: $remSize175;
+  opacity: 0.2;
+  height: $remSize0125;
+}
+
+.menu-reset-cursor {
+  cursor: default !important;
+}

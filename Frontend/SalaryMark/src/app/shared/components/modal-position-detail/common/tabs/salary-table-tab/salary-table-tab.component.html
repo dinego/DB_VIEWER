@@ -1,0 +1,234 @@
+<div class="d-flex flex-column table-container mt-3">
+  <div class="card d-flex p-2 flex-row">
+    <ng-container *ngIf="allSalaryTables && allSalaryTables.length > 1">
+      <div
+        class="d-flex flex-column title-data"
+        *ngIf="allSalaryTables && selectedTable"
+      >
+        <span class="title"> Tabela Salarial </span>
+        <app-button-list-light
+          [list]="allSalaryTables"
+          [text]="selectedTable.title"
+          [isDropUnit]="true"
+          (textSelected)="changeTable($event)"
+        ></app-button-list-light>
+      </div>
+      <div class="divider mx-3"></div>
+    </ng-container>
+    <div class="d-flex flex-column title-data" *ngIf="selectedUnit && allUnits">
+      <span class="title"> Unidade </span>
+      <app-button-list-light
+        [unitList]="allUnits"
+        [text]="selectedUnit.unit"
+        [isDropUnit]="true"
+        (textUnitSelected)="changeUnitSelected($event)"
+      ></app-button-list-light>
+    </div>
+  </div>
+
+  <div
+    class="mt-3 table-responsive ml-0 pr-0"
+    [ngClass]="tableClass"
+    infiniteScroll
+    (scrolled)="onScrollDown()"
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="50"
+    [scrollWindow]="false"
+  >
+    <table class="table table-striped">
+      <thead>
+        <tr class="mat-header-row">
+          <th
+            *ngFor="let item of columHeaders"
+            scope="col"
+            [resizeColumn]="true"
+            class="mat-header-cell"
+            [ngClass]="{
+              'font-weight-bold': item.isMidPoint
+            }"
+          >
+            <div
+              fxLayout="row"
+              [fxLayoutAlign]="
+                item.colPos == 2 || item.colName.includes('%')
+                  ? 'center center'
+                  : 'start center'
+              "
+            >
+              {{ item.nickName }}
+              <span
+                style="cursor: pointer"
+                *ngIf="
+                  item.columnId === tableSalaryColumnEnum.GSM ||
+                  item.columnId === tableSalaryColumnEnum.TableSalaryName ||
+                  item.columnId === tableSalaryColumnEnum.Unit
+                "
+                [ngClass]="!item.sortClass ? sortClass : item.sortClass"
+                (click)="onSort(item)"
+              ></span>
+            </div>
+          </th>
+          <th *ngIf="editable" width="60">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let row of dataCopy; let i = index">
+          <tr
+            class="accordion-toggle collapsed mat-row"
+            id="accordion1"
+            data-toggle="collapse"
+            data-parent="#accordion1"
+            [ngClass]="row[0].activeRow"
+          >
+            <ng-container
+              *ngFor="let item of columHeaders; let iInside = index"
+            >
+              <td class="mat-cell">
+                <div
+                  fxLayout="row"
+                  [fxLayoutAlign]="
+                    getRowResult(row, item).type === 'Double' ||
+                    getRowResult(row, item).type === 'Int32' ||
+                    transformText(row, item) === '-'
+                      ? 'center center'
+                      : 'start center'
+                  "
+                >
+                  <ng-container
+                    *ngIf="item.colPos === 0; then initialCol; else othersCol"
+                  >
+                  </ng-container>
+
+                  <ng-template #initialCol>
+                    <div fxLayoutAlign="space-between center" class="w-100">
+                      <ng-container *ngIf="!editable">
+                        <div>
+                          {{ transformText(row, item) }}
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="editable">
+                        <app-button-list-light
+                          [list]="allSalaryTables"
+                          [text]="transformText(row, item)"
+                          (textSelected)="setTableInRow($event, i, item.colPos)"
+                        ></app-button-list-light>
+                      </ng-container>
+                    </div>
+                  </ng-template>
+
+                  <ng-template #othersCol>
+                    <div
+                      *ngIf="getRowResult(row, item).type === 'Double'"
+                      [ngClass]="{
+                        'font-weight-bold': getIsMidPointResult(row, item)
+                      }"
+                    >
+                      <div
+                        *ngIf="
+                          transformText(row, item) !== '-' &&
+                          hoursTypeId == hourlyBasisEnum.HourSalary
+                        "
+                      >
+                        {{ getFormatValue(row, item) | number: "1.2-2" }}
+                      </div>
+                      <div
+                        *ngIf="
+                          transformText(row, item) !== '-' &&
+                          hoursTypeId !== hourlyBasisEnum.HourSalary
+                        "
+                      >
+                        {{ getFormatValue(row, item) | number: "1.0-3" }}
+                      </div>
+                      <div *ngIf="transformText(row, item) === '-'">
+                        {{ transformText(row, item) }}
+                      </div>
+                    </div>
+
+                    <div *ngIf="getRowResult(row, item).type === 'Int32'">
+                      <ng-container *ngIf="editable">
+                        <app-button-list-light
+                          *ngIf="item.colPos === 2"
+                          [list]="gsmList"
+                          [text]="getFormatValue(row, item)"
+                          (textSelected)="setGsmInRow($event, i, item.colPos)"
+                        ></app-button-list-light>
+                      </ng-container>
+                      <ng-container *ngIf="!editable">
+                        {{ transformText(row, item) }}
+                      </ng-container>
+                    </div>
+
+                    <div *ngIf="getRowResult(row, item).type === 'String'">
+                      <ng-container *ngIf="editable && item.colPos === 1">
+                        <app-button-list-light
+                          [unitList]="allUnits"
+                          [text]="transformText(row, item)"
+                          (textUnitSelected)="
+                            setUnitInRow($event, i, item.colPos)
+                          "
+                        ></app-button-list-light>
+                      </ng-container>
+                      <ng-container *ngIf="!editable">
+                        {{ transformText(row, item) }}
+                        <i
+                          *ngIf="
+                            getRowResult(row, item).occupantCLT ||
+                            getRowResult(row, item).occupantPJ
+                          "
+                          placement="right"
+                          class="fas fa-user ml-1"
+                          [ngClass]="{
+                            'has-occupant-clt': getRowResult(row, item)
+                              .occupantCLT,
+                            'has-occupant-pj': getRowResult(row, item)
+                              .occupantPJ
+                          }"
+                        ></i>
+                      </ng-container>
+                    </div>
+                  </ng-template>
+                </div>
+              </td>
+            </ng-container>
+            <td *ngIf="editable" align="center">
+              <img
+                class="delete-btn"
+                src="../../../../../../../assets/imgs/svg/cancel.svg"
+                width="16"
+                [tooltip]="'Excluir'"
+                [placement]="'bottom'"
+                (click)="deleteRow(row, i)"
+              />
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+    <div class="d-flex" *ngIf="editable">
+      <img
+        src="../../../../../../../assets/imgs/svg/add-circle.svg"
+        class="delete-btn"
+        (click)="addNewRowTable()"
+      />
+    </div>
+  </div>
+</div>
+
+<div class="buttons d-flex flex-row justify-content-center mt-3">
+  <app-button-primary
+    *ngIf="!editable"
+    [label]="'Editar'"
+    (click)="setEditable(true)"
+  ></app-button-primary>
+  <app-button-secundary
+    *ngIf="editable"
+    [label]="'Cancelar'"
+    class="mr-3"
+    (click)="resetData()"
+  ></app-button-secundary>
+  <app-button-primary
+    *ngIf="editable"
+    [label]="'Salvar'"
+    (click)="openModalConfirm()"
+  ></app-button-primary>
+</div>

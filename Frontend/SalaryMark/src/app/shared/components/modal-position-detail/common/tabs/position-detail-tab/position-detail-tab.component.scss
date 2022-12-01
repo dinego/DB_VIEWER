@@ -1,0 +1,75 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.container-tab {
+  & > .info-position {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: $white 0% 0% no-repeat padding-box;
+    box-shadow: $size0 $size2 $size6 $shadow;
+    border: $size1 solid $border-gray;
+    border-radius: $size4;
+
+    & > .info-id {
+      min-width: $size65;
+    }
+    & > .info-position {
+      min-width: $size300;
+    }
+    & > .info-drop-size {
+      min-width: $size150;
+    }
+    & > .infos {
+      & > .title-session {
+        font-size: $size12;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: $black-58;
+      }
+
+      & > .value-session {
+        font-weight: 600;
+        color: $black-1f;
+        font-size: $size14;
+      }
+    }
+
+    & > .divider {
+      margin-right: $size10;
+      margin-left: $size10;
+      width: $size1;
+      background-color: $border-gray;
+      min-height: $size43;
+    }
+  }
+
+  & > .scroll-parameters {
+    overflow-y: scroll;
+    max-height: 40vh;
+    & > .card {
+      background: $white 0% 0% no-repeat padding-box;
+      box-shadow: $size0 $size2 $size6 $shadow;
+      border: $size1 solid $border-gray;
+      border-radius: $size4;
+    }
+
+    & > .parameters {
+      & > .parameter {
+        & > .title-param {
+          color: $black-58;
+          text-transform: uppercase;
+          font-size: $size12;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+.my-card-box {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 2px 6px #5f5f5f29;
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+}

@@ -1,0 +1,94 @@
+<div class="parameters-users-list-container container-fluid">
+  <app-title-header [title]="locales.users">
+    <app-button-more-actions [isHelp]="false"> </app-button-more-actions>
+  </app-title-header>
+  <div class="mt-1">
+    <div
+      class="w-100"
+      [fromRoot]="true"
+      class="search-results"
+      infiniteScroll
+      (scrolled)="onScroll()"
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="50"
+      [scrollWindow]="false"
+      [style.height.vh]="listHeight"
+    >
+      <table class="table table-striped">
+        <thead>
+          <th>{{ locales.name }}</th>
+          <th>{{ locales.email }}</th>
+          <th>{{ locales.sector }}</th>
+          <th>{{ locales.lastAccess }}</th>
+          <th [width]="'60px'">{{ locales.actions }}</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let userParameter of usersParameter">
+            <td>
+              <div class="d-flex">
+                <div
+                  *ngIf="userParameter.photo; else showDefaultPhoto"
+                  fxLayoutAlign="center center"
+                  [style.background-image]="userParameter.photo"
+                  class="text-center flex-align-center avatar mr-3"
+                ></div>
+                <ng-template #showDefaultPhoto>
+                  <i
+                    class="fas fa-user text-center avatar avatar-default mr-3"
+                  ></i>
+                </ng-template>
+                <span
+                  class="text-vertical-align-fix flex-align-center text-wrap"
+                  >{{ userParameter.name }}</span
+                >
+              </div>
+            </td>
+            <td>
+              <div class="pt-1">
+                {{ userParameter.mail }}
+              </div>
+            </td>
+            <td>
+              <div class="pt-1">{{ userParameter.area }}</div>
+            </td>
+            <td>
+              <button
+                class="btn btn-default flex-align-center"
+                *ngIf="!userParameter.lastAccess; else showLastAccess"
+                (click)="getAccessLink(userParameter)"
+                data-toggle="modal"
+                data-target="#showModalSendLinkAccess"
+              >
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <label class="pt-1">
+                    {{ locales.sendAccessLink }}
+                  </label>
+                </div>
+              </button>
+              <ng-template #showLastAccess>
+                <span
+                  class="text-center text-vertical-align-fix flex-align-center overflow-wrap-anywhere"
+                >
+                  {{ userParameter.lastAccess | date: "dd, MMMM, yyyy" }}
+                </span>
+              </ng-template>
+            </td>
+            <td [align]="'center'">
+              <span
+                class="text-nowrap text-white link-item"
+                [routerLink]="userParameter.id"
+              >
+                <img width="30" src="/assets/imgs/svg/visualizar.svg" />
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<app-send-link-access
+  [hidden]="!modalSendLinkAccessData"
+  [data]="modalSendLinkAccessData"
+></app-send-link-access>

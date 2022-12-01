@@ -1,0 +1,83 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.salary-strategy-container {
+  padding-right: $size50;
+  padding-left: $size50;
+  padding-bottom: $size50;
+}
+
+.tiny-title {
+  color: $black-3e;
+  font-size: $remSize075;
+}
+
+.line {
+  width: $size0;
+  height: $size50;
+  border: $size1 solid #707070;
+  opacity: 0.2;
+  margin-left: $remSize1;
+  margin-right: $remSize1;
+}
+
+.btn-show {
+  background: $green46 0% 0% no-repeat padding-box;
+  border-radius: $size50;
+  color: $white;
+  font-size: $size14;
+  opacity: 1;
+  width: $size100;
+}
+
+.table-container {
+  display: flex;
+  margin: 0 $size5;
+  overflow: auto;
+  position: relative;
+}
+
+.table-rows {
+  max-height: $size250;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: auto;
+  overflow-wrap: anywhere;
+}
+
+.table-fit {
+  width: fit-content;
+}
+
+::ng-deep {
+  .datatable-header-inner {
+    height: $size50;
+  }
+
+  .form-control {
+    margin-top: -$size7;
+  }
+  .datatable-header-cell-template-wrap {
+    margin-top: $size5;
+  }
+}
+.table-title {
+  width: auto;
+  font-weight: 600;
+  font-size: $size18;
+}
+
+.title-content {
+  .super-title {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 18px;
+
+    display: flex;
+    align-items: center;
+    width: max-content;
+    > span {
+      margin-right: $remSize1;
+    }
+  }
+}

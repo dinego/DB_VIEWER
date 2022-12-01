@@ -1,0 +1,86 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.financial-impact-container {
+  margin-top: $size15;
+  padding-right: $size50;
+  padding-left: $size50;
+  overflow-x: hidden;
+
+  .btn-show {
+    font-size: $size14;
+    letter-spacing: $size0;
+    color: $white;
+    border: none;
+    background: $orange-gradient;
+    box-shadow: $size0 $size2 $size6 $box-shadow-74;
+    border-radius: $size42;
+    opacity: 1;
+    width: $size67;
+    height: $size33;
+  }
+
+  .btn-list {
+    min-width: $remSize7_18;
+  }
+
+  .card {
+    box-shadow: 0 $size3 $size6 $gray-box-shadow-00;
+  }
+
+  .tiny-title {
+    font-size: $remSize075;
+    font-weight: bold;
+    color: $black-58;
+    text-transform: uppercase;
+  }
+
+  .line {
+    width: $size0;
+    height: $size50;
+    border: $size1 solid #707070;
+    opacity: 0.2;
+    margin-left: $remSize1;
+    margin-right: $remSize1;
+  }
+
+  .show-table {
+    display: flex;
+  }
+  .hide-table {
+    display: none;
+  }
+}
+
+.table-container {
+  display: flex;
+  margin: 0 $size5;
+  overflow: auto;
+  position: relative;
+  .list-empty {
+    font-size: $remSize1;
+  }
+}
+
+.table-rows {
+  max-height: $size250;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: auto;
+  overflow-wrap: anywhere;
+}
+
+.table-fit {
+  width: fit-content;
+}
+
+.sub-header {
+  background-color: $gray-eb;
+  border-radius: $size3;
+  margin: $size5;
+  .sub-title {
+    color: $black-40;
+
+    font-size: $remSize09;
+  }
+}

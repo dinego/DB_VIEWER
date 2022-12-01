@@ -1,0 +1,56 @@
+<app-basic-dialog-structure
+  [input]="inputModalShow"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+  [isAnalyseModal]="true"
+>
+  <form
+    fxLayout="column"
+    *ngIf="form"
+    [formGroup]="form"
+    class="mr-2 ml-2 mt-4 modal-show-as-container"
+    [formGroup]="form.get('items')"
+  >
+    <div class="mt-5">
+      <div [formGroupName]="i" *ngFor="let column of firstBlock; let i = index">
+        <div class="items-list mt-2 mb-2">
+          <app-checkbox
+            [formControl]="column.controls['show']"
+            label="{{ column.value.name }}"
+            class="text-nowrap"
+          ></app-checkbox>
+        </div>
+      </div>
+
+      <div
+        [formGroupName]="j"
+        *ngFor="let column of secondBlock; let j = index"
+      >
+        <div class="items-list mt-2 mb-2">
+          <app-checkbox
+            [formControl]="column.controls['show']"
+            label="{{ column.value.name }}"
+            class="text-nowrap"
+          ></app-checkbox>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="d-flex ml-auto mt-2">
+    <button class="btn btn-show-modal mr-3">
+      <img
+        class="m-0"
+        src="../../../../assets/imgs/svg/change.svg"
+        alt="restore"
+      />
+    </button>
+    <app-button-secundary
+      [label]="locales.show"
+      data-dismiss="modal"
+      class="mr-2"
+    >
+    </app-button-secundary>
+  </div>
+</app-basic-dialog-structure>

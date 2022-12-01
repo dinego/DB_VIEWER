@@ -1,0 +1,12 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.percent {
+  margin-left: $size10;
+  width: $size53;
+  padding: $size4 $size10;
+  //background: #82a388 0% 0% no-repeat padding-box;
+  box-shadow: $size0 $size2 $size6 $shadow;
+  border-radius: $size30;
+  font-weight: 600;
+}

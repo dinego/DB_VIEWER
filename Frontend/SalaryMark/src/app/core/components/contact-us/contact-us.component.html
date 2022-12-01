@@ -1,0 +1,66 @@
+<app-basic-dialog-structure [input]="inputModalShow" (save)="onSave()">
+  <div class="mr-2 ml-2 modal-contact-us-container" fxLayout="column">
+    <label class="mt-2 mb-2 sub-title">{{ locales.topic }}</label>
+    <div class="select-container">
+      <div class="select" fxLayout="row" fxLayoutAlign="space-between center" (click)="onSelect()">
+        <label class="m-0 sub-title">{{ selected }}</label>
+        <img class="arrow-bottom" src="../../../assets/imgs/svg/down-arrow.svg" />
+      </div>
+      <div class="select-open" *ngIf="isOpenSelect">
+        <div class="card">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" (click)="onSelected(locales.doubts)">
+              <label class="m-0 {{
+                  selected === locales.doubts ? 'option-selected' : ''
+                }}">
+                {{ locales.doubts }}
+              </label>
+            </li>
+            <li class="list-group-item" (click)="onSelected(locales.reviews)">
+              <label class="m-0 {{
+                  selected === locales.reviews ? 'option-selected' : ''
+                }}">
+                {{ locales.reviews }}
+              </label>
+            </li>
+            <li class="list-group-item" (click)="onSelected(locales.suggestions)">
+              <label class="m-0 {{
+                  selected === locales.suggestions ? 'option-selected' : ''
+                }}">
+                {{ locales.suggestions }}
+              </label>
+            </li>
+            <li class="list-group-item" (click)="onSelected(locales.others)">
+              <label class="m-0 {{
+                  selected === locales.others ? 'option-selected' : ''
+                }}">
+                {{ locales.others }}
+              </label>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="input-container mt-4 mb-3">
+      <input placeholder="{{ locales.subject }}" [(ngModel)]="subject" />
+    </div>
+
+    <label class="mt-2 sub-title">{{ locales.message }}</label>
+    <textarea class="p-2 text-description" cols="30" rows="4" placeholder="{{ locales.writeMessage }}"
+      [(ngModel)]="message"></textarea>
+
+    <div class="mt-3" fxLayout="row" fxLayoutAlign="start center">
+      <!-- <label class="m-0 sub-title">{{ locales.file }}</label>
+      <img class="ml-3 icon-add" src="../../../../assets/imgs/svg/add-circle.svg" /> -->
+
+      <button type="button" class="btn border-0" (click)="chooseFile()" id="file-button">
+        {{ locales.file }}<img class="ml-3 icon-add" src="../../../../assets/imgs/svg/add-circle.svg" />
+      </button>
+      <input type="file" class="form-control-file d-none" (input)="setFileToUpload($event.target.files)" id="file" />
+
+      <button *ngIf="attachment" (click)="removeFile()" class="btn btn-blue border-0 shadow-none">
+        {{ attachment.name }} <i class="fas fa-times ml-2"></i>
+      </button>
+    </div>
+  </div>
+</app-basic-dialog-structure>

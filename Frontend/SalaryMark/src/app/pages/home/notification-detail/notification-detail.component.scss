@@ -1,0 +1,29 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.text-dark-blue {
+  color: $black-40;
+}
+
+hr {
+  margin-top: -0.7rem;
+  margin-left: $remSize7;
+  border-top: $size2 solid $gray-ee;
+}
+.text-gray-65{
+  color: $gray-65;
+}
+.modal-header,
+.modal-footer {
+  border: 0;
+}
+
+.message {
+  background-color: $gray-f8;
+  white-space: pre-wrap;
+}
+
+.small,
+small {
+  font-size: 90%;
+}

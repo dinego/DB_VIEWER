@@ -1,0 +1,58 @@
+<div class="d-flex">
+  <div class="input-group setting-nowrap d-flex">
+    <input
+      type="text"
+      class="form-control search-position-type flex-fill"
+      placeholder="Buscar"
+      appDelayedInput
+      (delayedInput)="searchEmit($event.target.value)"
+      [delayTime]="600"
+    />
+    <div dropdown class="filter-search px-3">
+      <button
+        class="
+          btn
+          dropdown-toggle
+          h-100
+          d-flex
+          align-items-center
+          justify-content-center
+          w-100
+          pl-2
+          pr-2
+        "
+        dropdownToggle
+        aria-controls="dropdown-display-type"
+        (click)="isCollapsed = !isCollapsed"
+      >
+        <span class="text-style pr-2">
+          {{
+            filterSelected && filterSelected.title
+              ? filterSelected.title
+              : locales.AllFields
+          }}
+        </span>
+        <i class="fas fa-sort-down style-icon"></i>
+      </button>
+      <ul
+        id="dropdown-display-type"
+        *dropdownMenu
+        [ngClass]="{ scroller: list && list.length > 5 }"
+        class="dropdown-menu"
+        role="menu"
+        aria-labelledby="display-type"
+      >
+        <ng-container *ngFor="let item of list">
+          <li role="menuitem" (click)="selectFilter(item)">
+            <a
+              role="button"
+              [ngClass]="{ selected: item.title === filterSelected.title }"
+              class="dropdown-item"
+              >{{ item.title }}</a
+            >
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</div>

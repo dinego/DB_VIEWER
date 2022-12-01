@@ -1,0 +1,14 @@
+<form class="form-inline">
+  <input
+    class="search form-control"
+    [ngClass]="{
+      'full-size': isFullSize
+    }"
+    type="text"
+    placeholder="{{ text }}"
+    aria-label="Search"
+    appDelayedInput
+    (delayedInput)="searchQuery.emit($event.target.value)"
+    [delayTime]="600"
+  />
+</form>

@@ -1,0 +1,58 @@
+<div
+  class="cs-publication-detail container-fluid mt-3"
+  id="cs-publication-detail"
+>
+  <div
+    class="row rowheader pb-3 m-0 d-flex justify-content-between flex-nowrap"
+  >
+    <div class="d-flex coltitle">
+      <img class="mr-2" src="../../../../assets/imgs/svg/study.svg" alt="" />
+      <h5 class="title text-dark font-weight-bold text-wrap mt-2">
+        {{ publication.title }}
+      </h5>
+    </div>
+    <div
+      class="d-flex justify-content-end align-items-center colactionbtns flex-grow-1"
+    >
+      <button
+        [disabled]="!isSharedView"
+        [ngClass]="{
+          'cursor-not-allowed': !isSharedView
+        }"
+        class="actionbtn mr-4"
+        (click)="share()"
+      >
+        <img
+          *ngIf="!isSharedView; else disabledSharedButton"
+          class="actionbtn img-share"
+          src="../../../../assets/imgs/svg/share-icon.svg"
+          alt=""
+        />
+        <ng-template #disabledSharedButton>
+          <img
+            class="actionbtn img-share"
+            src="../../../../assets/imgs/svg/share-icon.svg"
+            alt=""
+          />
+        </ng-template>
+      </button>
+      <button class="actionbtn -close" (click)="bsModalRef.hide()">
+        <img
+          (click)="bsModalRef.hide()"
+          src="../../../../assets/imgs/svg/close-modal.svg"
+          alt=""
+        />
+      </button>
+    </div>
+  </div>
+  <div class="row rowseparator mb-3">
+    <div class="col colseparator">
+      <hr class="my-0 lineseparator" />
+    </div>
+  </div>
+  <div class="row rowembeded">
+    <div class="col colembeded">
+      <div #embedHtml></div>
+    </div>
+  </div>
+</div>

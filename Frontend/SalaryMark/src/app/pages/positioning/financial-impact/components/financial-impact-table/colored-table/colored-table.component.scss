@@ -1,0 +1,119 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.table {
+  & > tbody {
+    & > tr {
+      &:hover {
+        color: #0187b9;
+        font-weight: 700;
+        text-decoration: underline;
+      }
+      &:last-child {
+        background: transparent
+          linear-gradient(180deg, #6f6e6e 0%, #909090 100%) 0% 0% no-repeat
+          padding-box;
+        color: $white;
+        font-weight: 700 !important;
+        text-decoration: none;
+      }
+      & > td {
+        text-align: center;
+        & > .link-item {
+          &:hover {
+            cursor: pointer;
+            font-weight: 700;
+          }
+        }
+        &:nth-child(even) {
+          font-weight: 500;
+        }
+        &:nth-child(odd) {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}
+
+.colored-table {
+  & > .title-table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: $size57;
+    color: $white;
+    font-weight: 700;
+    font-size: $size16;
+    text-align: center;
+    border: $size1 solid $gray-dee;
+    border-bottom: 0 !important;
+  }
+  & > .title-items {
+    display: flex;
+    font-weight: 600;
+    justify-content: center;
+    align-items: center;
+    min-height: $size50;
+    font-size: $size14;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    min-height: $size40;
+    border: $size1 solid $gray-dee;
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+    color: $white;
+  }
+}
+
+.color-index-0 {
+  & > .title-table {
+    background: transparent linear-gradient(90deg, #62a37e 0%, #91b5a1 100%) 0%
+      0% no-repeat padding-box;
+  }
+  & > .title-items {
+    background: transparent linear-gradient(90deg, #44775a 0%, #516b5d 100%) 0%
+      0% no-repeat padding-box;
+  }
+}
+
+.color-index-1 {
+  & > .title-table {
+    background: transparent linear-gradient(90deg, #f4e699 0%, #e5b83f 100%) 0%
+      0% no-repeat padding-box;
+  }
+  & > .title-items {
+    background: transparent linear-gradient(90deg, #c5ba7b 0%, #a0812b 100%) 0%
+      0% no-repeat padding-box;
+  }
+}
+
+.color-index-2 {
+  & > .title-table {
+    background: transparent linear-gradient(90deg, #839ccc 0%, #5f7298 100%) 0%
+      0% no-repeat padding-box;
+  }
+  & > .title-items {
+    background: transparent linear-gradient(90deg, #65789b 0%, #404d66 100%) 0%
+      0% no-repeat padding-box;
+  }
+}
+
+.color-index-3 {
+  & > .title-table {
+    background: transparent linear-gradient(90deg, #c15657 0%, #8e4c4d 100%) 0%
+      0% no-repeat padding-box;
+  }
+  & > .title-items {
+    background: transparent linear-gradient(90deg, #964244 0%, #643536 100%) 0%
+      0% no-repeat padding-box;
+  }
+}
+
+::ng-deep.modal-dialog {
+  max-width: 80vw !important;
+}
+::ng-deep.modal-content {
+  max-height: 100vh !important;
+}

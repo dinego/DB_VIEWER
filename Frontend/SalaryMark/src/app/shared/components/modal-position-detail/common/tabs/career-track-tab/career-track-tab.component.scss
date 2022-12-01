@@ -1,0 +1,45 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.container-tracker {
+  background: $white 0% 0% no-repeat padding-box;
+  box-shadow: $size0 $size2 $size6 $shadow;
+  border: $size1 solid $border-gray;
+  border-radius: $size4;
+
+  & > .tracker-graph {
+    margin-left: $size80 !important;
+    min-height: 50vh;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  & > .parameters-resp {
+    & > .parameters-list {
+      & > .line-items {
+        align-items: center;
+
+        & > .parameter-item {
+          font-size: $size12;
+          width: $size80;
+          text-align: right;
+          white-space: nowrap;
+        }
+
+        & > .row {
+          & > .rows {
+            & > .rounded-bg {
+              background: $border-gray 0% 0% no-repeat padding-box;
+              border-radius: 30px;
+              font-size: $size14;
+              font-weight: 700;
+              text-align: center;
+              justify-content: center;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+<div class="d-flex flex-column flex-grow-1" [ngClass]="{ 'mr-auto': isMRAuto }">
+  <div class="d-flex justify-content-between flex-row align-items-end">
+    <span class="title-slider" *ngIf="title !== ''">{{ title }}</span>
+    <span
+      *ngIf="restoreOptions"
+      class="clear-filter ml-auto"
+      (click)="restoreValues()"
+      >{{ locales.clearFilters }}</span
+    >
+  </div>
+  <div class="custom-slider d-flex" [style.width.px]="customWidth">
+    <ngx-slider
+      [(value)]="minValue"
+      [(highValue)]="maxValue"
+      [options]="options"
+      (userChangeEnd)="onUserChange($event)"
+    >
+    </ngx-slider>
+  </div>
+</div>

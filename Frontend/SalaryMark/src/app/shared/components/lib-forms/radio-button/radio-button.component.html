@@ -1,0 +1,19 @@
+<div class="options">
+  <label
+    title="{{ label }}"
+    class="d-flex align-items-bottom pb-1"
+    (click)="selectItem()"
+  >
+    <input
+      hidden
+      type="radio"
+      name="filter"
+      value="{{ itemId }}"
+      checked="{{ checked }}"
+    />
+    <span class="{{ checked ? 'selected' : '' }}"></span>
+    <div class="pl-2 label-radio align-items-center d-flex">
+      <span>{{ label }}</span>
+    </div>
+  </label>
+</div>

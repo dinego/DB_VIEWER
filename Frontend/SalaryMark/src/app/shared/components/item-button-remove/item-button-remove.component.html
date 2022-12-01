@@ -1,0 +1,14 @@
+<div
+  [ngClass]="{ disabled: !enabled, 'py-1': !enabled }"
+  class="d-flex bordered-item align-items-center py-1"
+>
+  <span class="param-data mx-2">{{ parameter }}</span>
+  <img
+    *ngIf="enabled"
+    src="../../../../assets/imgs/svg/remove-button.svg"
+    class="pointer"
+    (click)="clickRemove()"
+    [tooltip]="'Remover item'"
+    [placement]="'bottom'"
+  />
+</div>

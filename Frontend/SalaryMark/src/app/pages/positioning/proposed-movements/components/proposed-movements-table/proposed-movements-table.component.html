@@ -1,0 +1,30 @@
+<div class="container-table">
+  <div class="row">
+    <div class="col-md-3 pr-0">
+      <div class="col-md-12 p-0 title-table">Perfil</div>
+      <div
+        class="col-md-12 p-0 data-body py-2"
+        *ngFor="let item of proposedMovementsChart.categories; let i = index"
+      >
+        <span class="click-modal pl-2" (click)="clickNameItem(item)">{{
+          item.name
+        }}</span>
+      </div>
+    </div>
+
+    <div
+      class="col-md-3 pr-0 columns-data"
+      *ngFor="let items of proposedMovementsChart.chart"
+    >
+      <div class="title-col">{{ items.name }}</div>
+      <div
+        class="col-md-12 p-0 data-body py-2 text-center"
+        *ngFor="let item of items.data"
+      >
+        <span class="click-modal" (click)="openModalClick(item.click)"
+          >{{ item.value }}%</span
+        >
+      </div>
+    </div>
+  </div>
+</div>

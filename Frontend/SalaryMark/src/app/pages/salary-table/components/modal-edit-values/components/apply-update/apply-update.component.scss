@@ -1,0 +1,17 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.title-list {
+  color: $black-58;
+  font-weight: 600;
+  font-size: $size12;
+  text-transform: uppercase;
+}
+.has-error {
+  & > .title-list {
+    color: $error;
+  }
+  & > .form-control {
+    border: $size1 solid $error !important;
+  }
+}

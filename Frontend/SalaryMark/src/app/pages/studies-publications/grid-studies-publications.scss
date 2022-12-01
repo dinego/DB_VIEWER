@@ -1,0 +1,124 @@
+@import "../../../assets/scss/breakpoints.scss";
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.cs-grid-studies {
+  & > .col {
+    & > .card {
+      max-width: $remSize19_25;
+      height: $remSize27;
+      box-shadow: 0 $remSize0125 $remSize0375 $black-b7b7;
+      border: 0 solid $gray-eae;
+      border-radius: $size8;
+
+      & > .image {
+        margin: $remSize05;
+        width: $perSize95;
+        border-radius: $size8;
+        position: relative;
+        max-height: $remSize8_2;
+
+        & > .lockicon {
+          position: absolute;
+          right: $remSize05;
+          top: $remSize05;
+        }
+      }
+
+      .cardIMG {
+        width: $fullSize;
+        max-height: $remSize8_2;
+        position: relative;
+      }
+
+      & > .emptyimage {
+        margin: $remSize05;
+        width: $perSize95;
+        height: $remSize8_2;
+        border-radius: $size8;
+        background-color: $gray-eae;
+        position: relative;
+
+        & > .lockicon {
+          position: absolute;
+          right: $remSize05;
+          top: $remSize05;
+        }
+      }
+
+      & > .body {
+        & > .title {
+          text-align: center;
+          margin: 0 auto;
+          font-size: $remSize1_125;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        & > .date {
+          width: fit-content;
+          display: block;
+          color: $black-4040;
+          background: $gray-eae 0% 0% no-repeat padding-box;
+          border-radius: $remSize2_5;
+          padding: $remSize02 $remSize04;
+          font-size: $remSize075;
+          margin: 0 auto;
+          text-align: center;
+        }
+
+        & > .message {
+          text-align: center;
+          font-size: $remSize0875;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        & > .bottombuttons {
+          position: absolute;
+          width: 90%;
+          bottom: $remSize1;
+        }
+
+        // stylelint-disable-next-line rscss/class-format
+        & > .bottombuttons > .button {
+          border-radius: $remSize0125;
+          background: transparent linear-gradient(180deg, $orange-f7 0%, $orange-f2 100%) 0% 0% no-repeat padding-box;
+          box-shadow: $size0 $size2 $size6 $shadow;
+          border-radius: $size2;
+          color: $white;
+          width: 45%;
+          font-size: $remSize0875;
+          font-weight: 600;
+          height: $size38;
+
+          &:hover {
+            background: transparent linear-gradient(180deg, $orange-f4 0%, $orange-e8 100%) 0% 0% no-repeat padding-box;
+            box-shadow: 0px 2px 6px $shadow;
+          }
+
+          &.-sharebutton {
+            background: none;
+            background-color: $white;
+            color: $orange-f2;
+            border: $size1 solid $orange-f2;
+            border-radius: $size2;
+
+            &:hover {
+              background: #FDF4ED 0% 0% no-repeat padding-box;
+              border: 1px solid #F48122;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+}

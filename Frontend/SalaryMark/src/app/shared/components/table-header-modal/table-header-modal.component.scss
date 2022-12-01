@@ -1,0 +1,234 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.table-header-modal-container {
+  .btn-show-modal {
+    background: $white 0% 0% no-repeat padding-box;
+    border: $size1 solid $orange-f0;
+    color: $orange-f0;
+    width: $size46;
+    height: $size39;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $size14;
+
+    img {
+      width: $size21;
+      height: $size21;
+    }
+  }
+  .btn-show-modal:focus {
+    box-shadow: none;
+  }
+
+  .label-check {
+    cursor: pointer;
+
+    font-size: $remSize09;
+  }
+
+  .visible-check-container {
+    height: 70vh;
+    overflow: auto;
+    .line {
+      border-right: $size1 solid #cccccc;
+      margin-right: $size10;
+    }
+    &::-webkit-scrollbar {
+      width: $size10;
+    }
+    input[type="checkbox"] {
+      visibility: hidden;
+    }
+
+    input[type="checkbox"] + label:before {
+      border: $size1 solid $orange-button;
+      content: "\00a0";
+      display: inline-block;
+      font: 16px/1em sans-serif;
+      height: $remSize1;
+      margin: $size2 0.25em 0 0;
+      padding: 0;
+      vertical-align: top;
+      width: $remSize1;
+      border-radius: $size3;
+    }
+    input[type="checkbox"]:checked + label:before {
+      background: $orange-button;
+      color: $white;
+      content: "\2713";
+      text-align: center;
+    }
+    input[type="checkbox"]:checked + label:after {
+      font-weight: bold;
+    }
+
+    input[type="checkbox"]:focus + label::before {
+      outline: rgb(59, 153, 252) auto $size5;
+    }
+  }
+
+  .text-edit-container {
+    input[type="checkbox"] {
+      visibility: hidden;
+    }
+
+    input[type="checkbox"] + label:before {
+      border: $size1 solid $orange-button;
+      content: "\00a0";
+      display: inline-block;
+      font: 16px/1em sans-serif;
+      height: $remSize1;
+      margin: $size2 0.25em 0 0;
+      padding: 0;
+      vertical-align: top;
+      width: $remSize1;
+      border-radius: $size3;
+    }
+    input[type="checkbox"]:checked + label:before {
+      background: $orange-button;
+      color: $white;
+      content: "\2713";
+      text-align: center;
+    }
+    input[type="checkbox"]:checked + label:after {
+      font-weight: bold;
+    }
+
+    input[type="checkbox"]:focus + label::before {
+      outline: rgb(59, 153, 252) auto $size5;
+    }
+  }
+}
+.btn-save-show {
+  background-color: $white;
+  border: $size1 $orange-f0 solid;
+  font-weight: 600;
+  color: $orange-f0;
+  font-size: $size14;
+  width: $size67;
+  height: $size39;
+  box-shadow: $size0 $size2 $size6 $shadow-hover;
+  border-radius: $size2;
+  opacity: 1;
+}
+
+.btn-close {
+  padding: $size10 $size20;
+  span {
+    color: $black;
+    font-size: $size40;
+    font-weight: 100;
+  }
+}
+.btn-cancel {
+  color: $black-231f;
+  border: none;
+  background: none;
+}
+
+.btn-send {
+  border-radius: $remSize0125;
+  background-color: $orange-f0;
+  color: $white;
+  border: $size1 $orange-f0 solid;
+  font-weight: 600;
+  font-size: $size14;
+  width: $size120;
+  height: $size39;
+  box-shadow: $size0 $size2 $size6 $shadow-hover;
+  border-radius: $size2;
+  opacity: 1;
+
+  &.disabled {
+    cursor: default;
+  }
+}
+
+.btn-cancel {
+  border-radius: $remSize0125;
+  background-color: $white;
+  color: $orange-f0;
+  padding: $remSize053 $remSize1_1;
+  border: $size1 $orange-f0 solid;
+  font-weight: 600;
+}
+
+.btn-close {
+  padding: $size10 $size20;
+  span {
+    color: $black;
+    font-size: $size40;
+    font-weight: 100;
+  }
+}
+
+.style-line {
+  opacity: 0.5;
+  border-top: $remSize0125 solid rgba(0, 0, 0, 0.1);
+}
+
+.modal {
+  z-index: 9999;
+  > .full-size {
+    max-width: 80%;
+  }
+  > .modal-lg {
+    width: 400px !important;
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-right: 0 !important;
+    & > .modal-content {
+      border-radius: $size0;
+      height: 100vh;
+    }
+  }
+  > .modal-dialog {
+    min-height: calc(100% - 40rem);
+    max-width: 100%;
+    > .modal-body {
+      padding: $remSize1 $remSize1;
+    }
+    > .modal-content {
+      background: $white 0% 0% no-repeat padding-box;
+      border: $size1 solid $border-gray;
+      border-radius: $size20;
+      height: 100vh;
+      & > .modal-header {
+        border-bottom: 0;
+        & > .d-flex {
+          & > .modal-title {
+            font-size: $size16;
+            color: $black-1f;
+          }
+        }
+      }
+    }
+
+    &.modal-edit-right {
+      & > .modal-content {
+        border: 0 !important;
+        border-radius: 0 !important;
+      }
+    }
+  }
+}
+
+::ng-deep.modal-edit-right {
+  position: fixed;
+  margin: auto;
+  height: 100vh;
+  right: $size0;
+
+  & > .modal-content {
+    height: 100vh;
+    border-radius: 0;
+    padding-left: $size15;
+    padding-right: $size15;
+  }
+}
+.modal-title {
+  font-size: $size16;
+  font-weight: 600;
+}

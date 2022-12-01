@@ -1,0 +1,64 @@
+<div class="p-3 w-100">
+  <div class="title-modal d-flex justify-content-between flex-row">
+    <div class="icon-title d-flex align-items-center">
+      <img
+        src="../../../../assets/imgs/svg/position-background.svg"
+        class="mr-2"
+      />
+      <h6 class="title m-0">{{ title }}</h6>
+    </div>
+    <button type="button" class="close btn-close" (click)="modalRef.hide()">
+      <img src="../../../../assets/imgs/svg/close-modal.svg" />
+    </button>
+  </div>
+  <hr class="w-100 mt-2 mb-2" />
+  <div class="body-modal">
+    <div class="modal-share-table-container">
+      <div class="pb-3">
+        <label class="text-uppercase label-style"> E-mail </label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Email"
+          [(ngModel)]="email"
+        />
+      </div>
+
+      <div class="container fluid copy-link" triggers="" placement="bottom">
+        <div class="text-wrap">
+          {{ url }}
+        </div>
+
+        <div>
+          <div
+            #popLink="bs-tooltip"
+            tooltip="Link copiado!"
+            class="copy-container"
+          >
+            Copiar
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-3" fxLayout="row" fxLayoutAlign="end end">
+    <app-button-secundary
+      (click)="modalRef.hide()"
+      [label]="cancelButtonLabel"
+      data-dismiss="modal"
+      class="mr-2"
+    >
+    </app-button-secundary>
+    <app-button-primary
+      [disabled]="!email || (email && email.length == 0)"
+      [label]="saveButtonLabel"
+      (click)="
+        !email || (email && email.length == 0)
+          ? $event.stopPropagation()
+          : onSave()
+      "
+      data-dismiss="modal"
+    >
+    </app-button-primary>
+  </div>
+</div>

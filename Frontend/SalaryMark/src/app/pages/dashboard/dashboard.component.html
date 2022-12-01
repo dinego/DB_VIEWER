@@ -1,0 +1,211 @@
+<div class="dashboard-container container-fluid mb-5">
+  <app-title-header [title]="locales.title">
+    <div class="d-flex justify-content-between align-items-center w-100 pb-2">
+      <div class="d-flex align-items-center">
+        <app-button-list-light
+          [isDropUnit]="true"
+          class="btn-list mr-2"
+          *ngIf="units"
+          [text]="units && units.length > 0 ? units[0].unit : ''"
+          [unitList]="units"
+          (textUnitSelected)="changeUnitSelected($event)"
+        >
+        </app-button-list-light>
+        <app-button-list-light
+          *ngIf="movementsList && movementsList.length > 1"
+          class="btn-list"
+          [text]="movementsList.length > 0 ? movementsList[0].title : ''"
+          [list]="movementsList"
+          (textSelected)="changeMovements($event)"
+        ></app-button-list-light>
+      </div>
+      <div class="d-flex justify-content-end flex-grow-1">
+        <app-filter-by
+          *ngIf="filterBySelected && filterByList"
+          [list]="filterByList"
+          [selected]="filterBySelected"
+          (selectEvent)="filterByEvent($event)"
+        ></app-filter-by>
+      </div>
+    </div>
+    <app-button-more-actions [isHelp]="false"> </app-button-more-actions>
+  </app-title-header>
+  <div class="row">
+    <div class="col-sm-12 col-md-9 col-lg-9 pr-0">
+      <div class="card px-2 pt-2 pbc-9" *ngIf="comparativeAnalysisChart">
+        <div
+          class="title-card p-2 d-flex justify-content-between align-items-center"
+        >
+          <h5 class="title-impact mb-2">{{ locales.mediumPositioning }}</h5>
+          <div
+            class="percent px-2 py-1"
+            *ngIf="
+              comparativeAverage &&
+              comparativeAverage.chart &&
+              comparativeAverage.chart.average
+            "
+            [ngStyle]="
+              setBackgroundColorPercent(comparativeAverage.chart.average)
+            "
+          >
+            <span>{{ comparativeAverage.chart.average }}%</span>
+          </div>
+        </div>
+        <hr class="mt-0" />
+        <app-comparative-analysis-chart-dashboard
+          [valuesComparativeAnalysis]="comparativeAnalysisChart"
+          [showDataLabels]="false"
+          [height]="299"
+        >
+        </app-comparative-analysis-chart-dashboard>
+        <app-modal-chart>
+          <div class="header w-100">
+            <div
+              class="title-card p-2 d-flex justify-content-between align-items-center"
+            >
+              <h5 class="title-impact mb-0">{{ locales.mediumPositioning }}</h5>
+              <div
+                class="percent px-2 py-1"
+                *ngIf="
+                  comparativeAverage &&
+                  comparativeAverage.chart &&
+                  comparativeAverage.chart.average
+                "
+                [ngStyle]="
+                  setBackgroundColorPercent(comparativeAverage.chart.average)
+                "
+              >
+                <span>{{ comparativeAverage.chart.average }}%</span>
+              </div>
+            </div>
+          </div>
+          <div class="body">
+            <app-comparative-analysis-chart-dashboard
+              [valuesComparativeAnalysis]="comparativeAnalysisChart"
+              [showDataLabels]="false"
+              [height]="350"
+              [width]="widthModalChart"
+              [isModal]="true"
+            >
+            </app-comparative-analysis-chart-dashboard>
+          </div>
+        </app-modal-chart>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-3 col-lg-3">
+      <h5 class="title-impact mb-2">{{ locales.financialImpact }}</h5>
+      <div
+        class="card-impact card mb-3 d-flex flex-row"
+        *ngFor="let item of financialImpactCards; let i = index"
+      >
+        <h6 class="m-0 p-2 pt-2 pb-2 text-left info-impact">
+          {{ item.analyseFinancialImpactName }}
+        </h6>
+        <ng-template #tipEmployee>
+          <div class="content-tooltip tooltip-employee" fxLayout="column">
+            <div>
+              {{ item.cost | currency: "BRL":true:"1.0-2" }}
+              <b class="title-tooltip">
+                ({{ item.costPercentage | number: "1.1-2" }}%)</b
+              >
+            </div>
+            <div>
+              <b class="title-tooltip"
+                >{{ item.employeeAmount | number: "1.0-3" }} func.
+              </b>
+              ({{ item.employeePercentage }}%)
+            </div>
+          </div>
+        </ng-template>
+        <div
+          class="card-info {{ 'card-item-' + i }}"
+          fxLayout="column"
+          fxLayoutAlign="center end"
+          [tooltip]="tipEmployee"
+        >
+          <h5 class="m-0 text-value-impact text-nowrap">
+            {{ item.cost | currency: "BRL":true:"1.0-2" }}
+          </h5>
+          <h4 class="m-0 text-percentage-impact text-nowrap">
+            {{ item.costPercentage | number: "1.1-2" }}%
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 col-md-3 col-lg-3">
+      <div class="card p-2 h-100" *ngIf="positionChart">
+        <div
+          class="d-flex justify-content-between align-items-center ml-1 pb-2"
+        >
+          <h5 class="title-impact mb-0 p-0 m-0">{{ locales.posts }}</h5>
+          <app-button-list-light
+            class="btn-list mr-2"
+            *ngIf="positionFilterList"
+            [text]="
+              positionFilterSelected
+                ? positionFilterSelected.title
+                : positionFilterList && positionFilterList.length > 0
+                ? positionFilterList[0].title
+                : ''
+            "
+            [list]="positionFilterList"
+            (textSelected)="changePosition($event)"
+          >
+          </app-button-list-light>
+        </div>
+        <hr class="mb-4 mt-0" />
+        <app-positions-dashboard-chart
+          class="chart-size"
+          [valuesPositionsDashboard]="positionChart"
+          [height]="320"
+        >
+        </app-positions-dashboard-chart>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-9 col-lg-9 pl-0">
+      <div class="card p-2">
+        <h5 class="title-impact mb-0 pt-2 pl-2 pb-3">
+          {{ locales.salaryStrategy }}
+        </h5>
+        <hr class="mb-0 mt-0" />
+        <div class="mt-2" *ngIf="distributionAnalysisChart">
+          <div class="mb-2">
+            <app-distribution-analysis-chart
+              class="chart-size"
+              [height]="350"
+              [showDrillDown]="false"
+              [valuesDistributionAnalysisChart]="
+                distributionAnalysisChart.chart
+              "
+            >
+            </app-distribution-analysis-chart>
+          </div>
+
+          <app-modal-chart>
+            <div class="header">
+              <h5 class="title-impact mb-0 pt-2 pl-2 pb-2">
+                {{ locales.salaryStrategy }}
+              </h5>
+            </div>
+            <div class="body mb-2">
+              <app-distribution-analysis-chart
+                class="chart-size"
+                [height]="325"
+                [width]="widthModalChart"
+                [showDrillDown]="false"
+                [valuesDistributionAnalysisChart]="
+                  distributionAnalysisChart.chart
+                "
+                [isModal]="true"
+              >
+              </app-distribution-analysis-chart>
+            </div>
+          </app-modal-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

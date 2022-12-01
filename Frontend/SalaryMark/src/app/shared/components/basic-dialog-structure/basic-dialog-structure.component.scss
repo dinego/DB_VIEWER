@@ -1,0 +1,129 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.modal-title {
+  color: $orange-f4;
+  font-weight: bold;
+  font-size: $remSize1_25;
+}
+
+.modal-body {
+  padding: $remSize1 $remSize1;
+}
+
+.btn-save-show {
+  border: $size2 solid $orange-f0;
+  border-radius: $size4;
+  color: $orange-f0;
+  padding: $size10;
+}
+
+.btn-close {
+  padding: $size10 $size20;
+  span {
+    color: $black;
+    font-size: $size40;
+    font-weight: 100;
+  }
+}
+.btn-cancel {
+  color: $black-231f;
+  border: none;
+  background: none;
+}
+
+.btn-send {
+  border-radius: $remSize0125;
+  background-color: $orange-f0;
+  color: $white;
+  padding: $remSize053 $remSize1_1;
+  border: $size1 $orange-f0 solid;
+  font-weight: 600;
+  &.disabled {
+    cursor: default;
+  }
+}
+
+.btn-cancel {
+  border-radius: $remSize0125;
+  background-color: $white;
+  color: $orange-f0;
+  padding: $remSize053 $remSize1_1;
+  border: $size1 $orange-f0 solid;
+  font-weight: 600;
+}
+
+.full-size {
+  max-width: 80%;
+}
+
+.modal-content {
+  background: $white 0% 0% no-repeat padding-box;
+  border: $size1 solid $border-gray;
+  border-radius: $size20;
+  min-height: $remSize24;
+  & > .modal-header {
+    border-bottom: 0;
+    & > .d-flex {
+      & > .modal-title {
+        font-size: $size16;
+        color: $black-1f;
+      }
+    }
+  }
+}
+
+.modal-dialog {
+  min-height: calc(100% - 40rem);
+}
+
+.style-line {
+  opacity: 0.5;
+  border-top: $remSize0125 solid rgba(0, 0, 0, 0.1);
+}
+
+#shareModal {
+  & > .modal-dialog {
+    min-width: $size600;
+  }
+}
+.share-modal {
+  & > .modal-content {
+    height: $size280;
+    min-width: $size600;
+  }
+}
+
+.modal-edit-right {
+  width: 400px !important;
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-right: 0 !important;
+  & > .modal-content {
+    border-radius: $size0 !important;
+    height: 100vh;
+    & > .modal-body {
+      display: flex !important;
+      justify-content: start !important;
+      align-items: initial !important;
+    }
+  }
+}
+
+.send-modal {
+  min-height: calc(120% - 20rem);
+
+  & > .modal-content {
+    width: $size610 !important;
+    height: $size500 !important;
+    position: absolute;
+    left: 15%;
+  }
+}
+.modal-analyse {
+  & > .modal-content {
+    & > .remove-buttons {
+      display: none !important;
+    }
+  }
+}

@@ -1,0 +1,107 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.item {
+  border-radius: $size2;
+  font-size: $size14;
+  min-height: $size38;
+  max-height: $size38;
+
+  & > .title {
+    text-overflow: ellipsis;
+  }
+
+  &.disabled {
+    background: $white-e6e 0% 0% no-repeat padding-box;
+    border: $size1 solid $gray-bf;
+  }
+
+  &.bordered {
+    background: $orange-fff1e5 0% 0% no-repeat padding-box;
+    border: $size1 solid $orange-f4;
+    font-weight: 700;
+  }
+
+  &.possibility {
+    background: $white 0% 0% no-repeat padding-box;
+    border: $size1 dashed $orange-f4;
+    max-width: 90% !important;
+  }
+
+  &.is-drop {
+    background-color: $white;
+    &.enabled {
+      cursor: pointer;
+    }
+  }
+
+  & > .arrow {
+    background: $gray-f0 0% 0% no-repeat padding-box;
+    border-radius: $size2;
+    min-width: $size34;
+    min-height: $size34;
+  }
+}
+
+.possibility-line {
+  height: $size0;
+  border-top: $size1 dashed $black-40;
+}
+
+.possibility {
+  height: $size80;
+  width: $size0;
+  border-right: $size1 dashed $black-40;
+  margin-top: $size4;
+
+  &.arrowed {
+    &::before {
+      border-color: $black-40;
+      border-style: solid;
+      border-width: 0 0 $size1 $size1;
+      content: "";
+      display: block;
+      height: $size6;
+      left: 49.2%;
+      position: absolute;
+      width: $size6;
+      margin-top: -$size3;
+      transition: left 0.1s;
+      transform: rotate(136deg);
+      -webkit-transform: rotate(136deg);
+    }
+  }
+}
+
+.normal-line {
+  height: 60px;
+  width: 0px;
+  border-right: $size1 solid $black-40;
+
+  &.arrowed {
+    margin-top: $size4;
+    &::before {
+      border-color: $black-40;
+      border-style: solid;
+      border-width: 0 0 $size1 $size1;
+      content: "";
+      display: block;
+      height: $size6;
+      left: 49.2%;
+      position: absolute;
+      width: $size6;
+      margin-top: -$size3;
+      transition: left 0.1s;
+      transform: rotate(136deg);
+      -webkit-transform: rotate(136deg);
+    }
+  }
+}
+
+.w-90 {
+  max-width: 90% !important;
+}
+
+.remove-icon {
+  cursor: pointer;
+}

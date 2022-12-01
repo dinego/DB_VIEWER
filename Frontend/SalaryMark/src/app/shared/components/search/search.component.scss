@@ -1,0 +1,32 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.search {
+  border: $size1 solid #d9d9d9;
+  border-radius: $size70;
+  opacity: 1;
+  width: 100%;
+  font-size: $remSize08;
+  background-image: url("../../../../assets/imgs/svg/search-icon.svg");
+  background-repeat: no-repeat;
+  background-size: $size17 $size17;
+  background-position: $size10 50%;
+  padding-left: $size35;
+  height: $size40;
+  font-size: $size14;
+  color: $black-1f;
+}
+
+.full-size {
+  width: 100%;
+}
+
+@media only screen and (max-width: $screen-mobile-large) {
+  .search {
+    width: $size200;
+  }
+}
+.search,
+.small-search:focus {
+  box-shadow: none;
+}

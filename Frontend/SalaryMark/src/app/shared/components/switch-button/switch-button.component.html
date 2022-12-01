@@ -1,0 +1,19 @@
+<div fxLayoutAlign="start end">
+  <label class="switch">
+    <input
+      type="checkbox"
+      (click)="invertValue()"
+      [checked]="formControl.value"
+      [disabled]="disabled"
+    />
+    <span
+      [ngClass]="[
+        !disabled ? 'slider round' : 'slider disabled round',
+        SliderBlue ? 'slider-blue ' : 'slider disabled round',
+        SliderRed ? 'slider-red ' : 'slider disabled round',
+        SliderGreen ? 'slider-green ' : 'slider disabled round'
+      ]"
+    >
+    </span>
+  </label>
+</div>

@@ -1,0 +1,13 @@
+<div class="progress-bar-custom d-flex flex-grow-1" #progress>
+  <div class="progress-bar-content d-flex flex-grow-1">
+    <span
+      aria-valuemin="min"
+      aria-valuemax="max"
+      class="progress-bar-inner"
+      [style.width.%]="percentToView"
+      style="background-color: transparent"
+      data-value="percentToView"
+      data-percentage-value="percentToView"
+    ></span>
+  </div>
+</div>

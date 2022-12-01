@@ -1,0 +1,647 @@
+<div
+  class="salary-table-container container-fluid"
+  [ngClass]="share ? 'mt-1' : ''"
+>
+  <app-title-header [title]="locales.title">
+    <app-button-more-actions
+      *ngIf="!share"
+      [isMore]="true"
+      [isShare]="permissions && permissions.canShare"
+      [isHelp]="false"
+      idModal="shareModal"
+      (onShareClick)="getShareKey()"
+      class="d-flex align-items-center ml-auto"
+    >
+      <app-button-list
+        *ngIf="period && period.length > 1"
+        [showList]="period && period.length > 1"
+        class="btn-list mr-2"
+        [text]="period.length > 0 ? period[0].title : '-'"
+        [list]="period"
+        (textSelected)="changeSelectPeriod($event)"
+        [toolTipText]="locales.showAs"
+      ></app-button-list>
+      <app-button-list
+        *ngIf="
+          permissions &&
+          permissions.canFilterTypeofContract &&
+          typePosition &&
+          typePosition.length > 1
+        "
+        class="btn-list-reset mr-2"
+        [showList]="typePosition && typePosition.length > 1"
+        [text]="typePosition.length > 0 ? typePosition[0].title : '-'"
+        [list]="typePosition"
+        (textSelected)="changeSelectTypePosition($event)"
+        [toolTipText]="locales.contractType"
+      ></app-button-list>
+      <button
+        *ngIf="
+          selectedVisualization &&
+          selectedVisualization.id !== displayTypesEnum.COLUMNS
+        "
+        class="ml-1 mr-2 btn btn-show"
+        fxLayoutAlign="center center"
+        data-toggle="modal"
+        data-target="#showHeaderTableSalaryModal"
+        data-keyboard="false"
+        tooltip="{{ locales.show }}"
+        placement="bottom"
+        (click)="openModalShow()"
+      >
+        {{ locales.show }}
+      </button>
+      <app-config-button
+        *ngIf="permissions && permissions.canEditSalaryTableValues"
+        placement="bottom"
+        tooltip="{{ locales.editValues }}"
+        (click)="openModalEditValues()"
+        (closeModalEvent)="closeEdit()"
+      ></app-config-button>
+      <app-export-salary-table
+        *ngIf="permissions && permissions.canDownloadExcel"
+        [selectedVisualization]="selectedVisualization"
+        (exportChart)="exportChart()"
+        (exportCSV)="
+          isShowPositions ? getFileSpreadsheetPositions() : getFileSpreadsheet()
+        "
+      ></app-export-salary-table>
+    </app-button-more-actions>
+    <app-share-header [headers]="shareHeader" *ngIf="share"></app-share-header>
+  </app-title-header>
+  <app-filter-header
+    [listTables]="listTables"
+    [selectedTable]="listTables.length > 0 ? listTables[0].title : ''"
+    (tableSelected)="changeTable($event)"
+    [share]="share"
+    [shareFilter]="shareData ? shareData.table : ''"
+    [shareFilterTitle]="locales.table"
+  >
+    <div
+      [ngClass]="{
+        'w-100':
+          isShowPositions ||
+          (selectedVisualization &&
+            selectedVisualization.id === displayTypesEnum.COLUMNS),
+        'ml-auto':
+          selectedVisualization &&
+          selectedVisualization.id != displayTypesEnum.COLUMNS
+      }"
+      class="title-content align-items-end w-100"
+      ngClass.lt-md="mt-3"
+      fxLayout="row"
+      fxLayout.lt-md="row"
+      fxLayoutAlign="bottom bottom"
+    >
+      <ng-container
+        *ngIf="
+          selectedVisualization &&
+            selectedVisualization.id === displayTypesEnum.TABLE;
+          else slider
+        "
+      >
+        <div
+          class="flex-grow-1 mr-3"
+          ngClass.lt-md="mb-3"
+          fxLayout="column"
+          fxLayoutAlign="space-between"
+          *ngIf="isShowPositions"
+        >
+          <app-search
+            (searchQuery)="setFilterSearch($event)"
+            [isFullSize]="true"
+            [text]="locales.search"
+          ></app-search>
+        </div>
+        <div
+          ngClass.lt-md="mb-3"
+          fxLayout="column"
+          fxLayoutAlign="space-between"
+          *ngIf="!isShowPositions && !share"
+        >
+          <div class="tiny-title">{{ locales.expandAll }}</div>
+          <app-switch-button
+            (expandAllRows)="showAllRows($event)"
+          ></app-switch-button>
+        </div>
+        <div
+          fxHide.lt-md
+          class="ml-3 line"
+          *ngIf="!isShowPositions && !share"
+        ></div>
+
+        <div
+          ngClass.lt-md="mb-3"
+          fxLayout="column"
+          fxLayoutAlign="space-between"
+          *ngIf="!share"
+        >
+          <div class="tiny-title">{{ locales.expandPositions }}</div>
+          <app-switch-button
+            (expandAllRows)="showPositions($event)"
+          ></app-switch-button>
+        </div>
+        <div fxHide.lt-md class="ml-3 line" *ngIf="!share"></div>
+      </ng-container>
+      <ng-template #slider>
+        <app-slider-controller
+          *ngIf="rangesGraph && !share"
+          class="mr-3 ml-3 w-100 flex-grow-1"
+          [title]="locales.interval"
+          [isMRAuto]="true"
+          [minValue]="minRange"
+          [maxValue]="maxRange"
+          [floor]="rangesGraph.range.min"
+          [ceil]="rangesGraph.range.max"
+          (userChange)="sliderChange($event)"
+        ></app-slider-controller>
+      </ng-template>
+
+      <div
+        ngClass.lt-md="mb-3"
+        fxLayout="column"
+        fxLayoutAlign="space-between"
+        *ngIf="!share"
+      >
+        <div class="tiny-title">{{ locales.units }}</div>
+
+        <app-button-list-light
+          class="btn-list mr-2"
+          *ngIf="units"
+          [text]="unit ? unit : units && units.length > 0 ? units[0].unit : ''"
+          [unitList]="units"
+          [isDropUnit]="true"
+          (textUnitSelected)="changeUnitSelected($event)"
+        >
+        </app-button-list-light>
+      </div>
+
+      <div fxHide.lt-md class="ml-3 ml-3 line" *ngIf="!share"></div>
+
+      <div
+        ngClass.lt-md="mb-3"
+        fxLayout="column"
+        fxLayoutAlign="space-between"
+        *ngIf="!share"
+      >
+        <div class="tiny-title">{{ locales.profile }}</div>
+
+        <app-button-list-light
+          *ngIf="profiles"
+          class="btn-list"
+          [text]="
+            group
+              ? group
+              : profiles && profiles.length > 0
+              ? profiles[0].title
+              : ''
+          "
+          [list]="profiles"
+          (textSelected)="changeSelectProfile($event)"
+        ></app-button-list-light>
+      </div>
+
+      <div fxHide.lt-md class="ml-3 ml-3 line" *ngIf="!share"></div>
+      <div
+        ngClass.lt-md="mb-3"
+        fxLayout="column"
+        fxLayoutAlign="space-between"
+        *ngIf="!share"
+      >
+        <div class="tiny-title">{{ locales.visualization.title }}</div>
+
+        <app-button-list-visualization
+          [selected]="selectedVisualization"
+          [list]="visualizations"
+          (textSelected)="changeSelectVisualization($event)"
+        ></app-button-list-visualization>
+      </div>
+    </div>
+  </app-filter-header>
+  <app-clear-filter
+    *ngIf="isClearFilter"
+    (clearFilters)="onClearFilter()"
+    (filters)="onFilterChecked()"
+  >
+  </app-clear-filter>
+  <div
+    *ngIf="
+      selectedVisualization &&
+      selectedVisualization.id === displayTypesEnum.TABLE
+    "
+  >
+    <div
+      class="mt-3 table-responsive ml-0 pr-0"
+      *ngIf="
+        isShowPositions ? dataPosition.length > 0 : data.length > 0;
+        else emptyDataTable
+      "
+      [ngClass]="tableClass"
+      infiniteScroll
+      (scrolled)="onScrollDown()"
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="50"
+      [scrollWindow]="false"
+    >
+      <table class="table table-striped">
+        <thead>
+          <tr class="mat-header-row">
+            <th width="65" class="set-padding">
+              <label
+                class="container-cb"
+                *ngIf="
+                  isShowPositions ? dataPosition.length > 0 : data.length > 0
+                "
+              >
+                <input
+                  type="checkbox"
+                  id="customCheck"
+                  (change)="isAllChecked($event)"
+                  [checked]="
+                    isShowPositions
+                      ? selected.length === dataPosition.length
+                      : selected.length === data.length
+                  "
+                />
+                <span class="checkmark"></span>
+              </label>
+            </th>
+            <!--IS POSITIONS-->
+            <ng-container *ngIf="isShowPositions">
+              <th
+                *ngFor="let item of columHeadersPositions"
+                scope="col"
+                [resizeColumn]="true"
+                class="mat-header-cell"
+                [ngClass]="{
+                  'font-weight-bold': item.isMidPoint
+                }"
+              >
+                <div
+                  fxLayout="row"
+                  [fxLayoutAlign]="
+                    item.colName.includes('%')
+                      ? 'center center'
+                      : 'start center'
+                  "
+                >
+                  {{ item.nickName }}
+                  <span
+                    style="cursor: pointer"
+                    *ngIf="item.sortable"
+                    [ngClass]="!item.sortClass ? sortClass : item.sortClass"
+                    (click)="onSort(item)"
+                  ></span>
+                </div>
+              </th>
+            </ng-container>
+            <ng-container *ngIf="!isShowPositions">
+              <th
+                *ngFor="let item of columHeaders"
+                scope="col"
+                [resizeColumn]="true"
+                class="mat-header-cell"
+                [ngClass]="{
+                  'font-weight-bold': item.isMidPoint
+                }"
+              >
+                <div
+                  fxLayout="row"
+                  [fxLayoutAlign]="
+                    item.colName.includes('%')
+                      ? 'center center'
+                      : 'start center'
+                  "
+                >
+                  {{ item.nickName }}
+                  <span
+                    style="cursor: pointer"
+                    *ngIf="
+                      item.columnId === tableSalaryColumnEnum.GSM ||
+                      item.columnId === tableSalaryColumnEnum.TableSalaryName ||
+                      item.columnId === tableSalaryColumnEnum.Unit ||
+                      item.columnId === tableSalaryColumnEnum.Profile
+                    "
+                    [ngClass]="!item.sortClass ? sortClass : item.sortClass"
+                    (click)="onSort(item)"
+                  ></span>
+                </div>
+              </th>
+            </ng-container>
+          </tr>
+        </thead>
+
+        <!--POSITION-->
+        <ng-container *ngIf="isShowPositions">
+          <tbody>
+            <ng-container *ngFor="let rows of dataPosition; let i = index">
+              <tr
+                class="row-{{ rows[0].gsm }}"
+                (mouseenter)="hoverEnterTr($event)"
+                (mouseleave)="hoverLeaveTr($event)"
+                [style.background-color]="setStyleRow(rows[0].gsm)"
+              >
+                <td
+                  class="align-middle text-center padding-td"
+                  [attr.rowspan]="rows[0].rowSpan"
+                  *ngIf="rows[0].row == 0"
+                >
+                  <label class="container-cb">
+                    <input
+                      type="checkbox"
+                      id="customCheck"
+                      [checked]="rows[0].isChecked"
+                      (change)="checkOnePosition($event, rows[0].gsm)"
+                    />
+                    <span class="checkmark-item"></span>
+                  </label>
+                </td>
+
+                <td
+                  class="align-middle text-center"
+                  [attr.rowspan]="rows[0].rowSpan"
+                  *ngIf="rows[0].row == 0"
+                >
+                  {{ rows[0].gsm }}
+                </td>
+
+                <ng-container
+                  *ngFor="let rowPositions of shiftArray(rows); let i = index"
+                >
+                  <td
+                    [ngClass]="{
+                      'font-weight-bold': rowPositions.isMidPoint,
+                      'text-center':
+                        rowPositions.type === 'Double' ||
+                        rowPositions.type === 'Int32' ||
+                        rowPositions.value === '-'
+                    }"
+                  >
+                    <span
+                      *ngIf="
+                        rowPositions.type === 'Double' ||
+                        rowPositions.type === 'Int32'
+                      "
+                    >
+                      {{ rowPositions.value | number: "1.0-3" }}
+                    </span>
+                    <span
+                      *ngIf="
+                        rowPositions.type === 'String' &&
+                          rowPositions.colPos === 1 &&
+                          !this.share;
+                        else anothersPositions
+                      "
+                    >
+                      <span
+                        (click)="openModalPosition(rowPositions)"
+                        class="click-position"
+                        [innerHTML]="
+                          rowPositions.value | highlightsCase: filterSearch
+                        "
+                      ></span>
+                      <i
+                        *ngIf="
+                          rowPositions.occupantCLT || rowPositions.occupantPJ
+                        "
+                        containerClass="container-tooltip"
+                        [tooltip]="tipContent"
+                        placement="right"
+                        class="fas fa-user ml-1"
+                        [ngClass]="{
+                          'has-occupant-clt': rowPositions.occupantCLT,
+                          'has-occupant-pj': rowPositions.occupantPJ
+                        }"
+                      ></i>
+                      <ng-template #tipContent>
+                        <div
+                          class="content-tooltip"
+                          fxLayout="row"
+                          *ngIf="
+                            rowPositions.occupantPositions &&
+                            rowPositions.occupantPositions.length > 0
+                          "
+                          placement="right"
+                        >
+                          <div
+                            class="item"
+                            fxLayout="column"
+                            fxLayoutAlign="center start"
+                            placement="right"
+                          >
+                            <div
+                              *ngFor="
+                                let occupant of rowPositions.occupantPositions
+                              "
+                            >
+                              <div
+                                class="item"
+                                fxLayout="column"
+                                fxLayoutAlign="center start"
+                              >
+                                {{ occupant }}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </span>
+                    <ng-template #anothersPositions>
+                      <span
+                        *ngIf="rowPositions.type === 'String'"
+                        [innerHTML]="
+                          rowPositions.value | highlightsCase: filterSearch
+                        "
+                      >
+                      </span>
+                    </ng-template>
+                  </td>
+                </ng-container>
+              </tr>
+            </ng-container>
+          </tbody>
+        </ng-container>
+        <!--/POSITION-->
+
+        <tbody *ngIf="!isShowPositions">
+          <ng-container *ngFor="let row of data; let i = index">
+            <tr class="mat-row">
+              <td width="55" class="padding-td">
+                <label class="container-cb">
+                  <input
+                    type="checkbox"
+                    id="customCheck"
+                    [checked]="row[0].isChecked"
+                    (change)="checkOne($event, row)"
+                  />
+                  <span class="checkmark-item"></span>
+                </label>
+              </td>
+              <ng-container *ngFor="let item of columHeaders; let i = index">
+                <td class="mat-cell">
+                  <div
+                    fxLayout="row"
+                    [fxLayoutAlign]="
+                      getRowResult(row, item).type === 'Double' ||
+                      getRowResult(row, item).type === 'Int32' ||
+                      transformText(row, item) === '-'
+                        ? 'center center'
+                        : 'start center'
+                    "
+                  >
+                    <ng-container
+                      *ngIf="item.colPos === 0; then initialCol; else othersCol"
+                    >
+                    </ng-container>
+
+                    <ng-template #initialCol>
+                      <div fxLayoutAlign="space-between center" class="w-100">
+                        <div
+                          *ngIf="
+                            getRowResult(row, item).type === 'Double' ||
+                            getRowResult(row, item).type === 'Int32'
+                          "
+                        >
+                          <div *ngIf="transformText(row, item) !== '-'">
+                            {{ getFormatValue(row, item) | number: "1.0-3" }}
+                          </div>
+                          <div *ngIf="transformText(row, item) === '-'">
+                            {{ transformText(row, item) }}
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+
+                    <ng-template #othersCol>
+                      <div
+                        *ngIf="
+                          getRowResult(row, item).type === 'Double' ||
+                          getRowResult(row, item).type === 'Int32'
+                        "
+                        [ngClass]="{
+                          'font-weight-bold': getIsMidPointResult(row, item)
+                        }"
+                      >
+                        <div
+                          *ngIf="
+                            transformText(row, item) !== '-' &&
+                            hoursTypeId == hourlyBasisEnum.HourSalary
+                          "
+                        >
+                          {{ getFormatValue(row, item) | number: "1.2-2" }}
+                        </div>
+                        <div
+                          *ngIf="
+                            transformText(row, item) !== '-' &&
+                            hoursTypeId !== hourlyBasisEnum.HourSalary
+                          "
+                        >
+                          {{ getFormatValue(row, item) | number: "1.0-3" }}
+                        </div>
+                        <div *ngIf="transformText(row, item) === '-'">
+                          {{ transformText(row, item) }}
+                        </div>
+                      </div>
+
+                      <div
+                        *ngIf="
+                          getRowResult(row, item).type !== 'Double' ||
+                          getRowResult(row, item).type === 'Int32'
+                        "
+                      >
+                        {{ transformText(row, item) }}
+                      </div>
+                    </ng-template>
+                  </div>
+                </td>
+              </ng-container>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #emptyDataTable>
+      <div class="d-flex justify-content-center align-items-center">
+        <hr class="mt-5" />
+        <h4>{{ locales.noDataTable }}</h4>
+        <hr />
+      </div>
+    </ng-template>
+  </div>
+
+  <div
+    *ngIf="
+      selectedVisualization &&
+      selectedVisualization.id == displayTypesEnum.COLUMNS
+    "
+    class="card p-2 mt-3"
+  >
+    <app-salarial-chart
+      *ngIf="salaryChart"
+      [maxValue]="salaryChart.maxValue"
+      [height]="heightChartTable"
+      [showOccupantCLT]="showOccupantCLTIcon()"
+      [showOccupantPJ]="showOccupantPJIcon()"
+      [hoursType]="hoursTypeId"
+      [valuesSalaryChartInput]="salaryChart.chart"
+      [permissions]="permissions"
+      [gsmGlobalLabel]="gsmGlobalLabel"
+    ></app-salarial-chart>
+  </div>
+
+  <div
+    class="d-flex mt-2 mb-2 justify-content-end icons"
+    *ngIf="
+      ((salaryChart && salaryChart.chart) || dataPosition.length > 0) &&
+      showOccupantPJIcon() &&
+      showOccupantCLTIcon() &&
+      (isShowPositions ||
+        (selectedVisualization &&
+          selectedVisualization.id == displayTypesEnum.COLUMNS))
+    "
+  >
+    <div class="align-self-end d-flex">
+      <div class="d-flex mr-3 align-items-center">
+        <i class="fas fa-user mr-1 has-occupant-clt"></i>
+        {{ locales.occupantCLT }}
+      </div>
+      <div class="d-flex align-items-center">
+        <i class="fas fa-user mr-1 has-occupant-pj"></i>
+        <span>{{ locales.occupantPJ }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div
+    *ngIf="
+      salaryChart &&
+      salaryChart.chart &&
+      salaryChart.chart[0] &&
+      selectedVisualization &&
+      selectedVisualization.id == displayTypesEnum.COLUMNS
+    "
+    #print
+    id="icp-report"
+    class="{{ isPrinting ? '' : 'd-none' }}"
+    [ngStyle]="{ 'width.px': getMinimumWidth() }"
+  >
+    <app-salary-table-export-png
+      [chartHeight]="600"
+      [salarialTable]="listTables.length > 0 ? listTables[0].title : ''"
+      [unit]="units && units.length > 0 ? units[0].unit : ''"
+      [profile]="
+        profiles && profiles.length > 1
+          ? locales.all
+          : profiles
+          ? profiles[0].title
+          : ''
+      "
+      [chart]="salaryChart"
+    >
+    </app-salary-table-export-png>
+  </div>
+  <a #downloadLink></a>
+</div>

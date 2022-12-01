@@ -1,0 +1,59 @@
+<app-basic-dialog-structure
+  [input]="inputModalShow"
+  (save)="sendEmailToUser()"
+  IsSendModal="true"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <form
+    (ngSubmit)="sendEmailToUser()"
+    [formGroup]="form"
+    class="mr-2 ml-2 modal-send-access-link-container"
+    fxLayout="column"
+    *ngIf="data && form"
+  >
+    <div class="mb-3">
+      <span class="text-title-style text-uppercase">{{ locales.email }}</span>
+
+      <div class="box-send-email">
+        <p class="m-0">{{ data.userParameter.mail }}</p>
+      </div>
+    </div>
+
+    <label class="mb-1 text-title-style text-uppercase">
+      {{ locales.message }}
+    </label>
+
+    <textarea
+      class="p-2 text-description"
+      cols="30"
+      rows="5"
+      placeholder="{{ locales.message }}"
+      formControlName="message"
+    >
+    </textarea>
+
+    <div class="pt-3 pb-3">
+      <span class="m-0 sub-title">
+        {{ locales.ifPreferSendLinkAccessByEmail }}:
+      </span>
+    </div>
+
+    <div class="container fluid copy-link" triggers="" placement="bottom">
+      <p class="text-wrap m-0" triggers="" placement="bottom">
+        {{ data.accessLink }}
+      </p>
+
+      <div class="">
+        <div
+          #popLink="bs-tooltip"
+          tooltip="Link copiado!"
+          class="copy-container"
+        >
+          Copiar
+        </div>
+      </div>
+    </div>
+  </form>
+</app-basic-dialog-structure>

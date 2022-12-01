@@ -1,0 +1,86 @@
+<div
+  class="dropdown button-list-light-container"
+  id="dropdownMenuButton"
+  data-toggle="dropdown"
+  fxLayoutAlign="space-between center"
+  [ngClass]="{
+    disabled: disabled,
+    'w-100': isFullSize,
+    'is-drop-unit': isDropUnit
+  }"
+>
+  <div [tooltip]="text" [placement]="'bottom'" class="text-ellipsis">
+    <label *ngIf="text" class="m-0 pl-1 pr-1 text-size text-ellipsis">{{
+      text
+    }}</label>
+    <span
+      class="placeholder m-0 pl-1 pr-1 text-size"
+      *ngIf="!text && placeholder && placeholder.length > 0"
+      >{{ placeholder }}</span
+    >
+  </div>
+
+  <div class="arrow-icon">
+    <i class="fas fa-sort-down"> </i>
+  </div>
+
+  <div
+    class="dropdown-menu item-list-menu-light"
+    aria-labelledby="dropdownMenuButton"
+    [ngClass]="[
+      isFullSize ? 'item-list-menu-light w-100' : 'item-list-menu-light'
+    ]"
+  >
+    <div
+      class="dropdown-item reset-padding"
+      *ngIf="
+        (list && list.length >= minLengthSearch) ||
+        (unitList && unitList.length >= minLengthSearch)
+      "
+      (click)="$event.stopPropagation(); $event.preventDefault()"
+    >
+      <input
+        class="search-filter"
+        placeholder="Pesquisar"
+        appDelayedInput
+        (delayedInput)="onSearchChange($event.target.value)"
+        [delayTime]="600"
+      />
+    </div>
+    <ng-container *ngIf="list; else unit">
+      <ng-container
+        #list
+        *ngFor="let defItem of listFilter.length > 0 ? listFilter : list"
+      >
+        <div class="dropdown-item" (click)="changeText(defItem)">
+          <span
+            [ngClass]="{ selected: text === defItem.title }"
+            class="items {{
+              defItem && text && defItem.title === text ? 'selected' : ''
+            }}"
+          >
+            {{ defItem.title }}
+          </span>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #unit>
+      <ng-container
+        *ngFor="let item of listFilter.length > 0 ? listFilter : unitList"
+      >
+        <div class="dropdown-item">
+          <span
+            [ngClass]="{ selected: text === item.unit }"
+            class="items {{
+              item && text && item.title === text ? 'selected' : ''
+            }}"
+            (click)="changeTextUnit(item)"
+          >
+            {{ item.unit }}
+          </span>
+        </div>
+      </ng-container>
+    </ng-template>
+  </div>
+</div>

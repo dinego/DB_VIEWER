@@ -1,0 +1,10 @@
+<label class="checkbox-container d-flex">
+  <input
+    id="{{ id }}-{{ randomId }}"
+    type="checkbox"
+    (click)="invertValue()"
+    [checked]="checked ? checked : formControl.value"
+    [disabled]="disabled"
+  />
+  <span class="d-flex align-items-center">{{ label }}</span>
+</label>

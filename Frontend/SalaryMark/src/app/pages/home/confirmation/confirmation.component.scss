@@ -1,0 +1,41 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.btn-default:focus {
+  background-color: $orange-button;
+  color: $black-40;
+}
+
+.btn.focus,
+.btn:focus {
+  box-shadow: none;
+}
+
+.modal-header,
+.modal-footer {
+  border: 0;
+}
+
+.confirm-btn {
+  border-radius: $remSize0125;
+  background-color: $orange-ec1;
+  color: $white;
+  padding: $remSize08;
+  width: $remSize8;
+  font-weight: 600;
+}
+
+.cancel-btn {
+  border: $size1 solid $orange-ec1;
+  border-radius: $remSize0125;
+  background-color: $white;
+  color: $orange-ec1;
+  padding: $remSize08;
+  width: $remSize8;
+  font-weight: 600;
+}
+
+.title-size {
+  font-size: $size16;
+  font-weight: bold;
+}

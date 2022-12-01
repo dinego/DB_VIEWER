@@ -1,0 +1,57 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+input[type="checkbox"] {
+  display: none;
+}
+
+.cbModalShow + label:before {
+  border: $size1 solid $black-40;
+  content: "\00a0";
+  display: inline-block;
+  font-size: $size16;
+  width: $size24;
+  height: $size24;
+  margin: 0 0.9em 0 0;
+  padding: $size10;
+  vertical-align: top;
+  border-radius: $size3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cbModalShow:checked + label:before {
+  background: $white;
+  color: $black-40;
+  content: "\2714";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cbModalShow:disabled + label:before {
+  color: $gray-b2b2;
+  display: flex;
+  text-align: center;
+  border: $size1 solid $gray-b2b2;
+  background: $gray-d0 transparent;
+  content: "\2714";
+}
+
+.cbModalShow:checked + label:after {
+  font-weight: bold;
+}
+
+.cbModalShow:focus + label::before {
+  outline: rgb(59, 153, 252) auto $size5;
+}
+
+.cbModalShow + label {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  font-size: $remSize09;
+  margin-bottom: $remSize05;
+  cursor: pointer;
+}

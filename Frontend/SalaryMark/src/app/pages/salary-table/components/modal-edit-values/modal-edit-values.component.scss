@@ -1,0 +1,19 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.modal-control {
+  & > .header-control {
+    & > .header-title {
+      & > .title-modal {
+        font-weight: 600;
+        font-size: $size16;
+        color: $black-1f;
+      }
+    }
+
+    & > .btn-close {
+      cursor: pointer;
+    }
+  }
+}
+

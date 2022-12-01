@@ -1,0 +1,193 @@
+<div class="parameters-pj-settings-container container-fluid">
+  <app-title-header [title]="locales.corporateSettings">
+    <div
+      class="d-flex align-items-center flex-row-reverse pl-2 w-75"
+      slot="showWithOutAnimation"
+    >
+      <app-button-primary
+        [label]="locales.edit"
+        (click)="startEditValues()"
+        *ngIf="permissions && permissions.canEditConfigPJ && !canEdit"
+      ></app-button-primary>
+
+      <div
+        class="d-flex align-items-center"
+        *ngIf="permissions && permissions.canEditConfigPJ && canEdit"
+      >
+        <app-button-secundary
+          class="mr-3"
+          [label]="locales.cancel"
+          (click)="cancelEdit()"
+        ></app-button-secundary>
+
+        <app-button-primary
+          [label]="locales.save"
+          (click)="sendPJSettingsToSave()"
+        ></app-button-primary>
+      </div>
+
+      <div
+        class="d-flex align-items-center pl-2 pr-2"
+        slot="showWithOutAnimation"
+      >
+        <div class="d-flex align-items-center">
+          <p class="m-0 text-style text-nowrap text-uppercase">Expandir tudo</p>
+
+          <app-switch-button (expandAllRows)="collapseAll()" class="ml-3 mr-2">
+          </app-switch-button>
+        </div>
+      </div>
+    </div>
+  </app-title-header>
+
+  <div class="container w-75" *ngIf="pjSettings">
+    <div class="row align-items-center">
+      <div class="ml-auto d-flex align-items-center flex-wrap">
+        <app-button-list
+          *ngIf="
+            contractTypes &&
+            contractTypes.contractTypesResponse &&
+            contractTypes.contractTypesResponse.length > 1
+          "
+          [text]="contractTypes.contractTypesResponse[0].title"
+          [list]="contractTypes.contractTypesResponse"
+          [showList]="contractTypes.contractTypesResponse.length > 1"
+          (textSelected)="getPJSettingsByContractTypeId($event)"
+          [isLargeButton]="true"
+        ></app-button-list>
+
+        <div class="ml-0 ml-sm-0 ml-md-3 ml-lg-3 ml-xl-3 button-system">
+          {{ locales.systemSettings }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container w-75" *ngIf="pjSettings">
+    <form
+      (ngSubmit)="sendPJSettingsToSave()"
+      *ngIf="form"
+      [formGroup]="form"
+      [formGroup]="form.get('items')"
+    >
+      <div
+        class="row mt-3"
+        *ngFor="
+          let pjSettingItem of form.get('items')['controls'];
+          let i = index
+        "
+      >
+        <accordion class="w-100" [isAnimated]="true" [formGroupName]="i">
+          <accordion-group #accgroup [isOpen]="isCollapsedAll">
+            <div accordion-heading class="collapse-heading mx-3">
+              <div class="container align-items-center">
+                <div class="row align-items-center justify-content-start">
+                  <div class="mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0 title-text">
+                    <span class="text-nowrap">
+                      <i
+                        class="fas mr-2"
+                        [ngClass]="{
+                          'fas fa-angle-up': accgroup?.isOpen,
+                          'fa fa-angle-down': !accgroup?.isOpen
+                        }"
+                      ></i>
+                      {{ pjSettingItem.value.name }}
+                    </span>
+                  </div>
+
+                  <div
+                    class="d-flex align-items-center justify-content-end ml-auto"
+                  >
+                    <div
+                      class="button-porcentage-value my-2 mr-3 mr-sm-3 mr-md-5 mr-lg-5 mr-xl-5"
+                    >
+                      <div class="">
+                        <div class="">
+                          {{ pjSettingItem.value.contractTypePercentage }}%
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="text-nowra">
+                      <input
+                        [ngClass]="
+                          canEdit && permissions.canEditConfigPJ
+                            ? 'edit-value-style'
+                            : 'section-value-style'
+                        "
+                        type="number"
+                        formControlName="pjSettingsPercentage"
+                        [readonly]="
+                          !(
+                            permissions &&
+                            permissions.canEditConfigPJ &&
+                            canEdit
+                          )
+                        "
+                        (click)="
+                          $event.stopPropagation(); $event.preventDefault()
+                        "
+                        class="text-nowrap text-center pl-3 mr-1 ml-md-5 ml-lg-5 ml-xl-5 section-value-style"
+                      />
+                      <span class="ml-2">%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="container"
+              *ngFor="let subItems of pjSettingItem.value.subItems"
+            >
+              <div class="row pt-3 pb-3 row align-items-center">
+                <div class="text-nowrap set-padding-left mr-auto">
+                  <span class="set-padding-left">
+                    {{ subItems.name }}
+                  </span>
+                </div>
+
+                <div class="porcent-type text-nowrap padding-percent">
+                  <div class="px-2 percent-inner">
+                    {{ subItems.contractTypePercentage }}%
+                  </div>
+                  <div class="d-flex flex-fill"></div>
+                </div>
+              </div>
+            </div>
+          </accordion-group>
+        </accordion>
+      </div>
+    </form>
+  </div>
+
+  <div class="container mt-4 mb-5 w-75 title-text" *ngIf="pjSettings">
+    <div class="row row-border-top align-items-center pt-3 p-align">
+      <div
+        class="d-flex align-items-center mr-auto pb-2 pb-sm-0 pb-md-0 pb-lg-0 pb-xl-0"
+      >
+        <span class="text-nowrap text-dark set-padding-left">
+          {{ locales.conversionPJ }}
+          {{ contractTypesSelected ? contractTypesSelected.title : "" }}
+          {{ locales.consieredPJ }}
+        </span>
+      </div>
+
+      <div class="d-flex align-items-center justify-content-end mr-4">
+        <div
+          class="porcentage-final-value mr-2 mr-sm-5 mr-md-5 mr-lg-5 mr-xl-5"
+        >
+          <div>{{ pjSettings.contractTypePercentageTotal }}%</div>
+        </div>
+
+        <div class="d-flex align-items-center ml-4">
+          <div class="mr-1 mr-sm-3 mr-md-3 mr-lg-3 mr-xl-3 ml-5">
+            <div class="rounded-50 pill-gray text-nowrap text-dark px-3">
+              {{ totalPJSettingsPercentage }}%
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<div
+  class="dropdown"
+  fxLayoutAlign="space-between center"
+  dropdown
+  #dropdown="bs-dropdown"
+>
+  <button
+    [ngClass]="{
+      'large-button': isLargeButton
+    }"
+    dropdownToggle
+    type="button"
+    class="btn btn-options d-flex px-3 align-items-center dropdown-toggle"
+    type="button"
+    fxLayoutAlign="space-between center"
+    placement="bottom"
+    tooltip="{{ toolTipText ? toolTipText : null }}"
+    containerClass="dropdown-tooltip"
+    (click)="changeOpen()"
+  >
+    <label class="m-0">{{ text }}</label>
+    <i
+      class="ml-2 fas fa-angle-down"
+      [ngClass]="{ 'opened-menu': isOpened }"
+    ></i>
+  </button>
+  <ul
+    id="dropdown-triggers-manual"
+    *dropdownMenu
+    class="dropdown-menu"
+    role="menu"
+    aria-labelledby="button-triggers-manual"
+  >
+    <ng-container *ngIf="list; else unit">
+      <ng-container #list *ngFor="let item of sorted ? sortedItemsList : list">
+        <li
+          role="menuitem"
+          class="pl-2 dropdown-item d-flex align-items-center"
+          (click)="changeText(item)"
+        >
+          <span [ngClass]="{ selected: text === item.title }">{{
+            item.title
+          }}</span>
+        </li>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #unit>
+      <ng-container
+        #list
+        *ngFor="let item of sorted ? sortedUnitList : unitList"
+      >
+        <li role="menuitem">
+          <a
+            class="dropdown-item pl-2"
+            href="!#"
+            (click)="changeTextUnit(item)"
+            [ngClass]="{ selected: text === item.title }"
+            >{{ item.unit }}</a
+          >
+        </li>
+      </ng-container>
+    </ng-template>
+  </ul>
+</div>

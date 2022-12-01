@@ -1,0 +1,36 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+@import "src/app/shared/styles/timings.scss";
+
+.button-secundary {
+  cursor: pointer;
+  background: $white 0% 0% no-repeat padding-box;
+  box-shadow: $size0 $size2 $size6 $shadow;
+  border: $size1 solid $orange-f6;
+  border-radius: $size2;
+  height: $size39;
+  font-size: $size14;
+  color: $orange-f6;
+  -webkit-transition: background-color $transition ease-out;
+  -moz-transition: background-color $transition ease-out;
+  -o-transition: background-color $transition ease-out;
+  transition: background-color $transition ease-out;
+  &:hover {
+    background: $gray-fd 0% 0% no-repeat padding-box;
+    box-shadow: $size0 $size2 $size6 $shadow-hover;
+  }
+  &:focus {
+    outline: 0;
+  }
+
+  &.disabled {
+    background: $gray-ef 0% 0% no-repeat padding-box;
+    box-shadow: $size0 $size2 $size6 $shadow-hover;
+    border: $size1 solid $gray-a5;
+    background: $gray-b4 0% 0% no-repeat padding-box;
+  }
+}
+.button-secundary:not(:disabled):not(.disabled):active:focus,
+.show > .button-secundary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0 transparent;
+}

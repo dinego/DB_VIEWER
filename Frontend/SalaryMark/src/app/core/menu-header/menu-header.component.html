@@ -1,0 +1,226 @@
+<div class="menu-header-container" fxLayoutAlign="start center">
+  <div fxFlex="20" class="d-flex menu-margin-default">
+    <div class="img-hamburguer" (click)="changeShowMenu()">
+      <img src="../../../assets/imgs/svg/hamburguer.svg" class="img" />
+    </div>
+    <div class="ml-3 d-flex align-items-center">
+      <span
+        class="title-menu font-weight-bold mt-0 d-none d-lg-block d-xl-none d-none d-xl-block"
+        >{{ locales.menu | uppercase }}</span
+      >
+    </div>
+  </div>
+  <div
+    fxFlex="60"
+    fxFlex.md="60"
+    fxFlex.lg="60"
+    fxLayoutAlign="center"
+    routerLink="/"
+    routerLinkActive="route-active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class="dvLogo"
+  >
+    <img
+      class=" {{
+        screenWidth < 414 ? 'icon-logo-mobile mr-3' : 'icon-logo mr-3'
+      }}"
+      src="../../../assets/imgs/svg/Desenho_Salary_Mark.svg"
+    />
+    <img
+      class=" {{
+        screenWidth < 414 ? ' img-logo-mobile mr-3' : 'icon-logo mr-3'
+      }}"
+      src="../../../assets/imgs/svg/SalaryMark_Logo.svg"
+    />
+  </div>
+
+  <div
+    class=" {{
+      screenWidth >= 768
+        ? ' ml-5 mr-4 align-items-center section-user'
+        : 'm-0 align-items-center section-user'
+    }}"
+    fxLayout="row"
+    fxLayoutAlign="end end"
+    fxFlex="20"
+    fxFlex.lg="20"
+    fxFlex.sm="28"
+    fxFlex.xs="80"
+  >
+    <label
+      *ngIf="!share"
+      class="contact br-gray pr-3 br-gray d-none d-lg-block d-xl-none d-none d-xl-block"
+      (click)="goToZendesk()"
+    >
+      <img
+        src="../../../assets/imgs/svg/help.svg"
+        width="26"
+        height="26"
+        alt=""
+        tooltip="Central de ajuda"
+        containerClass="orange-tooltip"
+      />
+    </label>
+    <!-- Notifications -->
+    <div
+      (click)="onOpenNotifications()"
+      *ngIf="!share"
+      id="btn-notifications"
+      class="notifications-icon br-gray mr-3 d-none d-lg-block d-xl-none d-none d-xl-block"
+    >
+      <span
+        *ngIf="notificationService.amountNotRead"
+        class="badge badge-pill badge-danger counter-badge"
+        >&emsp;</span
+      >
+      <a class="mr-1 ml-1">
+        <img
+          width="24"
+          height="24"
+          src="{{
+            notificationService.amountNotRead > 0
+              ? '../../../assets/imgs/svg/bell-notification.svg'
+              : '../../../assets/imgs/svg/bell.svg'
+          }}"
+        />
+      </a>
+    </div>
+
+    <div
+      class="vertical-line-separator mr-4 d-none d-lg-block d-xl-none d-none d-xl-block"
+    ></div>
+
+    <div
+      *ngIf="notificationIsOpen"
+      class="card notifications-card p-0"
+      id="notifications"
+    >
+      <ul class="list-group list-group-flush">
+        <li
+          class="list-group-item"
+          *ngIf="firstsNotificationsNotReaded.length <= 0"
+        >
+          <p class="mt-1 mb-2 text-dark-blue w-100 p-2">
+            Você não tem nenhuma nova mensagem!
+          </p>
+        </li>
+        <li
+          *ngFor="let notification of firstsNotificationsNotReaded"
+          class="list-group-item"
+        >
+          <a
+            class="action-list mt-2"
+            (click)="openDetailNotification(notification)"
+          >
+            <small class="text-secondary">{{
+              notification.create | date: "dd/MM/yyyy"
+            }}</small>
+            <p class="mb-1 mt-1 text-dark-blue w-100 text-notification">
+              {{ notification.title }}
+            </p>
+          </a>
+        </li>
+        <li
+          class="list-group-item d-flex justify-content-center mx-0 px-0 mt-0"
+          *ngIf="firstsNotificationsNotReaded.length > 0"
+        >
+          <a class="action-list mb-1" href="#" (click)="goToHome()">
+            <img
+              src="../../../assets/imgs/svg/arrow-down_v3.svg"
+              width="23"
+              height="23"
+            />
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- End Notifications -->
+    <div
+      class="profile-container"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+      *ngIf="!share"
+      (click)="clickMenuProfile()"
+    >
+      <div
+        class="profile"
+        fxLayoutAlign=" center"
+        fxLayout="row"
+        id="btn-menu-profile"
+      >
+        <div class="profile-photo">
+          <img
+            *ngIf="photoString"
+            [src]="photo | async"
+            width="28"
+            height="28"
+          />
+
+          <span *ngIf="initials !== null && !photoString" class="nameinitials">
+            {{ initials }}
+          </span>
+        </div>
+
+        <div>
+          <label class="profile-name ml-1 text-nowrap">
+            {{ name }}
+          </label>
+        </div>
+      </div>
+
+      <img
+        width="10px"
+        class="arrow-bottom mr-2"
+        src="../../../assets/imgs/svg/down-arrow.svg"
+      />
+
+      <div class="menu-profile" *ngIf="isOpen" id="menu-profile">
+        <div class="card">
+          <ul class="list-group list-group-flush menu-user">
+            <li
+              class="list-group-item"
+              fxLayout="row"
+              data-toggle="modal"
+              data-target="#showModalChangePassword"
+            >
+              <label class="m-0 menu-header-hoveritens" fxFlex="90">
+                {{ locales.changePassword }}
+              </label>
+              <img fxFlex="10" src="../../../assets/imgs/svg/lock.svg" />
+            </li>
+
+            <li
+              class="list-group-item"
+              data-toggle="modal"
+              data-target="#showModalProfilePhoto"
+            >
+              <label class="m-0 menu-header-hoveritens" fxFlex="90">
+                {{ locales.myAccount }}
+              </label>
+              <img fxFlex="10" src="../../../assets/imgs/svg/settings.svg" />
+            </li>
+            <li class="list-group-item" (click)="logout()">
+              <label class="m-0 menu-header-hoveritens" fxFlex="90">
+                {{ locales.close }}
+              </label>
+              <img fxFlex="10" src="../../../assets/imgs/svg/sign-out.svg" />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-profile-picture
+  *ngIf="user"
+  [user]="user"
+  [initials]="initials"
+  (removePhoto)="onRemovePhoto()"
+  (updatePhoto)="onSavePhoto($event)"
+  (setUserPhoto)="onSetUserPhoto($event)"
+></app-profile-picture>
+
+<app-change-password></app-change-password>
+
+<app-contact-us (send)="saveSupport($event)"></app-contact-us>

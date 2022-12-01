@@ -1,0 +1,44 @@
+@import "../../../../assets/scss/breakpoints.scss";
+
+.item-slider {
+  width: 150px;
+  height: 150px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #a7a7a729;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  opacity: 1;
+  margin-bottom: 1rem;
+}
+
+.card-item {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.card-image {
+  background: #eaf0f8 0% 0% no-repeat padding-box;
+  border-radius: 38px;
+  opacity: 1;
+  padding: 15px;
+}
+
+.card-label {
+  padding: 10px;
+  text-align: center;
+}
+
+@include for-phone-only {
+  .item-slider {
+    width: 175px;
+    height: 170px;
+    margin-bottom: 0.9em;
+  }
+  .card-label {
+    padding: 6px;
+  }
+}
+

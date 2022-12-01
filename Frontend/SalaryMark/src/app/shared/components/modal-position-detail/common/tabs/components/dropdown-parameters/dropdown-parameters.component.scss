@@ -1,0 +1,62 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.bordered-drop {
+  background: $white 0% 0% no-repeat padding-box;
+  border: $size1 solid $orange-f6;
+  border-radius: $size2;
+  min-height: $size35;
+  cursor: pointer;
+
+  & > .content {
+    min-width: 135px;
+    & > .item-selected {
+      font-size: $size14;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    & > .carret {
+      height: $size32;
+      width: $size31;
+      background-color: $gray-f0;
+      border-radius: $size2;
+      align-items: center;
+      justify-content: center;
+      & > .fas {
+        height: $size21;
+      }
+    }
+  }
+}
+.dropdown-menu {
+  padding: 0;
+  margin: $remSize0125 0 0;
+  font-size: $size14;
+  color: $black-1f;
+  text-align: left;
+  list-style: none;
+  border: $size1 solid $border-gray;
+  border-radius: $size2;
+
+  & > li {
+    border-bottom: $size1 solid $border-gray;
+    min-height: $size35;
+    &:last-child {
+      border-bottom: none;
+    }
+
+    & > .dropdown-item {
+      padding: $remSize05;
+    }
+  }
+}
+
+.limited-scroll {
+  max-height: 170px;
+  overflow-y: scroll;
+}
+
+.add-pointer {
+  cursor: pointer;
+}

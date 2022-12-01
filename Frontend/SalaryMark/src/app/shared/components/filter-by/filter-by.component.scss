@@ -1,0 +1,112 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.filter-by {
+  & > .label-filter {
+    font-size: $size12;
+    color: $black-58;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  & > .button-filter {
+    background: transparent
+      linear-gradient(180deg, $orange-f7 0%, $orange-f2 100%) 0% 0% no-repeat
+      padding-box;
+    box-shadow: $size0 $size2 $size6 $shadow;
+    border-radius: $size42;
+    color: $white;
+    padding: $size5 $size10;
+    font-size: $size12;
+    height: $size31;
+    font-weight: 500;
+    cursor: pointer;
+  }
+}
+
+label.custom-radio-button input[type="radio"] {
+  opacity: 0;
+}
+div.options {
+  min-height: 50px;
+}
+div.options > label > input {
+  visibility: hidden;
+}
+
+div.options > label {
+  display: block;
+  margin: 0 0 0 -10px;
+  padding: 0 0 20px 0;
+  height: 20px;
+  width: 150px;
+}
+
+div.options > label > span {
+  display: inline-block;
+  padding: 0px;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  border: 1px solid #f47e1e;
+  background: $white;
+  &:hover {
+    background-image: url("../../../../assets/imgs/svg/check-in.svg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-radius: 50%;
+    background-size: 16px 16px;
+    background: #f47e1e;
+    opacity: 0.3;
+    cursor: pointer;
+  }
+}
+
+div.options > label > span.selected {
+  background-image: url("../../../../assets/imgs/svg/check-in.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 50%;
+  border: 0;
+  margin: 0;
+  background-size: 16px 16px;
+  background-color: #f47e1e;
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+}
+.buttons-bottom {
+  font-weight: 600;
+  font-weight: $size14;
+  height: 39px;
+  & > .btn-show {
+    font-size: $size14;
+    background: $orange-gradient;
+    box-shadow: $size0 $size2 $size6 $shadow;
+    border-radius: $size2;
+    color: $white;
+    border: 0;
+    height: $size39;
+  }
+
+  & > .btn-cancel {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 2px 6px #74747429;
+    border: 1px solid #f6903c;
+    border-radius: 2px;
+    color: #f6903c;
+    font-weight: 600;
+  }
+}
+.title-modal {
+  font-size: $size16;
+  color: $black-1f;
+  font-weight: 600;
+}
+.filter-text {
+  font-size: $size14;
+}
+.cursor-pointer {
+  cursor: pointer;
+}

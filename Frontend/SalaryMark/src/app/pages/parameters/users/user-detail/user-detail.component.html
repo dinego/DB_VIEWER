@@ -1,0 +1,392 @@
+<div class="parameters-pj-settings-container container-fluid h-100 mb-5">
+  <app-title-header [title]="locales.users" [hasBack]="true">
+    <app-button-primary
+      [label]="locales.edit"
+      (click)="startEditValues()"
+      *ngIf="permissions && permissions.canEditUser && !canEdit"
+    ></app-button-primary>
+
+    <div
+      class="d-flex justify-content-between flex-align-center pl-2"
+      slot="showWithOutAnimation"
+      *ngIf="permissions && permissions.canEditUser && canEdit"
+    >
+      <app-button-secundary
+        [label]="locales.cancel"
+        class="mr-3"
+        (click)="cancelEdit()"
+      ></app-button-secundary>
+
+      <app-button-primary
+        [label]="locales.save"
+        (click)="sendUserInformationToSave()"
+      >
+      </app-button-primary>
+    </div>
+  </app-title-header>
+
+  <div
+    *ngIf="userParameterDetail"
+    fxLayout="column"
+    class="my-3 pb-5 h-100"
+    fxLayoutAlign="flex-start start"
+  >
+    <div
+      fxLayout="column"
+      fxFlex="25"
+      fxLayoutAlign="center center"
+      class="w-100"
+    >
+      <div class="w-100 header-info d-flex align-items-center">
+        <div
+          *ngIf="photo; else showDefaultPhoto"
+          fxLayoutAlign="center center"
+          class="avatar mx-auto my-3 d-sm-none"
+        >
+          <img *ngIf="photo" [src]="photo" width="100" height="100" />
+        </div>
+
+        <ng-template #showDefaultPhoto>
+          <i class="avatar avatar-default d-md-block d-none d-sm-block m-2"></i>
+        </ng-template>
+
+        <div
+          class="d-flex flex-column justify-content-center user-info pr-3 pl-2"
+        >
+          <h5 class="name-details mb-0">
+            {{ userParameterDetail.name }}
+          </h5>
+
+          <p class="m-0">{{ userParameterDetail.email }}</p>
+        </div>
+
+        <div fxHide.lt-md class="ml-3 mr-3 line"></div>
+
+        <div class="sector-info">
+          <h5 class="text-style text-uppercase mb-0">
+            {{ locales.sector }}
+          </h5>
+
+          <p class="m-0 text-subtitle">{{ userParameterDetail.sector }}</p>
+        </div>
+
+        <div fxHide.lt-md class="ml-3 mr-3 line"></div>
+
+        <div class="last-access-info">
+          <h5 class="text-style text-uppercase mb-0">
+            {{ locales.lastAccess }}
+          </h5>
+
+          <p class="m-0 text-subtitle">
+            {{ userParameterDetail.lastAccess | date: "dd, MMMM, yyyy" }}
+          </p>
+        </div>
+      </div>
+
+      <form [formGroup]="form" *ngIf="form" class="w-100 h-100">
+        <div
+          fxLayout="column"
+          fxFlexOffset=""
+          fxFlex="grow"
+          fxLayoutAlign="flex-start start"
+        >
+          <div class="tab-wrap bottom-separator-100">
+            <input type="radio" class="d-none" name="tabs" id="tab1" checked />
+
+            <div class="tab-label-content" id="tab1-content">
+              <label class="m-0 name-details" for="tab1">{{
+                locales.levels | titlecase
+              }}</label>
+
+              <div class="tab-content w-100 pb-5">
+                <div class="card w-100 custom-card d-flex p-3">
+                  <div class="card-body position-relative pt-1 pb-1">
+                    <div
+                      class="default-grid-divider"
+                      [formGroup]="form.get('userPermissions').get('levels')"
+                    >
+                      <div
+                        [formGroupName]="i"
+                        *ngFor="
+                          let level of form
+                            .get('userPermissions')
+                            .get('levels')['controls'];
+                          let i = index
+                        "
+                      >
+                        <app-checkbox
+                          class="text-nowrap"
+                          formControlName="isChecked"
+                          label="{{ level.value.name }}"
+                          [disabled]="
+                            permissions && permissions.canEditUser && !canEdit
+                          "
+                        >
+                        </app-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <input type="radio" class="d-none" name="tabs" id="tab2" />
+            <div class="tab-label-content" id="tab2-content">
+              <label class="m-0 name-details" for="tab2">{{
+                locales.areas | titlecase
+              }}</label>
+              <div class="tab-content w-100 pb-5">
+                <div class="card w-100 custom-card d-flex p-3">
+                  <div class="card-body position-relative pt-1">
+                    <div
+                      class="default-grid-divider"
+                      [formGroup]="form.get('userPermissions').get('areas')"
+                    >
+                      <div
+                        [formGroupName]="i"
+                        *ngFor="
+                          let area of form.get('userPermissions').get('areas')[
+                            'controls'
+                          ];
+                          let i = index
+                        "
+                      >
+                        <app-checkbox
+                          class="text-nowrap"
+                          formControlName="isChecked"
+                          label="{{ area.value.name }}"
+                          [disabled]="
+                            permissions && permissions.canEditUser && !canEdit
+                          "
+                        >
+                        </app-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <input type="radio" class="d-none" name="tabs" id="tab3" />
+
+            <div class="tab-label-content" id="tab3-content">
+              <label class="m-0 name-details" for="tab3">{{
+                locales.sections | titlecase
+              }}</label>
+              <div
+                class="tab-content w-100 pb-5"
+                [formGroup]="form.get('userPermissions').get('sections')"
+              >
+                <div
+                  class="card w-100 custom-card d-flex p-2 mb-3"
+                  [formGroupName]="i"
+                  *ngFor="
+                    let section of form.get('userPermissions').get('sections')[
+                      'controls'
+                    ];
+                    let i = index
+                  "
+                >
+                  <div class="card-body d-flex">
+                    <div class="feature">
+                      <app-checkbox
+                        class="font-weight-custom text-nowrap"
+                        formControlName="isChecked"
+                        label="{{ section.value.name }}"
+                        [changeItem]="section.value.isChecked"
+                        (selectedAll)="onSelectedAllItems($event, section)"
+                        [disabled]="
+                          permissions && permissions.canEditUser && !canEdit
+                        "
+                      >
+                      </app-checkbox>
+                    </div>
+                    <div class="position-relative w-100">
+                      <div
+                        class="default-grid set-flex ml-3"
+                        formArrayName="subItems"
+                      >
+                        <div
+                          [formGroupName]="j"
+                          *ngFor="
+                            let subItem of section.get('subItems')['controls'];
+                            let j = index
+                          "
+                        >
+                          <app-checkbox
+                            class="text-nowrap"
+                            formControlName="isChecked"
+                            label="{{ subItem.value.name }}"
+                            [changeItem]="subItem.value.isChecked"
+                            [id]="subItem.value.id"
+                            [children]="true"
+                            (selected)="onSelectedOneChildren($event, section)"
+                            [disabled]="
+                              permissions && permissions.canEditUser && !canEdit
+                            "
+                          >
+                          </app-checkbox>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <input type="radio" class="d-none" name="tabs" id="tab4" />
+            <div class="tab-label-content" id="tab4-content">
+              <label class="m-0 name-details" for="tab4">{{
+                locales.permissions | titlecase
+              }}</label>
+              <div
+                class="tab-content w-100 pb-5"
+                [formGroup]="form.get('userPermissions').get('permission')"
+              >
+                <div
+                  class="card w-100 custom-card d-flex p-2 mb-3"
+                  [formGroupName]="i"
+                  *ngFor="
+                    let permission of form
+                      .get('userPermissions')
+                      .get('permission')['controls'];
+                    let i = index
+                  "
+                >
+                  <div class="card-body d-flex">
+                    <div class="feature">
+                      <app-checkbox
+                        class="font-weight-custom text-nowrap"
+                        formControlName="isChecked"
+                        [changeItem]="permission.value.isChecked"
+                        (selectedAll)="onSelectedAllItems($event, permission)"
+                        [disabled]="
+                          permissions && permissions.canEditUser && !canEdit
+                        "
+                        label="{{ permission.value.name }}"
+                      >
+                      </app-checkbox>
+                    </div>
+                    <div class="position-relative w-100">
+                      <div
+                        class="default-grid set-flex ml-3"
+                        formArrayName="subItems"
+                      >
+                        <div
+                          [formGroupName]="j"
+                          *ngFor="
+                            let subItem of permission.get('subItems')[
+                              'controls'
+                            ];
+                            let j = index
+                          "
+                        >
+                          <app-checkbox
+                            class="text-nowrap"
+                            formControlName="isChecked"
+                            label="{{ subItem.value.name }}"
+                            [changeItem]="subItem.value.isChecked"
+                            [id]="subItem.value.id"
+                            [children]="true"
+                            (selected)="
+                              onSelectedOneChildren($event, permission)
+                            "
+                            [disabled]="
+                              permissions && permissions.canEditUser && !canEdit
+                            "
+                          >
+                          </app-checkbox>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <input type="radio" class="d-none" name="tabs" id="tab5" />
+            <div class="tab-label-content" id="tab5-content">
+              <label class="m-0 name-details" for="tab5">{{
+                locales.content | titlecase
+              }}</label>
+              <div
+                class="tab-content w-100 pb-5"
+                [formGroup]="form.get('userPermissions').get('contents')"
+              >
+                <div
+                  class="card w-100 custom-card d-flex p-3 mb-3"
+                  [formGroupName]="i"
+                  *ngFor="
+                    let content of form.get('userPermissions').get('contents')[
+                      'controls'
+                    ];
+                    let i = index
+                  "
+                >
+                  <span class="font-weight-custom text-style">{{
+                    content.value.name
+                  }}</span>
+
+                  <div class="card-body d-flex pl-0 box-responsive">
+                    <div
+                      [hidden]="hiddenCheckboxAllOnContent(content.value)"
+                      [ngClass]="
+                        content.get('subItems')['controls'].length > 1
+                          ? 'feature'
+                          : ''
+                      "
+                    >
+                      <app-checkbox
+                        class="font-weight-custom text-nowrap"
+                        formControlName="allIsChecked"
+                        label="Todos"
+                        [hidden]="hiddenCheckboxAllOnContent(content.value)"
+                        [changeItem]="content.value.allIsChecked"
+                        (selectedAll)="onSelectedAll($event, content)"
+                        [disabled]="
+                          permissions && permissions.canEditUser && !canEdit
+                        "
+                      >
+                      </app-checkbox>
+                    </div>
+                    <div class="position-relative w-100">
+                      <div
+                        [ngClass]="
+                          hiddenCheckboxAllOnContent(content.value)
+                            ? 'sub-grid'
+                            : 'sub-grid-divider'
+                        "
+                        formArrayName="subItems"
+                      >
+                        <div
+                          [formGroupName]="j"
+                          *ngFor="
+                            let subItem of content.get('subItems')['controls'];
+                            let j = index
+                          "
+                        >
+                          <app-checkbox
+                            class="text-nowrap"
+                            formControlName="isChecked"
+                            label="{{ subItem.value.name }}"
+                            [changeItem]="subItem.value.isChecked"
+                            [id]="subItem.value.id"
+                            [children]="true"
+                            (selected)="onSelectedChildren($event, content)"
+                            [disabled]="
+                              permissions && permissions.canEditUser && !canEdit
+                            "
+                          >
+                          </app-checkbox>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="slide"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

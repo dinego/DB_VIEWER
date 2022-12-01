@@ -1,0 +1,98 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.modal-control {
+  & > .header-control {
+    & > .header-title {
+      & > .title-modal {
+        font-weight: 600;
+        font-size: $size16;
+        color: $black-1f;
+      }
+    }
+
+    & > .btn-close {
+      cursor: pointer;
+    }
+  }
+}
+
+.position-sm {
+  & > label {
+    font-size: $size12;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: $black-58;
+  }
+}
+
+.card-position {
+  background: $white 0% 0% no-repeat padding-box;
+  box-shadow: $size0 $size2 $size6 $shadow;
+  border: $size1 solid $gray-e9e;
+  border-radius: $size4;
+}
+
+.items-parameters {
+  width: 30%;
+}
+
+:host::ng-deep.tab-container {
+  .nav-tabs {
+    margin-bottom: $remSize075;
+    & > .nav-item {
+      & > .nav-link {
+        color: $black-1f;
+        font-size: $size16;
+        font-weight: 600;
+        border: 0;
+
+        &.active {
+          border-bottom: $size3 solid $border-orange;
+        }
+      }
+    }
+  }
+}
+
+.tab-pane {
+  & > .table-striped {
+    & > thead {
+      & > .fixed-tr {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+    }
+    th {
+      background: transparent linear-gradient(180deg, #646464 0%, #868686 100%)
+        0% 0% no-repeat padding-box !important;
+      color: $white;
+    }
+  }
+}
+.table-positions {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+.controller-parameters {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+.pointer-img {
+  cursor: pointer;
+}
+
+.has-error {
+  & > label {
+    color: $error;
+  }
+  & > input,
+  ::ng-deep.button-list-light-container {
+    border-color: $error;
+  }
+}
+
+.remove-table {
+  cursor: pointer;
+}

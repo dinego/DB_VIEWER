@@ -1,0 +1,69 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.row-titles {
+  font-size: $size16;
+  font-weight: 700;
+  color: $white;
+}
+.title-filter {
+  justify-self: left;
+  align-self: flex-start;
+  padding: 0;
+  color: $black-1f;
+}
+.col-data {
+  align-items: center;
+}
+.rows-collapsers {
+  min-height: $size39;
+  font-weight: 700;
+  align-items: center;
+}
+.body-rows {
+  cursor: pointer;
+}
+.bg-gray {
+  background-color: $gray-f0;
+  border: $size1;
+  border-style: solid;
+  border-color: $gray-dbd;
+}
+.bg-white {
+  background-color: $white;
+  border: $size1;
+  border-style: solid;
+  border-color: $gray-dbd;
+}
+.container-table {
+  font-size: $size14;
+}
+.show {
+  transition: height 1s;
+}
+.size-inner {
+  font-weight: 400;
+  font-size: $size14;
+}
+.col-md-3 {
+  max-width: 23%;
+}
+
+.title-colored-0 {
+  background: transparent linear-gradient(180deg, #a0527e 0%, #713557 100%) 0%
+    0% no-repeat padding-box;
+}
+.title-colored-1 {
+  background: transparent
+    linear-gradient(180deg, #81ac97 0%, #6e9381 83%, #668979 100%) 0% 0%
+    no-repeat padding-box;
+}
+.title-colored-2 {
+  background: transparent linear-gradient(180deg, #6685be 0%, #516a98 100%) 0%
+    0% no-repeat padding-box;
+}
+
+.titles {
+  line-height: $size54;
+  text-align: center;
+}

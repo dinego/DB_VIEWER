@@ -1,0 +1,46 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.table-container {
+  display: flex;
+  margin: 0 $size5;
+  overflow: auto;
+  position: relative;
+}
+
+.table-rows {
+  max-height: $size250;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: auto;
+  overflow-wrap: anywhere;
+}
+
+.table-fit {
+  width: fit-content;
+}
+
+::ng-deep.datatable-body-cell {
+  padding: none !important;
+}
+
+:host::ng-deep.datatable-header-inner {
+  background: transparent linear-gradient(180deg, #646464 0%, #868686 100%) 0%
+    0% no-repeat padding-box;
+}
+:host::ng-deep.datatable-header-cell {
+  border-bottom: 0 !important;
+}
+.titles {
+  font-weight: 700;
+  font-size: $size16;
+}
+.card {
+  box-shadow: $size0 $size2 $size6 $shadow;
+  border: $size1 solid $border-gray !important;
+  border-radius: $size4 !important;
+}
+
+.export-icon {
+  cursor: pointer;
+}

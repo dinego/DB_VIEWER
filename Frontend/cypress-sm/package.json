@@ -1,0 +1,22 @@
+{
+    "name": "cypress-sm",
+    "version": "1.0.0",
+    "description": "Cypress para o SalaryMark",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "cypress": "cypress open"
+    },
+    "keywords": [
+        "sm",
+        "salary",
+        "mark",
+        "teste",
+        "cypress"
+    ],
+    "author": "Xavier, Letty, Nazzy",
+    "license": "ISC",
+    "dependencies": {
+        "cypress": "^8.5.0"
+    }
+}

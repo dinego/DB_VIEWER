@@ -1,0 +1,55 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.parameters-nav-header-container {
+  margin-top: $size8;
+}
+
+.activated-route {
+  .logo {
+    filter: brightness(0) invert(1);
+  }
+
+  &.btn-default {
+    background-color: $orange-button;
+    color: $white;
+  }
+}
+
+.btn-default {
+  background: transparent 0% 0% no-repeat padding-box;
+  border-radius: $size57;
+  border-color: $orange-button;
+  opacity: 1;
+  color: $orange-button;
+  padding: 0 $remSize1;
+  text-align: left;
+  height: $size33;
+  letter-spacing: $size0;
+  opacity: 1;
+  font-size: $size14;
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &:hover {
+    background-color: $orange-button;
+    color: $white;
+
+    .logo {
+      filter: brightness(0) invert(1);
+    }
+  }
+}
+
+.btn-area {
+  margin-right: $remSize075;
+  margin-bottom: $remSize075;
+}
+
+@media only screen and (max-width: $screen-mobile-large) {
+  .btn-content {
+    margin-top: $remSize2;
+  }
+}

@@ -1,0 +1,83 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.modal-profile-picture-container {
+  .picture-container {
+    background-color: $gray-ed;
+    border: $size2 solid $border-orange;
+    border-radius: 50%;
+    height: $size140;
+    width: $size140;
+    position: relative;
+
+    .action-photo-container {
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 1;
+      .action-photo {
+        position: relative;
+        img {
+          cursor: pointer;
+          height: $size50;
+          width: $size50;
+          margin-top: -6px;
+        }
+        .input-file {
+          height: $size36;
+          left: -$size6;
+          opacity: 0;
+          position: absolute;
+          top: -$size6;
+          width: $size36;
+        }
+      }
+    }
+
+    .empty-photo {
+      display: none;
+    }
+
+    .full-photo {
+      object-fit: cover;
+      border-radius: 50%;
+      height: $size135;
+      width: $size135;
+    }
+  }
+
+  .profile-name {
+    color: $black;
+
+    font-size: $size18;
+  }
+
+  .profile-email {
+    color: $black;
+    font-weight: normal;
+    font-size: $size16;
+  }
+
+  .btn-cancel {
+    color: $black-231f;
+
+    font-size: $remSize08;
+  }
+
+  .btn-save {
+    background-color: $orange-button;
+    color: $white;
+
+    font-size: $remSize08;
+  }
+}
+
+.nameinitials {
+  justify-content: center;
+  align-items: center;
+  font-size: 3.5rem;
+  height: 100%;
+  display: flex;
+  font-weight: 700;
+  color: $orange-f6;
+}

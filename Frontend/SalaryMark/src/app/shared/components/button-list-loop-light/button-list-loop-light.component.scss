@@ -1,0 +1,90 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.button-list-light-container {
+  border: $size1 solid $border-orange;
+  border-radius: $size2;
+  position: relative;
+  height: $size35;
+  width: auto;
+  display: flex;
+  background-color: $white;
+  align-items: center;
+  cursor: pointer;
+
+  &.disabled {
+    background: $gray-eae;
+    border: $size1 solid $gray-a5;
+    border-radius: $size2;
+    opacity: 1;
+  }
+  & > .dropdown-menu {
+    padding: 0;
+    overflow-y: auto;
+    max-height: $size232;
+  }
+  .arrow-icon {
+    height: $size31;
+    width: $size31;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    border-radius: $size2;
+    & > i {
+      height: $size20;
+    }
+  }
+  .btn-options-light {
+    color: $gray-8f;
+    font-size: $size14;
+    opacity: 1;
+    width: 100%;
+    white-space: nowrap;
+    cursor: pointer;
+    label {
+      cursor: pointer;
+      white-space: break-spaces;
+    }
+  }
+  .btn-options-light:focus {
+    outline: 0;
+    white-space: nowrap;
+    box-shadow: none;
+  }
+}
+
+.item-list-menu-light {
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    border-radius: $size2;
+    font-size: $size14;
+    padding: $size5 $size10;
+    border-bottom: $size1 solid $border-gray;
+    min-height: $size35;
+    &:last-child {
+      border-bottom: 0;
+    }
+    &:hover {
+      background-color: $gray-ed;
+    }
+    & > .item {
+      font-size: $size14;
+    }
+    & > .selected {
+      color: $orange-f7;
+      font-weight: 600;
+    }
+  }
+}
+
+.text-size {
+  font-size: $size14;
+}
+.rotate {
+  transform: rotate(180deg);
+}
+.placeholder {
+  color: $gray-8f;
+}

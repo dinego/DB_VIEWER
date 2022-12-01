@@ -1,0 +1,140 @@
+<div
+  class="d-flex justify-content-between align-items-center pt-2 pb-2"
+  *ngIf="inputModalShow"
+>
+  <div class="d-flex flex-row align-items-center">
+    <img src="../../../../assets/imgs/svg/config-account.svg" class="mr-3" />
+    <h5 class="modal-title w-100">{{ inputModalShow.title }}</h5>
+  </div>
+
+  <button
+    type="button"
+    class="close btn-close"
+    data-dismiss="modal"
+    aria-label="Close"
+    (click)="modalRef.hide()"
+  >
+    <img class="" src="../../../../assets/imgs/svg/close-modal.svg" />
+  </button>
+</div>
+
+<div class="mt-1 mb-0 ml-3 mr-3 style-line"></div>
+
+<div class="pt-0">
+  <div class="table-header-modal-container">
+    <div fxLayout="row" fxLayoutAlign="end" class="pt-3">
+      <button
+        class="mr-3 btn btn-show-modal"
+        fxLayoutAlign="end center"
+        (click)="restoreFilters.emit(modalChildren)"
+      >
+        <img
+          class="ml-0"
+          src="../../../../assets/imgs/svg/change.svg"
+          tooltip="Restaurar"
+          placement="bottom"
+        />
+      </button>
+      <button
+        class="btn btn-show-modal mr-3"
+        fxLayoutAlign="end center"
+        (click)="changeEditCols()"
+        *ngIf="canEdit()"
+      >
+        <img
+          [src]="
+            !isModalEdit
+              ? '../../../../assets/imgs/svg/edit.svg'
+              : '../../../../assets/imgs/svg/close_orange.svg'
+          "
+          [tooltip]="
+            !isModalEdit ? 'Editar nome das colunas' : 'Cancelar Edição'
+          "
+          placement="bottom"
+        />
+      </button>
+
+      <div
+        *ngIf="inputModalShow && !inputModalShow.disableFooter"
+        fxLayout="row"
+        fxLayoutAlign="end end"
+      >
+        <button
+          *ngIf="inputModalShow && !inputModalShow.btnWithoutCancel"
+          type="button"
+          class="btn btn-cancel"
+          data-dismiss="modal"
+        >
+          {{ inputModalShow.btnSecondaryTitle }}
+        </button>
+        <button
+          *ngIf="inputModalShow && inputModalShow.btnWithoutCancel"
+          type="button "
+          class="btn btn-save-show"
+          (click)="onShow()"
+        >
+          {{ inputModalShow.btnSecondaryTitle }}
+        </button>
+        <button
+          type="button"
+          *ngIf="inputModalShow && inputModalShow.btnPrimaryTitle"
+          class="btn btn-send ml-3"
+          (click)="onSave()"
+          data-dismiss="modal"
+        >
+          {{ inputModalShow.btnPrimaryTitle }}
+        </button>
+      </div>
+    </div>
+
+    <div fxLayout="column" class="mt-3 visible-check-container">
+      <div class="w-50">
+        <div
+          fxLayout="row"
+          *ngFor="let item of firstBlock; let i = index"
+          fxLayoutAlign="start center"
+        >
+          <div
+            [hidden]="!item.visible"
+            class="items-list"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+          >
+            <app-view-child-show-modal
+              [item]="item"
+              [columnId]="item.columnId"
+              [editCols]="isModalEdit"
+            >
+            </app-view-child-show-modal>
+          </div>
+        </div>
+      </div>
+      <div class="w-50">
+        <div
+          fxLayout="row"
+          *ngFor="
+            let item of secondBlock;
+            let i = index;
+            trackBy: trackItemModal
+          "
+          fxLayoutAlign="start center"
+        >
+          <div
+            [hidden]="!item.visible"
+            class="items-list"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+          >
+            <app-view-child-show-modal
+              [item]="item"
+              [columnId]="item.columnId"
+              [editCols]="isModalEdit"
+              (onValueChange)="onValueChanged($event, i)"
+            >
+            </app-view-child-show-modal>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

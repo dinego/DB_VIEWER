@@ -1,0 +1,15 @@
+export enum PercentHeaderEnum {
+  Minus6 = 1,
+  Minus5 = 2,
+  Minus4 = 3,
+  Minus3 = 4,
+  Minus2 = 5,
+  Minus1 = 6,
+  Mid = 7,
+  Plus1 = 8,
+  Plus2 = 9,
+  Plus3 = 10,
+  Plus4 = 11,
+  Plus5 = 12,
+  Plus6 = 13,
+}

@@ -1,0 +1,41 @@
+<div ngClass.lt-md="mb-2" fxLayout="row" fxLayoutAlign="space-between center">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <ng-template #showWithOutAnimation>
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
+        <ng-content select="[slot=showWithOutAnimation]"></ng-content>
+      </div>
+    </ng-template>
+    <div
+      [@inOutAnimation]
+      fxLayout="row"
+      fxLayout.xs="row"
+      fxLayout.sm="row"
+      fxLayoutAlign="center center"
+    >
+      <ng-content></ng-content>
+    </div>
+  </div>
+  <div
+    *ngIf="isShare"
+    class="btn-share mt-1"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    data-toggle="modal"
+    data-target="#shareModal"
+    (click)="onShareClick.emit()"
+    tooltip="{{ locales.share }}"
+    placement="bottom"
+  >
+    <img src="../../../../assets/imgs/svg/share-icon.svg" />
+  </div>
+  <div
+    *ngIf="isHelp"
+    class="btn-help ml-3"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    data-toggle="modal"
+    data-target="#helpModal"
+  >
+    <span class="far fa-question-circle" aria-hidden="true"></span>
+  </div>
+</div>

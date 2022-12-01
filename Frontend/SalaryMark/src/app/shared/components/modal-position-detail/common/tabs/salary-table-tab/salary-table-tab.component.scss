@@ -1,0 +1,183 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.table-container {
+  & > .card {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: $white 0% 0% no-repeat padding-box;
+    box-shadow: $size0 $size2 $size6 $shadow;
+    border: $size1 solid $border-gray;
+    border-radius: $size4;
+
+    & > .title-data {
+      & > .title {
+        font-size: $size12;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: $black-58;
+      }
+    }
+
+    & > .divider {
+      width: $size1;
+      background-color: $gray-dbd;
+      min-height: $size43;
+    }
+  }
+}
+
+table {
+  width: 100%;
+  font-size: $remSize08;
+  &.resizing {
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: e-resize;
+  }
+
+  .mat-header-cell {
+    font-weight: 500;
+    &:not(:last-child) {
+      .resize-holder {
+        cursor: e-resize;
+        width: 20px;
+        height: 100%;
+        position: absolute;
+        right: -10px;
+        top: 0;
+        z-index: 1;
+      }
+    }
+  }
+  thead {
+    color: $white;
+    position: sticky;
+
+    tr {
+      display: table-row;
+      width: 99%;
+      table-layout: fixed;
+      white-space: nowrap;
+
+      .set-padding {
+        padding-top: $size10;
+        padding-left: $size20;
+        padding-bottom: $size20;
+      }
+
+      th {
+        border-top: none !important;
+
+        background: $gray-gradient;
+
+        position: sticky;
+        top: 0;
+        &:hover {
+          border-right: 1px solid #cccccc;
+        }
+
+        .container-cb {
+          .checkmark {
+            border: $size1 solid $black-40;
+            height: $size24;
+            width: $size24;
+            background-color: $white;
+          }
+
+          span.checkmark::after {
+            border: solid $black-40;
+            left: $size8;
+            top: $size1;
+            width: $size7;
+            height: $size17;
+            border-width: $size0 $size2_7 $size2_7 $size0;
+            transform: rotate(45deg);
+          }
+        }
+      }
+    }
+  }
+  tbody {
+    display: table-row-group;
+    overflow: scroll;
+    tr {
+      display: table-row;
+      width: 100%;
+      table-layout: fixed;
+      white-space: nowrap;
+
+      .padding-td {
+        padding-top: $size10;
+        padding-left: $size20;
+        padding-bottom: $size20;
+      }
+
+      &.row-detail {
+        background-color: $gray-dee !important;
+        td {
+          padding: $size7;
+
+          padding-left: $size30;
+        }
+        &:hover {
+          background-color: $gray-dee !important;
+        }
+      }
+      &:hover {
+        background-color: $table-hover !important;
+      }
+      td {
+        white-space: nowrap;
+        vertical-align: top;
+        border-top: none !important;
+        height: "auto";
+        border-right: 1px solid $gray-da;
+        .container-cb {
+          .checkmark-item {
+            border: $size1 solid $black-40;
+            height: $size24;
+            width: $size24;
+          }
+
+          span.checkmark-item::after {
+            border: solid $black-40;
+            left: $size8;
+            top: $size1;
+            width: $size7;
+            height: $size17;
+            border-width: $size0 $size2_7 $size2_7 $size0;
+            transform: rotate(45deg);
+          }
+        }
+      }
+      tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+      &.active {
+        background-color: $table-hover !important;
+        color: $black !important;
+      }
+    }
+  }
+}
+
+.delete-btn {
+  cursor: pointer;
+}
+
+::ng-deep.ngx-custom {
+  height: 40vh !important;
+}
+
+::ng-deep.ngx-custom-lg {
+  height: 60vh !important;
+}
+.has-occupant-clt {
+  color: $default-gray;
+}
+.has-occupant-pj {
+  color: $blue-277;
+}

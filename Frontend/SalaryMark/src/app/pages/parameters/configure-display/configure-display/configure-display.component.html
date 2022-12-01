@@ -1,0 +1,176 @@
+<div class="parameters-levels-container container-fluid">
+  <app-title-header [title]="locales.configureDisplay">
+    <div class="d-flex justify-content-center pt-2">
+      <app-button-primary
+        [label]="locales.edit"
+        (click)="startEditValues()"
+        *ngIf="!canEdit"
+      ></app-button-primary>
+
+      <div
+        class="d-flex justify-content-between flex-align-center pl-2"
+        slot="showWithOutAnimation"
+        *ngIf="canEdit"
+      >
+        <app-button-secundary
+          [label]="locales.cancel"
+          class="mr-3"
+          (click)="cancelEdit()"
+        >
+        </app-button-secundary>
+
+        <app-button-primary
+          [label]="locales.save"
+          (click)="sendLevelsToSave()"
+        ></app-button-primary>
+      </div>
+    </div>
+  </app-title-header>
+
+  <div class="">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li
+        class="nav-item pr-4"
+        *ngIf="displaySettings && displaySettings.displayTypes.length > 0"
+      >
+        <a
+          class="nav-link {{
+            displaySettingsEnum == displayEnum.display ? 'active' : ''
+          }} text-dark"
+          id="home-tab"
+          data-toggle="tab"
+          href="#display"
+          role="tab"
+          aria-controls="home"
+          aria-selected="true"
+          (click)="displaySettingsEnum = displayEnum.display"
+          >Exibição</a
+        >
+      </li>
+
+      <li
+        class="nav-item"
+        *ngIf="
+          preferencesDisplays && preferencesDisplays.globalLabels.length > 0
+        "
+      >
+        <a
+          class="nav-link {{
+            displaySettingsEnum == displayEnum.preference ? 'active' : ''
+          }} text-dark"
+          id="profile-tab"
+          data-toggle="tab"
+          href="#preferences"
+          role="tab"
+          aria-controls="profile"
+          aria-selected="false"
+          (click)="displaySettingsEnum = displayEnum.preference"
+          >Preferências</a
+        >
+      </li>
+    </ul>
+  </div>
+
+  <div class="tab-content">
+    <div
+      class="tab-pane {{
+        displaySettingsEnum == displayEnum.display ? 'active' : ''
+      }} pt-3"
+      id="display"
+      *ngIf="displaySettings && displaySettings.displayTypes.length > 0"
+    >
+      <div class="grid-box">
+        <div
+          class="display-items-box p-3 m-0 spacing-box"
+          *ngFor="
+            let items of displaySettings.displayTypes;
+            let indexDisplay = index
+          "
+        >
+          <h3 class="title-style pb-3">{{ items.name }}</h3>
+
+          <div
+            *ngFor="let item of items.subItems"
+            class="pb-3 d-flex align-items-center"
+          >
+            <label class="checkbox-container d-flex">
+              <input
+                id="chk-{{ item.id }}"
+                type="checkbox"
+                (change)="changeItemSelectDisplay($event, item, indexDisplay)"
+                [checked]="item.isChecked"
+                [disabled]="!canEdit"
+              />
+              <span class="d-flex align-items-center">{{ item.name }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="tab-pane {{
+        displaySettingsEnum == displayEnum.preference ? 'active' : ''
+      }} pt-3"
+      id="preferences"
+      *ngIf="preferencesDisplays && preferencesDisplays.globalLabels.length > 0"
+    >
+      <div class="d-flex flex-wrap">
+        <div class="preference-parameter-box mr-auto p-3">
+          <div>
+            <h3 class="title-style">Parâmetro Padrão</h3>
+            <div class="">
+              <p class="description-title mb-1 text-edit">
+                PARÂMETRO PADRÃO DAS ANÁLISES
+              </p>
+
+              <div class="pb-3">
+                <app-button-list-light
+                  [list]="parameterList"
+                  [disabled]="
+                    (permissions && !permissions.canEditGlobalLabels) ||
+                    !canEdit
+                  "
+                  (textSelected)="changeItemSelect($event)"
+                  [isFullSize]="true"
+                  [text]="preferenceTitle"
+                ></app-button-list-light>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          [ngClass]="[
+            preferencesDisplays && preferencesDisplays.globalLabels.length > 7
+              ? 'labels-preference-scroll-box p-3'
+              : 'labels-preference-box p-3'
+          ]"
+          *ngIf="preferencesDisplays && preferencesDisplays.globalLabels"
+        >
+          <h3 class="title-style m-0">
+            Rótulos Globais (alicáveis a todos os usuários)
+          </h3>
+
+          <div
+            class="d-flex align-items-center"
+            *ngFor="let item of loadGlobalLabels()"
+          >
+            <div class="title-label mt-3">
+              <span class="pr-3 text-edit text-nowrap">
+                {{ item.name }}
+              </span>
+            </div>
+
+            <input
+              class="form-control ml-3 mt-3"
+              [(ngModel)]="item.alias"
+              [disabled]="
+                (permissions && !permissions.canEditGlobalLabels) || !canEdit
+              "
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.modal-contact-us-container {
+  .input-container {
+    width: $fullSize;
+
+    input {
+      border: none;
+      border-bottom: $size1 solid $gray-ac;
+
+      font-size: $remSize075;
+      outline: 0;
+      padding: $size5;
+      width: $fullSize;
+    }
+    input:focus {
+      border-bottom: $size1 solid $black;
+    }
+    input::placeholder {
+      color: $black;
+
+      font-size: $remSize075;
+    }
+  }
+  .select-container {
+    position: relative;
+
+    .select {
+      border: $size1 solid $gray-ac;
+      border-radius: $size10;
+      cursor: pointer;
+      padding: $size9;
+
+      label {
+        cursor: pointer;
+      }
+
+      .arrow-bottom {
+        height: $size15;
+        transform: rotate(180);
+        width: $size15;
+      }
+    }
+    .select-open {
+      box-shadow: 0 $size3 $size6 $gray-box-shadow-00;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: $vhSize7;
+      li {
+        cursor: pointer;
+        label {
+          cursor: pointer;
+
+          font-size: $remSize085;
+        }
+        label:hover {
+
+        }
+
+        .option-selected {
+
+          font-size: $remSize085;
+        }
+      }
+    }
+  }
+  .text-description {
+    border: $size1 solid $gray-ac;
+    border-radius: $size10;
+
+    font-size: $remSize08;
+    outline: 0;
+
+    .text-description::placeholder {
+      color: $gray-84;
+    }
+  }
+  .icon-add {
+    cursor: pointer;
+    height: $size15;
+    width: $size15;
+  }
+  .sub-title {
+    color: $black;
+
+    font-size: $remSize085;
+  }
+  .btn-cancel {
+    color: $black-231f;
+
+    font-size: $remSize08;
+  }
+
+  .btn-save {
+    background-color: $orange-button;
+    color: $white;
+
+    font-size: $remSize08;
+  }
+}

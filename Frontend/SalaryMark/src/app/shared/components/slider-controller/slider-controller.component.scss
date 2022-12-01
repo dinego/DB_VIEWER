@@ -1,0 +1,92 @@
+@import "../../../shared/styles/dimensions.scss";
+@import "../../../shared/styles/colors.scss";
+
+.title-slider {
+  position: relative;
+  font-size: $size12;
+  top: $size1;
+  left: $size1;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: $black-58;
+  white-space: nowrap;
+}
+.clear-filter {
+  color: $black-58;
+  font-size: $size12;
+  white-space: nowrap;
+  cursor: pointer;
+  margin-top: $size1;
+}
+
+::ng-deep {
+  .ngx-slider {
+    margin: $size16 0 $size15 !important;
+  }
+  .custom-slider {
+    flex-direction: column;
+    align-items: center;
+    min-width: 100%;
+  }
+  .custom-slider .ngx-slider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: 100%;
+  }
+  .custom-slider .ngx-slider .ngx-slider-bar {
+    background: $gray-e3e;
+    height: $size8;
+    border-radius: $size10;
+    width: 100%;
+  }
+  .custom-slider .ngx-slider .ngx-slider-selection {
+    background: $orange-gradient;
+    height: $size8;
+    border-radius: $size10;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-pointer {
+    background: $white 0% 0% no-repeat padding-box;
+    box-shadow: $size0 $size2 $size6 $black-afa;
+    border: $size1 solid $black-40;
+    opacity: 1;
+    width: $size23;
+    height: $size23;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-pointer:after {
+    display: none;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-bubble {
+    top: $size8;
+    font-size: $size12;
+    letter-spacing: $size0;
+    color: $black-1f;
+    opacity: 1;
+  }
+  .ngx-slider-ceil,
+  .ngx-slider-floor {
+    top: $size1 !important;
+  }
+  .ngx-slider-model-high,
+  .ngx-slider-model-value {
+    font-weight: 800 !important;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-tick {
+    display: none;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-tick .ngx-slider-selected {
+    display: none;
+  }
+
+  .custom-slider .ngx-slider.animate .ngx-slider-bubble .ngx-slider-limit {
+    display: none;
+  }
+  .ngx-slider-limit {
+    color: $black-58 !important;
+  }
+}

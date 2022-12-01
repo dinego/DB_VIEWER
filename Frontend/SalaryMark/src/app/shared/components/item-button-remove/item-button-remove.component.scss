@@ -1,0 +1,21 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.bordered-item {
+  background: $white 0% 0% no-repeat padding-box;
+  box-shadow: $size0 $size1 $size6 $shadow;
+  border: $size1 solid $border-orange;
+  border-radius: $size40;
+
+  & > .param-data {
+    font-size: $size14;
+  }
+
+  & > .pointer {
+    cursor: pointer;
+  }
+}
+
+.disabled {
+  border: $size1 solid $gray-bf;
+}

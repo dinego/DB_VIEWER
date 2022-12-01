@@ -1,0 +1,389 @@
+/* You can add global styles to this file, and also import other style files */
+@use "sass:math";
+
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+@import "src/app/shared/styles/ngx-datatable-custom.scss";
+@import "../src/assets/scss/breakpoints.scss";
+
+/* styles.scss */
+/* You can add global styles to this file, and also import other style files */
+@import "~@swimlane/ngx-datatable/index.css";
+@import "~@swimlane/ngx-datatable/themes/material.scss";
+@import "~@swimlane/ngx-datatable/themes/dark.scss";
+@import "~@swimlane/ngx-datatable/themes/bootstrap.scss";
+@import "~@swimlane/ngx-datatable/assets/icons.css";
+
+@import url("https://p.typekit.net/p.css?s=1&k=hzy7zyt&ht=tk&f=139.169.173.175.176.25136&a=44792538&app=typekit&e=css");
+
+@font-face {
+  font-family: "proxima-nova";
+  src: url("https://use.typekit.net/af/98e3f6/000000000000000077359562/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3")
+      format("woff2"),
+    url("https://use.typekit.net/af/98e3f6/000000000000000077359562/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3")
+      format("woff"),
+    url("https://use.typekit.net/af/98e3f6/000000000000000077359562/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3")
+      format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "proxima-nova";
+  src: url("https://use.typekit.net/af/199a3f/00000000000000007735955e/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n8&v=3")
+      format("woff2"),
+    url("https://use.typekit.net/af/199a3f/00000000000000007735955e/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n8&v=3")
+      format("woff"),
+    url("https://use.typekit.net/af/199a3f/00000000000000007735955e/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n8&v=3")
+      format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: "proxima-nova";
+  src: url("https://use.typekit.net/af/e4b1a9/000000000000000077359571/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3")
+      format("woff2"),
+    url("https://use.typekit.net/af/e4b1a9/000000000000000077359571/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3")
+      format("woff"),
+    url("https://use.typekit.net/af/e4b1a9/000000000000000077359571/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3")
+      format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "proxima-nova";
+  src: url("https://use.typekit.net/af/d45b9a/000000000000000077359577/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3")
+      format("woff2"),
+    url("https://use.typekit.net/af/d45b9a/000000000000000077359577/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3")
+      format("woff"),
+    url("https://use.typekit.net/af/d45b9a/000000000000000077359577/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3")
+      format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "proxima-nova";
+  src: url("https://use.typekit.net/af/6cc429/00000000000000007735957a/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3")
+      format("woff2"),
+    url("https://use.typekit.net/af/6cc429/00000000000000007735957a/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3")
+      format("woff"),
+    url("https://use.typekit.net/af/6cc429/00000000000000007735957a/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3")
+      format("opentype");
+  font-display: auto;
+  font-style: italic;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "proxima-nova";
+  src: url("https://use.typekit.net/af/0758f3/000000000000000077359583/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3")
+      format("woff2"),
+    url("https://use.typekit.net/af/0758f3/000000000000000077359583/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3")
+      format("woff"),
+    url("https://use.typekit.net/af/0758f3/000000000000000077359583/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3")
+      format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.tk-proxima-nova {
+  font-family: "proxima-nova", sans-serif;
+}
+.tk-proxima-nova-condensed {
+  font-family: "proxima-nova-condensed", sans-serif;
+}
+.tk-proxima-nova-extra-condensed {
+  font-family: "proxima-nova-extra-condensed", sans-serif;
+}
+
+$animationDelay: 1;
+@for $i from 1 through 15 {
+  .projects div:nth-of-type(#{$i}) {
+    animation-delay: #{0.3 + math.div($i, 30)}s;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+* {
+  font-family: "proxima-nova";
+}
+
+body {
+  margin: 0;
+  background-color: #f8f8f8;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  margin: 0;
+  font-family: "proxima-nova", Roboto, sans-serif;
+}
+
+.mark,
+mark {
+  background-color: $yellow-mark;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: transparent;
+  color: $black;
+}
+
+::-webkit-scrollbar {
+  width: $size12;
+  height: $size12;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $white-e6e;
+
+  border-radius: 70px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $white-d1d;
+
+  border-radius: 70px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  border-radius: 70px;
+}
+
+.tooltip-inner {
+  color: $white;
+  background-color: $black-1f;
+
+  text-transform: capitalize;
+  max-width: max-content;
+  font-size: $size10;
+  border-radius: $size4;
+
+  animation-name: fade-in;
+  animation-fill-mode: both;
+  animation-duration: 0.5s;
+
+  font-size: $size12;
+}
+
+.bs-tooltip-auto[x-placement^="right"] .arrow::before,
+.bs-tooltip-right .arrow::before {
+  border-right-color: $black-1f;
+  animation-name: fade-in;
+  animation-fill-mode: both;
+  animation-duration: 0.5s;
+}
+
+.bs-tooltip-auto[x-placement^="right"],
+.bs-tooltip-right {
+  border-right-color: $black-1f;
+  animation-name: fade-in;
+  animation-fill-mode: both;
+  animation-duration: 0.5s;
+}
+
+.bs-tooltip-auto[x-placement^="bottom"] .arrow::before,
+.bs-tooltip-bottom .arrow::before {
+  border-bottom-color: $black-1f;
+  animation-name: fade-in;
+  animation-fill-mode: both;
+  animation-duration: 0.5s;
+}
+.bs-tooltip-auto[x-placement^="bottom"],
+.bs-tooltip-bottom {
+  border-bottom-color: $black-1f;
+  animation-name: fade-in;
+  animation-fill-mode: both;
+  animation-duration: 0.5s;
+}
+
+.bs-tooltip-auto[x-placement^="bottom-left"] .arrow::before,
+.bs-tooltip-bottom-left .arrow::before {
+  border-bottom-color: $black-1f;
+  margin-left: 35px;
+  animation-name: fade-in;
+  animation-fill-mode: both;
+  animation-duration: 0.5s;
+}
+.bs-tooltip-auto[x-placement^="bottom-left"],
+.bs-tooltip-bottom-left {
+  border-bottom-color: $black-1f;
+  margin-left: 35px;
+  animation-name: fade-in;
+  animation-fill-mode: both;
+  animation-duration: 0.5s;
+}
+
+.bs-tooltip-auto[x-placement^="top"] .arrow::before,
+.bs-tooltip-top .arrow::before {
+  border-top-color: $black-1f;
+  animation-name: fade-in;
+  animation-fill-mode: both;
+  animation-duration: 0.5s;
+}
+.bs-tooltip-auto[x-placement^="top"],
+.bs-tooltip-top {
+  border-top-color: $black-1f;
+  animation-name: fade-in;
+  animation-fill-mode: both;
+  animation-duration: 0.5s;
+}
+
+.bs-tooltip-auto[x-placement^="left"] .arrow::before,
+.bs-tooltip-left .arrow::before {
+  border-left-color: $black-1f;
+  animation-name: fade-in;
+  animation-fill-mode: both;
+  animation-duration: 0.5s;
+}
+.bs-tooltip-auto[x-placement^="left"],
+.bs-tooltip-left {
+  border-left-color: $black-1f;
+  animation-name: fade-in;
+  animation-fill-mode: both;
+  animation-duration: 0.5s;
+}
+
+label {
+  margin: 0;
+}
+
+.card-body {
+  padding: inherit;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+  top: 32%;
+  background-color: #fff;
+  height: 29px;
+  width: 29.5px;
+  border-radius: 50%;
+}
+
+.swiper-button-disabled {
+  pointer-events: auto !important;
+}
+
+.swiper-button-prev,
+.swiper-container-rtl .swiper-button-next {
+  left: 0;
+
+  @include for-phone-only {
+    display: none;
+  }
+}
+
+.swiper-button-next,
+.swiper-container-rtl .swiper-button-prev {
+  right: 0;
+
+  @include for-phone-only {
+    display: none;
+  }
+}
+
+.swiper-button-next {
+  background-image: url("../src/assets/imgs/svg/next-position.svg");
+}
+
+.swiper-button-prev {
+  background-image: url("../src/assets/imgs/svg/prev-position.svg");
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  content: "";
+}
+
+#content {
+  overflow-y: auto;
+  height: 95vh;
+}
+
+.modal-content {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #d6d6d6;
+  border-radius: 20px;
+  opacity: 1;
+  .modal-video-sm {
+    max-width: $size1000;
+  }
+}
+
+//effect fade dropdown
+
+.dropdown-menu {
+  -webkit-animation-name: fade-in;
+  animation-name: fade-in;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+}
+
+.form-control {
+  background: $white 0% 0% no-repeat padding-box;
+  border: $size1 solid $orange-f6;
+  border-radius: $size2;
+  height: $size35;
+}
+
+.orange-tooltip .tooltip-inner {
+  font-size: $size14;
+}
+
+.dropdown-tooltip .tooltip-inner {
+  z-index: 2;
+}
+
+.table {
+  font-size: $size14;
+}
+td,
+th {
+  border: 1px solid #d5d5d5;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.03);
+}
+
+.table-striped tbody tr {
+  &:hover {
+    background-color: #f7e9de;
+
+  }
+}
+
+.ngx-datatable.bootstrap .datatable-body .datatable-body-row.datatable-row-even:hover, .ngx-datatable.bootstrap .datatable-body .datatable-body-row:hover {
+    background-color: #f7e9de;
+}

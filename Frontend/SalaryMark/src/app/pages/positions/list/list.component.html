@@ -1,0 +1,570 @@
+<div class="list-table-container container-fluid">
+  <app-title-header
+    [title]="locales.list"
+    [customClass]="'justify-content-between'"
+  >
+    <div class="links-router d-flex align-items-center">
+      <div
+        class="btn-area mr-3"
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        *ngIf="canAccess(subModules.positionList)"
+      >
+        <div
+          class="btn btn-default activated-route"
+          fxLayout="row"
+          fxLayoutAlign="center center"
+        >
+          <span>{{ locales.listShort }}</span>
+        </div>
+      </div>
+      <div
+        class="btn-area"
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        *ngIf="canAccess(subModules.positionMap)"
+      >
+        <button class="btn btn-default" [routerLink]="'/cargos/mapa-cargos'">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <span>{{ locales.map }}</span>
+          </div>
+        </button>
+      </div>
+    </div>
+    <app-button-more-actions
+      *ngIf="!share"
+      [isHelp]="false"
+      [isMore]="true"
+      [isShare]="permissions && permissions.canShare"
+      idModal="shareModal"
+      (onShareClick)="getShareKey()"
+    >
+      <app-button-list
+        *ngIf="period && period.length > 1"
+        class="btn-list"
+        [text]="period[0].title"
+        [list]="period"
+        [showList]="period && period.length > 1"
+        (textSelected)="changeSelectPeriod($event)"
+        [toolTipText]="locales.showAs"
+      ></app-button-list>
+      <app-button-list
+        *ngIf="
+          typePosition &&
+          permissions &&
+          permissions.canFilterTypeofContract &&
+          typePosition.length > 1
+        "
+        class="btn-list-reset"
+        [showList]="typePosition && typePosition.length > 1"
+        [text]="typePosition[0].title"
+        [list]="typePosition"
+        (textSelected)="changeSelectTypePosition($event)"
+        [toolTipText]="locales.contractType"
+      >
+      </app-button-list>
+      <button
+        class="ml-1 btn btn-options single-button-style"
+        fxLayoutAlign="center center"
+        data-toggle="modal"
+        data-target="#showModal"
+        tooltip="{{ locales.show }}"
+        placement="top"
+      >
+        {{ locales.show }}
+      </button>
+      <img
+        placement="bottom"
+        tooltip="{{ locales.addPosition }}"
+        class="add-position mt-1 ml-2"
+        src="../../../../assets/imgs/svg/add-position.svg"
+        (click)="openAddPosition()"
+      />
+
+      <app-export-button
+        *ngIf="permissions && permissions.canDownloadExcel"
+        (export)="getFileSpreadsheet()"
+      ></app-export-button>
+    </app-button-more-actions>
+    <app-share-header [headers]="shareHeader" *ngIf="share"></app-share-header>
+  </app-title-header>
+  <app-filter-header
+    [listTables]="listTables"
+    (tableSelected)="tableSelectedEvent($event)"
+    [share]="share"
+    [shareFilter]="shareData ? shareData.share.table : ''"
+    [shareFilterTitle]="locales.table"
+  >
+    <div
+      class="title-content flex-row flex-grow-1"
+      ngClass.lt-md="mt-3"
+      fxLayout="row"
+      fxLayout.lt-md="row"
+      fxLayoutAlign="end"
+    >
+      <app-dropdown-search
+        *ngIf="listProfiles && listProfiles.length > 0"
+        [list]="listProfiles"
+        (searchEmitter)="searchFilter($event)"
+        class="mt-3 flex-grow-1 mr-3 ml-3"
+      ></app-dropdown-search>
+      <div
+        fxLayout="column"
+        fxLayoutAlign="space-between"
+        class="d-flex align-items-end"
+        *ngIf="permissions && permissions.canFilterOccupants"
+      >
+        <div class="tiny-title">{{ locales.withOccupants }}</div>
+        <app-switch-button
+          (expandAllRows)="onOccupantsSwitch($event)"
+        ></app-switch-button>
+      </div>
+      <div
+        fxHide.lt-md
+        class="ml-3 ml-3 line"
+        *ngIf="!share && units && units.length > 1"
+      ></div>
+      <div
+        class="d-flex align-items-end"
+        ngClass.lt-md="mb-3"
+        fxLayout="column"
+        fxLayoutAlign="space-between"
+        *ngIf="!share && units && units.length > 1"
+      >
+        <div class="tiny-title">{{ locales.units }}</div>
+        <app-button-list-light
+          *ngIf="units"
+          text="{{ changeUnitLabel(units) }}"
+          [unitList]="units"
+          [addAllInUnit]="true"
+          [isDropUnit]="true"
+          [textAllDefautl]="
+            units && units.length > 1
+              ? locales.allA
+              : units
+              ? units[0].unit
+              : ''
+          "
+          class="btn-list"
+          (textUnitSelected)="changeSelectUnit($event)"
+        ></app-button-list-light>
+      </div>
+
+      <div fxHide.lt-md class="ml-3 ml-3 line" *ngIf="!share"></div>
+
+      <div
+        class="align-items-end d-flex"
+        ngClass.lt-md="mb-3"
+        fxLayout="column"
+        fxLayoutAlign="space-between"
+        *ngIf="!share"
+      >
+        <div class="tiny-title">{{ locales.profile }}</div>
+        <app-button-list-light
+          class="btn-list"
+          (textSelected)="changeSelectProfile($event)"
+          [list]="profiles"
+          [text]="selectedProfile ? selectedProfile.title : ''"
+        >
+        </app-button-list-light>
+      </div>
+    </div>
+  </app-filter-header>
+  <app-clear-filter
+    *ngIf="isClearFilter"
+    (clearFilters)="onClearFilter()"
+    (filters)="onFilterChecked()"
+  >
+  </app-clear-filter>
+  <div
+    class="mt-3 table-container w-100"
+    fxLayout="column"
+    *ngIf="tableInfo && tableClass"
+  >
+    <ngx-datatable
+      class="bootstrap"
+      [rows]="dataResult"
+      [columnMode]="ColumnMode.force"
+      [ngClass]="tableClass"
+      [selectionType]="SelectionType.checkbox"
+      [headerHeight]="headerHeight"
+      [rowHeight]="rowHeight"
+      [selected]="selected"
+      [selectAllRowsOnPage]="false"
+      [scrollbarV]="true"
+      [scrollbarH]="true"
+      [loadingIndicator]="isLoading"
+      [offset]="page"
+      [messages]="{ emptyMessage: commonLocales.emptyResult }"
+      (sort)="onSort($event)"
+      [externalSorting]="true"
+      (select)="onSelect($event)"
+      (scroll)="onScroll($event.offsetY)"
+    >
+      <ngx-datatable-column
+        [width]="50"
+        [sortable]="false"
+        [canAutoResize]="false"
+        [draggable]="false"
+        [resizeable]="false"
+        *ngIf="tableInfo && tableInfo.header.length > 0"
+      >
+        <ng-template
+          ngx-datatable-header-template
+          let-value="value"
+          let-allRowsSelected="allRowsSelected"
+          let-selectFn="selectFn"
+        >
+          <label class="container-cb">
+            <input
+              type="checkbox"
+              [checked]="allRowsSelected"
+              (change)="selectFn(!allRowsSelected)"
+            />
+            <span class="checkmark"></span>
+          </label>
+        </ng-template>
+        <ng-template
+          ngx-datatable-cell-template
+          let-value="value"
+          let-isSelected="isSelected"
+          let-onCheckboxChangeFn="onCheckboxChangeFn"
+        >
+          <label class="container-cb">
+            <input
+              type="checkbox"
+              [checked]="isSelected"
+              (change)="onCheckboxChangeFn($event)"
+            />
+            <span class="checkmark-item"></span>
+          </label>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column
+        name="{{ item.nickName }}"
+        prop="{{ item.columnId }}"
+        [sortable]="item.sortable"
+        [width]="setColumnWidth(item)"
+        [headerClass]="setClassHeader(item)"
+        *ngFor="let item of getHeaderColumns()"
+      >
+        <ng-template
+          let-rowIndex="rowIndex"
+          let-row="row"
+          ngx-datatable-cell-template
+        >
+          <div
+            fxLayout="row"
+            [fxLayoutAlign]="
+              getRowResult(row, item) &&
+              (getRowResult(row, item).type === 'Double' ||
+                getRowResult(row, item).type === 'Boolean' ||
+                getRowResult(row, item).type === 'Int64' ||
+                transformText(row, item) === '-')
+                ? 'center center'
+                : 'start center'
+            "
+          >
+            <ng-container
+              *ngIf="item.colPos === 0; then initialCol; else othersCol"
+            >
+            </ng-container>
+            <ng-template #initialCol>
+              <div
+                *ngIf="getTooltip(row, item).length > 0"
+                class="initial-column click-item"
+                [innerHTML]="transformText(row, item) | highlightsCase: query"
+                placement="right"
+                (click)="onLineClick(row, transformText(row, item))"
+              ></div>
+              <div
+                *ngIf="getTooltip(row, item).length <= 0"
+                class="initial-column click-item"
+                [innerHTML]="transformText(row, item) | highlightsCase: query"
+                placement="right"
+                (click)="onLineClick(row, transformText(row, item))"
+              ></div>
+
+              <div *ngIf="isCLT(row, item) || isPJ(row, item)">
+                <i *ngIf="isCLT(row, item)" class="fas fa-user ml-1 clt"></i>
+                <i
+                  *ngIf="isPJ(row, item)"
+                  class="fas fa-user ml-1 occupant-pj-color"
+                ></i>
+              </div>
+            </ng-template>
+
+            <ng-template #othersCol>
+              <div
+                *ngIf="
+                  getRowResult(row, item) &&
+                  getRowResult(row, item).type === 'Boolean' &&
+                  transformText(row, item)
+                "
+              >
+                <div class="tec-adjust"></div>
+              </div>
+
+              <div
+                *ngIf="
+                  getRowResult(row, item) &&
+                  getRowResult(row, item).type === 'Double'
+                "
+                class="font-weight-bold"
+              >
+                <div
+                  *ngIf="
+                    transformText(row, item) !== '-' &&
+                    hoursType === hourlyBasisEnum.HourSalary
+                  "
+                >
+                  {{ getFormatValue(row, item) | number: "1.2-2" }}
+                </div>
+                <div
+                  *ngIf="
+                    transformText(row, item) !== '-' &&
+                    hoursType !== hourlyBasisEnum.HourSalary
+                  "
+                >
+                  {{ getFormatValue(row, item) | number: "1.0-3" }}
+                </div>
+                <div *ngIf="transformText(row, item) === '-'">
+                  {{ transformText(row, item) | highlightsCase: query }}
+                </div>
+              </div>
+
+              <div
+                [ngClass]="{ parameters: containsParameters(item) }"
+                *ngIf="
+                  getRowResult(row, item) &&
+                  getRowResult(row, item).type !== 'Boolean' &&
+                  getRowResult(row, item).type !== 'Double'
+                "
+                [innerHTML]="transformText(row, item) | highlightsCase: query"
+                placement="right"
+              ></div>
+            </ng-template>
+
+            <ng-template #tecnicalAdjustContent>
+              <div class="content-tooltip" fxLayout="row">
+                <div class="text">
+                  {{ transformText(row, item) | highlightsCase: query }}
+                </div>
+              </div>
+            </ng-template>
+
+            <ng-template #tipContent>
+              <div
+                class="content-tooltip"
+                fxLayout="row"
+                *ngIf="getTooltip(row, item).length > 0"
+              >
+                <div class="title">
+                  {{ locales.actualPosition }}
+                </div>
+                <div
+                  class="item"
+                  fxLayout="column"
+                  fxLayoutAlign="center start"
+                >
+                  <div *ngFor="let tooltip of getTooltip(row, item)">
+                    <div
+                      *ngIf="tooltip.occupantTypeId"
+                      style="min-width: 150px"
+                    >
+                      <strong>{{ tooltip.position }}</strong>
+                      <br />
+                      <span>{{ tooltip.amount }} func</span>
+                    </div>
+                    <div *ngIf="!tooltip.occupantTypeId">
+                      <b>{{ tooltip.position }}</b> - {{ tooltip.amount }} func
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+
+  <div
+    fxLayout="row"
+    fxLayoutAlign="end center"
+    *ngIf="showOccupantPJIcon() && showOccupantCLTIcon()"
+  >
+    <div class="occupant-clt">
+      <i class="fas fa-user"></i>
+      {{ locales.occupantCLT }}
+    </div>
+    <div class="occupant-pj">
+      <i class="fas fa-user"></i>
+      {{ locales.occupantPJ }}
+    </div>
+  </div>
+
+  <app-table-header-modal
+    *ngIf="tableInfo && permissions && inputModalShow"
+    [inputModalShow]="inputModalShow"
+    [headerInfo]="tableInfo.header"
+    (changeHeader)="changeHeaderShowCols($event)"
+    (save)="saveAndShowCols($event)"
+    (showChanges)="onShowChanges($event)"
+    (restoreFilters)="onRestoreCols($event)"
+  >
+  </app-table-header-modal>
+
+  <app-basic-dialog-structure
+    [hidden]="!shareURL"
+    (save)="onSendEmail()"
+    [input]="inputShareModal"
+    *ngIf="permissions && inputShareModal"
+    [isShareModal]="true"
+  >
+    <app-modal-share-table
+      (onChangeEmail)="onPutEmail($event)"
+      [url]="shareURL"
+    ></app-modal-share-table>
+  </app-basic-dialog-structure>
+
+  <app-basic-dialog-structure
+    class="help-text"
+    [input]="inputModalHelp"
+    *ngIf="permissions && inputModalHelp"
+  >
+    <p>
+      &nbsp;&nbsp;&nbsp;&nbsp;Aqui, você visualiza a lista de cargos da sua
+      empresa com os respectivos GSM (Grades SalaryMark®) e os valores de
+      referência na Tabela Salarial.
+    </p>
+    <p>
+      &nbsp;&nbsp;&nbsp;&nbsp;Também é possível identificar os cargos que
+      possuem algum “Ajuste Técnico”, ou seja, exceções feitas dentro da
+      política definida no Plano.
+    </p>
+  </app-basic-dialog-structure>
+
+  <app-basic-dialog-structure
+    class="help-text"
+    [input]="inputModalPositions"
+    *ngIf="permissions && !share"
+  >
+    <div
+      class="dialogPosition container-fluid"
+      fxLayout="row"
+      fxLayoutAlign="space-between stretch"
+      *ngIf="dialogPositionData"
+    >
+      <div class="h-100" fxLayout="column" fxLayoutAlign="center start">
+        <div
+          fxLayout="column container-fluid"
+          class="mb-3"
+          *ngFor="let item of getFirstBlockPositionInfo()"
+        >
+          <label for="">{{ item.name }}</label>
+          <div>
+            <strong *ngIf="item.value">{{ item.value }}</strong>
+            <strong *ngIf="!item.value">-</strong>
+          </div>
+        </div>
+      </div>
+      <div class="h-100" fxLayout="column" fxLayoutAlign="center start">
+        <div
+          fxLayout="column container-fluid"
+          class="mb-3"
+          *ngFor="let item of getSecondBlockPositionInfo()"
+        >
+          <label for="">{{ item.name }}</label>
+          <div>
+            <strong *ngIf="item.value">{{ item.value }}</strong>
+            <strong *ngIf="!item.value">-</strong>
+          </div>
+        </div>
+      </div>
+      <div class="h-100" fxLayout="column" fxLayoutAlign="center start">
+        <div
+          fxLayout="column container-fluid"
+          class="mb-3"
+          *ngFor="let item of getThirdBlockPositionInfo()"
+        >
+          <label for="">{{ item.name }}</label>
+          <div>
+            <strong *ngIf="item.value">{{ item.value }}</strong>
+            <strong *ngIf="!item.value">-</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="accordion"
+      id="accordionFramework"
+      *ngIf="
+        dialogPositionData &&
+        dialogPositionData.framework &&
+        dialogPositionData.framework.length > 0
+      "
+    >
+      <div class="card">
+        <div
+          class="card-header"
+          id="headingOne"
+          data-toggle="collapse"
+          data-target="#collapseOne"
+          aria-expanded="true"
+          aria-controls="collapseOne"
+        >
+          <label class="mb-0"> {{ locales.positionInfo.enquadramento }} </label>
+        </div>
+
+        <div
+          id="collapseOne"
+          class="collapse show"
+          aria-labelledby="headingOne"
+          data-parent="#accordionFramework"
+        >
+          <div class="card-body" *ngIf="dialogPositionData">
+            <ngx-datatable
+              class="bootstrap"
+              [rows]="dialogPositionData.framework"
+              [columnMode]="ColumnMode.force"
+              [headerHeight]="40"
+              [rowHeight]="40"
+              [scrollbarV]="dialogPositionData.framework.length > 3"
+              [messages]="{ emptyMessage: commonLocales.emptyResult }"
+            >
+              <ngx-datatable-column name="Unidade" [width]="200">
+                <ng-template
+                  let-row="row"
+                  let-value="value"
+                  ngx-datatable-cell-template
+                >
+                  {{ row.unit }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Cargo Atual" [width]="200">
+                <ng-template
+                  let-row="row"
+                  let-value="value"
+                  ngx-datatable-cell-template
+                >
+                  {{ row.currentyPosition }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Freq." [width]="40">
+                <ng-template
+                  let-value="value"
+                  let-row="row"
+                  ngx-datatable-cell-template
+                >
+                  {{ row.amountEmployees }}
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-basic-dialog-structure>
+</div>

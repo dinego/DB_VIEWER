@@ -1,0 +1,10 @@
+.open-modal-img {
+  cursor: pointer;
+  opacity: 0.7;
+  &:hover {
+    opacity: 1;
+  }
+}
+.label-tooltip {
+  font-size: 12px;
+}

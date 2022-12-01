@@ -1,0 +1,45 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.progress-bar-custom .progress-bar-content {
+  box-shadow: $size0 $size2 $size6 $shadow;
+  border-radius: $size1;
+  height: $size25;
+  position: relative;
+}
+.progress-bar-custom .progress-number {
+  float: right;
+  margin-top: -$size24;
+}
+.progress-bar-custom .progress-bar-inner {
+  background-color: hsl(0, 0%, 88%);
+  display: block;
+  width: 0;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: width 1s linear 0s;
+}
+.progress-bar-custom .progress-bar-inner:before {
+  content: "";
+  background-color: hsl(0, 0%, 100%);
+  border-radius: 50%;
+  width: $size4;
+  height: $size4;
+  position: absolute;
+  right: $size1;
+  top: 0;
+  z-index: 1;
+}
+.progress-bar-custom .progress-bar-inner:after {
+  content: "";
+  width: $size10;
+  height: $size35;
+  background-color: $white;
+  border-radius: $size33;
+  position: absolute;
+  right: -$size4;
+  top: -$size5;
+  border: $size1 solid black;
+}

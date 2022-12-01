@@ -1,0 +1,147 @@
+<div class="container-tab d-flex mt-3 flex-column" *ngIf="positionDetail">
+  <div class="info-position w-100 d-flex align-items-start flex-row p-3">
+    <div class="infos info-id d-flex flex-column">
+      <span class="title-session">{{ locales.id }}</span>
+      <span class="value-session mt-1">{{
+        positionDetail.header.positionId
+      }}</span>
+    </div>
+    <div class="divider"></div>
+
+    <div class="infos d-flex info-position flex-column">
+      <span class="title-session">{{
+        positionDetail.header.positionSalaryMarkLabel
+      }}</span>
+      <span class="value-session mt-1" *ngIf="!editable">{{
+        positionDetail.header.position
+      }}</span>
+      <div class="value-session" *ngIf="editable">
+        <input
+          type="text"
+          [(ngModel)]="positionDetail.header.position"
+          class="form-control"
+          placeholder="Digite o cargo"
+        />
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="infos info-drop-size d-flex flex-column">
+      <span class="title-session">{{ locales.smCode }}</span>
+      <span class="value-session mt-1">{{ positionDetail.header.smCode }}</span>
+    </div>
+    <div class="divider"></div>
+
+    <div class="infos info-drop-size d-flex flex-column">
+      <span class="title-session">{{ locales.level }}</span>
+      <span
+        class="value-session mt-1"
+        *ngIf="!editable && levelSelected && levelSelected.title"
+        >{{ levelSelected.title }}</span
+      >
+      <div *ngIf="editable">
+        <app-button-list-light
+          [list]="levelCombo"
+          [text]="levelSelected.title"
+          (textSelected)="selectedLevel($event)"
+        ></app-button-list-light>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="infos info-drop-size d-flex flex-column">
+      <span class="title-session">{{ locales.profile }}</span>
+      <span
+        class="value-session mt-1"
+        *ngIf="!editable && profileSelected && profileSelected.title"
+        >{{ profileSelected.title }}</span
+      >
+      <div *ngIf="editable">
+        <app-button-list-light
+          [list]="profileCombo.profilesResponse"
+          [text]="profileSelected.title"
+          (textSelected)="selectedProfile($event)"
+        ></app-button-list-light>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="scroll-parameters mt-3 pr-2"
+    *ngIf="listParameters && listParameters.length > 0"
+  >
+    <ng-container *ngFor="let data of listParameters">
+      <div
+        class="d-flex flex-column parameters justify-content-start mt-3 my-card-box p-3"
+      >
+        <div class="parameter">
+          <span class="title-param">{{ data.parameter.title }}</span>
+        </div>
+        <div class="d-flex" *ngIf="data.list && data.list.length > 0">
+          <app-dropdown-parameters
+            *ngIf="editable"
+            [list]="data.list"
+            [text]="'Selecione'"
+            [paramTypeById]="data.parameter.parameterId"
+            (addItemEmitter)="
+              addItemToListParam(
+                $event,
+                data.parameter.parameterId,
+                data.parameter.projetParameters
+              )
+            "
+            (addParameterEmitter)="
+              addParameterToListParam(
+                $event,
+                data.parameter.parameterId,
+                data.list
+              )
+            "
+            [isLimitedDropdown]="true"
+          >
+          </app-dropdown-parameters>
+        </div>
+        <div
+          class="param-list d-flex flex-row mt-3"
+          *ngIf="data && data.parameter && data.parameter.projetParameters"
+        >
+          <ng-container
+            *ngFor="let param of data.parameter.projetParameters; let j = index"
+          >
+            <app-item-button-remove
+              *ngIf="param && param.title"
+              class="mr-3"
+              [enabled]="editable"
+              [parameter]="param.title"
+              (removeClick)="
+                removeClick(
+                  data.parameter.projetParameters,
+                  param.id,
+                  param.title
+                )
+              "
+            ></app-item-button-remove>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<div class="buttons d-flex flex-row justify-content-center mt-3">
+  <app-button-primary
+    *ngIf="!editable && canEditListPosition"
+    [label]="locales.edit"
+    (click)="edit()"
+  ></app-button-primary>
+  <app-button-secundary
+    *ngIf="editable"
+    [label]="locales.cancel"
+    class="mr-3"
+    (click)="cancel()"
+  ></app-button-secundary>
+  <app-button-primary
+    *ngIf="editable"
+    (click)="openModalConfirm()"
+    [label]="locales.save"
+  ></app-button-primary>
+</div>

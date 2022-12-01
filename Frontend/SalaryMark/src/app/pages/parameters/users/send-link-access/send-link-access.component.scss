@@ -1,0 +1,138 @@
+@import "src/app/shared/styles/colors.scss";
+@import "src/app/shared/styles/dimensions.scss";
+
+.modal-send-access-link-container {
+  .input-container {
+    width: $fullSize;
+
+    input {
+      border: none;
+      border-bottom: $size1 solid $gray-ac;
+
+      font-size: $remSize075;
+      outline: 0;
+      padding: $size5;
+      width: $fullSize;
+    }
+
+    input:focus {
+      border-bottom: $size1 solid $black;
+    }
+
+    input::placeholder {
+      color: $black;
+
+      font-size: $remSize075;
+    }
+  }
+
+  .text-description {
+    background: $white 0% 0% no-repeat padding-box;
+    border: $size1 solid $orange-f6;
+    border-radius: $size2;
+    opacity: 1;
+
+    .text-description::placeholder {
+      color: $gray-84;
+    }
+    &:focus {
+      border: $size1 solid $orange-f6;
+      outline: none;
+    }
+  }
+
+  .sub-title {
+    font-size: $size16;
+    color: $black-1f;
+  }
+  .btn-cancel {
+    color: $black-231f;
+
+    font-size: $remSize08;
+  }
+
+  .btn-save {
+    background-color: $orange-button;
+    color: $white;
+
+    font-size: $remSize08;
+  }
+}
+
+.avatar {
+  width: $remSize4_37;
+  height: $remSize4_37;
+}
+
+.avatar-default {
+  padding-top: $remSize05;
+  font-size: $remSize3;
+  background-color: $green-24;
+  color: $white;
+  margin-left: 0;
+}
+
+.bottom-separator {
+  border-bottom: 1px solid $gray-ee;
+}
+
+.text-wrap {
+  word-break: break-word;
+  white-space: pre-wrap;
+  text-align: center;
+  font: normal normal 600 $size14 proxima-nova;
+}
+
+.text-title-style {
+  font: normal normal bold $size12 proxima-nova;
+  letter-spacing: $size0;
+  color: $black-58;
+  opacity: 1;
+}
+
+.box-send-email {
+  width: 100%;
+  background: #e6e6e6 0% 0% no-repeat padding-box;
+  border: $size1 solid $gray-a5;
+  border-radius: $size2;
+  opacity: 1;
+  padding: $size7 $size0 $size7 $size10;
+}
+
+.box-copy-email {
+  width: 100%;
+  background: #efefef;
+  border-radius: $size2;
+  opacity: 1;
+  padding: $size15;
+  border-radius: $size4;
+}
+
+.copy-link {
+  background: $gray-f2 0% 0% no-repeat padding-box;
+  font-size: $size13;
+  overflow-wrap: anywhere;
+  width: $size570;
+  height: $size49;
+  border-radius: $size4;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.copy-container {
+  width: $size69;
+  height: $size35;
+  background: $gray-dd 0% 0% no-repeat padding-box;
+  border: $size1 solid $border-gray;
+  border-radius: $size50;
+  opacity: 1;
+  letter-spacing: $size0;
+  color: $black-1f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $size14;
+}
